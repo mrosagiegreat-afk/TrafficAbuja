@@ -1,1 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrafficAbuja | Coming Soon</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
+    body {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      min-height: 100vh;
+      color: #1a1a1a;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(120, 119, 198, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 119, 97, 0.03) 0%, transparent 40%);
+      z-index: -1;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 60px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+      position: relative;
+    }
+
+    .registered {
+      font-size: 10px;
+      vertical-align: super;
+      color: #666;
+      margin-left: 2px;
+    }
+
+    .nav nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      font-size: 16px;
+    }
+
+    .nav a:hover {
+      color: #000;
+    }
+
+    .cart-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #1a1a1a;
+      background: #ffffff;
+      color: #1a1a1a;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .cart-btn:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* Main Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 40px 60px 0;
+      min-height: calc(100vh - 160px);
+      position: relative;
+      z-index: 5;
+      gap: 60px;
+    }
+
+    /* Left Content */
+    .left {
+      max-width: 600px;
+    }
+
+    .tag {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 16px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .left h1 {
+      font-size: 56px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #1a1a1a;
+    }
+
+    .left p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 40px;
+      max-width: 500px;
+    }
+
+    .notify-form {
+      display: flex;
+      max-width: 480px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .notify-form input {
+      flex: 1;
+      padding: 18px 24px;
+      border-radius: 50px;
+      border: 1px solid #ddd;
+      background: #ffffff;
+      color: #1a1a1a;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .notify-form input:focus {
+      border-color: #666;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+    }
+
+    .notify-form button {
+      padding: 18px 36px;
+      border-radius: 50px;
+      border: none;
+      background: #1a1a1a;
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: absolute;
+      right: 6px;
+      top: 6px;
+    }
+
+    .notify-form button:hover:not(:disabled) {
+      background: #000;
+      transform: translateY(-2px);
+    }
+
+    .notify-form button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .left small {
+      color: #888;
+      font-size: 14px;
+      display: block;
+      margin-top: 24px;
+    }
+
+    /* Right Content - White Card */
+    .right {
+      display: flex;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .feature-card {
+      width: 380px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid #f0f0f0;
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1a1a1a;
+    }
+
+    .card-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      color: #444;
+    }
+
+    .feature-list li i {
+      color: #1a1a1a;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+
+    .cta-button {
+      padding: 16px 32px;
+      border-radius: 50px;
+      border: 2px solid #1a1a1a;
+      background: transparent;
+      color: #1a1a1a;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .cta-button:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+
+    /* Floating Elements */
+    .floating {
+      position: absolute;
+      background: #ffffff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid #f0f0f0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      z-index: 1;
+      font-weight: 600;
+    }
+
+    .floating.stat {
+      top: -20px;
+      right: -20px;
+      font-size: 20px;
+    }
+
+    .floating.tag-card {
+      bottom: -20px;
+      left: -20px;
+      font-size: 14px;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 60px;
+      margin-top: 60px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .socials {
+      display: flex;
+      gap: 16px;
+    }
+
+    .socials span {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #666;
+    }
+
+    .socials span:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .links a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: #666;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .links a:hover {
+      color: #1a1a1a;
+    }
+
+    /* Success Message */
+    .success {
+      background: #f8fff8;
+      padding: 24px 32px;
+      border-radius: 16px;
+      font-weight: 600;
+      color: #2e7d32;
+      border: 1px solid #e8f5e9;
+      max-width: 480px;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .success i {
+      color: #4caf50;
+      margin-right: 10px;
+    }
+
+    .success small {
+      color: #66bb6a;
+      font-weight: 400;
+      display: block;
+      margin-top: 8px;
+    }
+
+    /* Animations */
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-6px); }
+      100% { transform: translateX(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1100px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        padding: 20px 40px 0;
+      }
+      
+      .left, .right {
+        justify-content: center;
+        text-align: center;
+      }
+      
+      .left h1 {
+        font-size: 48px;
+      }
+      
+      .feature-card {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav, .hero, .footer {
+        padding: 20px 30px;
+      }
+      
+      .left h1 {
+        font-size: 40px;
+      }
+      
+      .nav nav {
+        gap: 20px;
+      }
+      
+      .nav a {
+        display: none;
+      }
+      
+      .footer {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+      }
+      
+      .links a {
+        margin: 0 12px;
+      }
+      
+      .notify-form {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .notify-form button {
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        padding: 20px;
+      }
+      
+      .logo-text {
+        font-size: 24px;
+      }
+      
+      .hero {
+        padding: 20px 20px 0;
+      }
+      
+      .left h1 {
+        font-size: 36px;
+      }
+      
+      .feature-card {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="logo-text">TrafficAbuja<sup class="registered">®</sup></div>
+    <nav>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Retainership</a>
+      <button class="cart-btn"><i class="fas fa-shopping-cart"></i></button>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <section class="left">
+      <span class="tag">— COMING SOON</span>
+      <h1>Get Notified<br/>When We Launch</h1>
+      <p>Join our exclusive waiting list and be the first to experience our revolutionary services transforming Abuja's connectivity.</p>
+
+      <form class="notify-form">
+        <input type="email" placeholder="Enter your email address" required />
+        <button type="submit">Notify Me</button>
+      </form>
+
+      <small>We respect your privacy. No spam, unsubscribe anytime.</small>
+    </section>
+
+    <section class="right">
+      <div class="feature-card">
+        <h2 class="card-title">Exclusive Access</h2>
+        <p class="card-subtitle">Be among the first to experience our premium services with special launch benefits.</p>
+        
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Early access to all features</li>
+          <li><i class="fas fa-check"></i> Special launch pricing</li>
+          <li><i class="fas fa-check"></i> Priority customer support</li>
+          <li><i class="fas fa-check"></i> Invitation to launch event</li>
+        </ul>
+        
+        <button class="cta-button">Learn More About Benefits</button>
+      </div>
+
+      <div class="floating stat">🚀</div>
+      <div class="floating tag-card"> </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="socials">
+      <span><i class="fab fa-twitter"></i></span>
+      <span><i class="fab fa-instagram"></i></span>
+      <span><i class="fab fa-linkedin-in"></i></span>
+      <span><i class="fab fa-facebook-f"></i></span>
+    </div>
+    <div class="links">
+      <a href="#">FAQ</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.querySelector('.notify-form');
+    const input = form.querySelector('input');
+    const button = form.querySelector('button');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = input.value.trim();
+
+      if (!validateEmail(email)) {
+        shake(input);
+        showMessage('Please enter a valid email address.', 'error');
+        return;
+      }
+
+      // UI feedback
+      button.disabled = true;
+      button.textContent = 'Processing...';
+
+      // Simulated async request
+      setTimeout(() => {
+        localStorage.setItem('launchEmail', email);
+        showSuccessMessage();
+      }, 1200);
+    });
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function shake(el) {
+      el.style.animation = 'shake 0.4s';
+      el.addEventListener('animationend', () => {
+        el.style.animation = '';
+      });
+    }
+
+    function showSuccessMessage() {
+      form.innerHTML = `
+        <div class="success">
+          <i class="fas fa-check-circle"></i> You're on the list!<br/>
+          <small>We'll notify you as soon as we launch. Check your email for confirmation.</small>
+        </div>
+      `;
+    }
+
+    function showMessage(text, type) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = type === 'error' ? 'error-message' : 'info-message';
+      messageDiv.textContent = text;
+      messageDiv.style.cssText = `
+        background: ${type === 'error' ? '#fff5f5' : '#f0f9ff'};
+        color: ${type === 'error' ? '#dc2626' : '#0369a1'};
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+        border: 1px solid ${type === 'error' ? '#fecaca' : '#bae6fd'};
+        animation: fadeIn 0.5s ease;
+      `;
+      
+      form.parentNode.insertBefore(messageDiv, form.nextSibling);
+      
+      setTimeout(() => {
+        messageDiv.style.opacity = '0';
+        messageDiv.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => messageDiv.remove(), 500);
+      }, 3000);
+    }
+
+    // Add some interactive effects
+    document.querySelectorAll('.cart-btn, .cta-button').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+      });
+      
+      btn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+
+    // Cart button counter
+    const cartBtn = document.querySelector('.cart-btn');
+    let cartCount = 0;
+    
+    cartBtn.addEventListener('click', function() {
+      cartCount++;
+      if (cartCount > 0) {
+        this.innerHTML = `<i class="fas fa-shopping-cart"></i><span style="font-size:10px; margin-left:4px;">${cartCount}</span>`;
+      }
+    });
+  </script>
+</body>
+</html>
