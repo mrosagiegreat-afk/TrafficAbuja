@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Purchased Inventory/Hired Network | TrafficAbuja</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      min-height: 100vh;
+      color: #1a1a1a;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(120, 119, 198, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 119, 97, 0.03) 0%, transparent 40%);
+      z-index: -1;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 60px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .logo-text:hover {
+      color: #1a1a1a;
+    }
+
+    .registered {
+      font-size: 10px;
+      vertical-align: super;
+      color: #666;
+      margin-left: 2px;
+    }
+
+    .nav nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      font-size: 16px;
+    }
+
+    .nav a:hover {
+      color: #000;
+    }
+
+    .back-btn {
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: 2px solid #1a1a1a;
+      background: transparent;
+      color: #1a1a1a;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-btn:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+
+    /* Main Content */
+    .content-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px;
+    }
+
+    .page-title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 40px;
+      color: #1a1a1a;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .info-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid #f0f0f0;
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #1a1a1a;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .info-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .execution-section {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 2px solid #f0f0f0;
+    }
+
+    .execution-type {
+      background: #f8f9fa;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      border-left: 4px solid #1a1a1a;
+    }
+
+    .execution-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+      display: flex;
+      align-items: center;
+    }
+
+    .execution-title i {
+      margin-right: 10px;
+      color: #1a1a1a;
+    }
+
+    .note-box {
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+
+    .note-box p {
+      margin-bottom: 0;
+      font-weight: 500;
+      color: #5d4037;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 60px;
+      margin-top: 60px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #666;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #1a1a1a;
+    }
+
+    .copyright {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav, .content-container, .footer {
+        padding: 20px 30px;
+      }
+      
+      .page-title {
+        font-size: 36px;
+      }
+      
+      .info-card {
+        padding: 30px;
+      }
+      
+      .footer {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        padding: 20px;
+      }
+      
+      .logo-text {
+        font-size: 24px;
+      }
+      
+      .content-container {
+        padding: 20px;
+      }
+      
+      .page-title {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a href="index.html" class="logo-text">TrafficAbuja<sup class="registered">®</sup></a>
+    <nav>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="retainership.html">Retainership</a>
+      <a href="index.html" class="back-btn">Back to Home</a>
+    </nav>
+  </header>
+
+  <main class="content-container">
+    <h1 class="page-title">Purchased Inventory / Hired Network</h1>
+    
+    <div class="info-card">
+      <div class="info-content">
+        <p>As a request progresses toward completion, its specific requirements will be identified. These may include specialized skills, resources, or third-party favours, and may involve direct acquisition or engaged effort for a defined period.</p>
+      </div>
+      
+      <div class="execution-section">
+        <h2 class="section-title">Client Execution Directives</h2>
+        
+        <div class="execution-type">
+          <div class="execution-title">
+            <i class="fas fa-bullseye"></i> Direct Execution
+          </div>
+          <p>If a Client mandates a specific method without alternatives, the request shall be fulfilled precisely as specified.</p>
+        </div>
+        
+        <div class="execution-type">
+          <div class="execution-title">
+            <i class="fas fa-route"></i> Alternative Methods
+          </div>
+          <p>If the Client is open to alternatives that achieve the same result through different means, such options shall be disclosed and reconciled with the Client before proceeding.</p>
+        </div>
+        
+        <div class="note-box">
+          <p><i class="fas fa-exclamation-circle"></i> In all cases, if the requirements for execution exceed the resource level the Client has indicated, work will proceed only upon mutual alignment.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <div class="copyright">
+      © 2023 TrafficAbuja. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>
