@@ -18,14 +18,14 @@
       --secondary: #444;
       --light: #f8f9fa;
       --border: #e0e0e0;
-      --accent: #d4af37; /* Gold accent for professionalism */
+      --white: #ffffff;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
       line-height: 1.6;
       color: var(--primary);
-      background: #ffffff;
+      background: var(--white);
       overflow-x: hidden;
     }
 
@@ -69,7 +69,7 @@
       color: var(--secondary);
     }
 
-    /* Mobile Menu */
+    /* Mobile Menu Button */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -78,6 +78,8 @@
       color: var(--primary);
       cursor: pointer;
       padding: 5px;
+      z-index: 1001;
+      position: relative;
     }
 
     .nav {
@@ -140,7 +142,7 @@
       max-width: 500px;
     }
 
-    /* Form */
+    /* Form - CORRECTED: Kept on ash background */
     .form-container {
       background: var(--light);
       padding: 40px;
@@ -161,86 +163,14 @@
       font-size: 15px;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-
-    .form-full {
-      grid-column: span 2;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 15px;
-      background: #fff;
-      transition: border 0.3s ease;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    select.form-control {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%231a1a1a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 40px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 14px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-      background: #000;
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .privacy-note {
-      font-size: 13px;
-      color: #888;
-      margin-top: 15px;
-    }
-
-    /* Right Content - Contact Info */
+    /* Contact Section - CORRECTED: Now on white background */
     .contact-section {
-      background: var(--light);
+      background: var(--white); /* CHANGED from var(--light) to var(--white) */
       padding: 40px;
       border-radius: 8px;
       border: 1px solid var(--border);
       height: 100%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .contact-title {
@@ -276,14 +206,13 @@
     .contact-icon {
       width: 40px;
       height: 40px;
-      background: white;
+      background: var(--light);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 15px;
       flex-shrink: 0;
-      border: 1px solid var(--border);
     }
 
     .contact-icon i {
@@ -314,19 +243,18 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: white;
+      background: var(--light);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--primary);
       text-decoration: none;
-      border: 1px solid var(--border);
       transition: all 0.3s ease;
     }
 
     .social-link:hover {
       background: var(--primary);
-      color: white;
+      color: var(--white);
       transform: translateY(-2px);
     }
 
@@ -433,22 +361,51 @@
       }
       
       .nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: white;
-        padding: 20px;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: var(--white);
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
-        border-top: 1px solid var(--border);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        gap: 0;
+        padding: 80px 30px 30px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+        z-index: 1000;
       }
       
       .nav.active {
-        display: flex;
+        right: 0;
+      }
+      
+      .nav a {
+        width: 100%;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 16px;
+      }
+      
+      .nav a:last-child {
+        border-bottom: none;
+      }
+      
+      /* Overlay for mobile menu */
+      .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      
+      .nav-overlay.active {
+        display: block;
       }
       
       .hero {
@@ -470,14 +427,6 @@
         padding: 30px;
       }
       
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .form-full {
-        grid-column: span 1;
-      }
-      
       .footer-content {
         flex-direction: column;
         gap: 20px;
@@ -496,7 +445,7 @@
       
       .form-container,
       .contact-section {
-        padding: 20px;
+        padding: 25px;
       }
       
       .contact-item {
@@ -515,39 +464,6 @@
       .off-hours-banner {
         font-size: 14px;
         padding: 12px 20px;
-      }
-    }
-
-    /* Tablet Landscape */
-    @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
-      .hero {
-        min-height: auto;
-        padding: 120px 0 60px;
-      }
-    }
-
-    /* Large Desktop */
-    @media (min-width: 1400px) {
-      .container {
-        max-width: 1320px;
-      }
-      
-      .hero-left h1 {
-        font-size: 4rem;
-      }
-    }
-
-    /* Print Styles */
-    @media print {
-      .header,
-      .social-links,
-      .off-hours-banner,
-      .submit-btn {
-        display: none !important;
-      }
-      
-      .hero {
-        padding-top: 0;
       }
     }
   </style>
@@ -578,11 +494,14 @@
     </div>
   </header>
 
+  <!-- Mobile Menu Overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
-        <!-- Left Column: Form -->
+        <!-- Left Column: Form (on ash background) -->
         <div class="hero-left">
           <span class="coming-soon">— COMING SOON</span>
           <h1>Get Notified When We Launch</h1>
@@ -596,30 +515,30 @@
               <!-- Honeypot field -->
               <input type="text" name="_gotcha" style="display: none;">
               
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="firstName">First Name *</label>
-                  <input type="text" id="firstName" name="first_name" class="form-control" required>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div>
+                  <label for="firstName" style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px;">First Name *</label>
+                  <input type="text" id="firstName" name="first_name" required style="width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 4px; font-size: 15px;">
                 </div>
                 
-                <div class="form-group">
-                  <label for="lastName">Last Name *</label>
-                  <input type="text" id="lastName" name="last_name" class="form-control" required>
+                <div>
+                  <label for="lastName" style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px;">Last Name *</label>
+                  <input type="text" id="lastName" name="last_name" required style="width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 4px; font-size: 15px;">
                 </div>
                 
-                <div class="form-group form-full">
-                  <label for="email">Email Address *</label>
-                  <input type="email" id="email" name="email" class="form-control" required>
+                <div style="grid-column: span 2;">
+                  <label for="email" style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px;">Email Address *</label>
+                  <input type="email" id="email" name="email" required style="width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 4px; font-size: 15px;">
                 </div>
                 
-                <div class="form-group form-full">
-                  <label for="phone">Phone Number</label>
-                  <input type="tel" id="phone" name="phone" class="form-control">
+                <div style="grid-column: span 2;">
+                  <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px;">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" style="width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 4px; font-size: 15px;">
                 </div>
                 
-                <div class="form-group form-full">
-                  <label for="attendance">Expected Attendance *</label>
-                  <select id="attendance" name="attendance" class="form-control" required>
+                <div style="grid-column: span 2;">
+                  <label for="attendance" style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px;">Expected Attendance *</label>
+                  <select id="attendance" name="attendance" required style="width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 4px; font-size: 15px; background: white;">
                     <option value="">Select an option</option>
                     <option value="company">Company On-Site</option>
                     <option value="late">Will be late</option>
@@ -634,19 +553,19 @@
               <input type="hidden" name="_subject" value="New TrafficAbuja Waitlist Signup">
               <input type="hidden" name="_template" value="table">
               
-              <button type="submit" class="submit-btn" id="submitBtn">
+              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
                 Join Waitlist
               </button>
             </form>
             
-            <p class="privacy-note">We respect your privacy. No spam, unsubscribe anytime.</p>
+            <p style="font-size: 13px; color: #888; margin-top: 15px;">We respect your privacy. No spam, unsubscribe anytime.</p>
             
             <!-- Message container -->
             <div id="formMessage"></div>
           </div>
         </div>
         
-        <!-- Right Column: Contact Info -->
+        <!-- Right Column: Contact Info (NOW ON WHITE BACKGROUND) -->
         <div class="contact-section">
           <h2 class="contact-title">Contact Information</h2>
           <p class="contact-subtitle">Get in touch with us through any of these channels</p>
@@ -725,30 +644,34 @@
 
   <script>
     // ============================================
-    // 1. MOBILE MENU TOGGLE
+    // 1. MOBILE MENU FIX - NOW WORKING PROPERLY
     // ============================================
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.getElementById('navOverlay');
     
-    mobileMenuBtn.addEventListener('click', () => {
+    // Toggle mobile menu
+    mobileMenuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
       mainNav.classList.toggle('active');
+      navOverlay.classList.toggle('active');
       mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
         ? '<i class="fas fa-times"></i>' 
         : '<i class="fas fa-bars"></i>';
     });
     
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-        mainNav.classList.remove('active');
-        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-      }
+    // Close menu when clicking overlay
+    navOverlay.addEventListener('click', function() {
+      mainNav.classList.remove('active');
+      navOverlay.classList.remove('active');
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
     });
     
-    // Close menu on link click (mobile)
+    // Close menu when clicking a link
     mainNav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mainNav.classList.remove('active');
+        navOverlay.classList.remove('active');
         mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
       });
     });
@@ -809,6 +732,9 @@
       const originalText = submitBtn.textContent;
       const messageContainer = document.getElementById('formMessage');
       
+      // Clear previous messages
+      messageContainer.innerHTML = '';
+      
       // Basic validation
       const requiredFields = form.querySelectorAll('[required]');
       let isValid = true;
@@ -843,27 +769,11 @@
         const timestamp = new Date().toISOString();
         const isOffHours = checkBusinessHours();
         
-        // Create hidden fields if they don't exist
-        let timeField = form.querySelector('input[name="timestamp"]');
-        if (!timeField) {
-          timeField = document.createElement('input');
-          timeField.type = 'hidden';
-          timeField.name = 'timestamp';
-          form.appendChild(timeField);
-        }
-        timeField.value = timestamp;
-        
-        let hoursField = form.querySelector('input[name="off_hours"]');
-        if (!hoursField) {
-          hoursField = document.createElement('input');
-          hoursField.type = 'hidden';
-          hoursField.name = 'off_hours';
-          form.appendChild(hoursField);
-        }
-        hoursField.value = isOffHours ? 'yes' : 'no';
-        
         // Submit to Formspree
         const formData = new FormData(form);
+        formData.append('timestamp', timestamp);
+        formData.append('off_hours', isOffHours ? 'yes' : 'no');
+        
         const response = await fetch(form.action, {
           method: 'POST',
           body: formData,
@@ -920,35 +830,7 @@
       if (isOffHours) {
         bannerText.textContent = "We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.";
       }
-      
-      // Add input focus effects
-      const formControls = document.querySelectorAll('.form-control');
-      formControls.forEach(control => {
-        control.addEventListener('focus', function() {
-          this.parentElement.style.transform = 'translateY(-2px)';
-        });
-        
-        control.addEventListener('blur', function() {
-          this.parentElement.style.transform = '';
-        });
-      });
     });
-
-    // ============================================
-    // 5. TOUCH DEVICE DETECTION
-    // ============================================
-    let isTouchDevice = false;
-    
-    try {
-      document.createEvent('TouchEvent');
-      isTouchDevice = true;
-    } catch (e) {
-      isTouchDevice = false;
-    }
-    
-    if (isTouchDevice) {
-      document.body.classList.add('touch-device');
-    }
   </script>
 </body>
 </html>
