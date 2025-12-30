@@ -523,45 +523,46 @@
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <form id="launchForm" action="https://script.google.com/macros/s/AKfycbwjYHkT1r2MK4WdOhSIfMgremQ20BC86C-mkW8EnG0M8RULILkwNHlSwlJ6SnJY6gW5/exec" method="POST">
-              <!-- Honeypot field -->
-              <input type="text" name="_gotcha" style="display: none;">
-              
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                <div>
-                  <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div>
-                  <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div style="grid-column: span 2;">
-                  <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div style="grid-column: span 2;">
-                  <input type="tel" name="phone" placeholder="Phone Number" style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div style="grid-column: span 2;">
-                  <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
-                    <option value="">Expected Attendance *</option>
-                    <option value="company">Company On-Site</option>
-                    <option value="late">Will be late</option>
-                    <option value="arrival">Arrival upon completion</option>
-                    <option value="cannot">Cannot be present</option>
-                    <option value="delegation">Full delegation</option>
-                  </select>
-                </div>
-              </div>
-              
-              <!-- Hidden fields will be added by JavaScript -->
-              
-              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
-                Join Waitlist
-              </button>
-            </form>
+            <form id="launchForm" method="GET" action="https://script.google.com/macros/s/AKfycbxQPsk1aBjCKhLpHo6w_YlnI77FzdGusVeI7PTx_psWaXiy4s3q6_VpdSe-t1t1ZMQ7/exec">
+  <!-- Honeypot field -->
+  <input type="text" name="_gotcha" style="display: none;">
+  
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+    <div>
+      <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+    </div>
+    
+    <div>
+      <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+    </div>
+    
+    <div style="grid-column: span 2;">
+      <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+    </div>
+    
+    <div style="grid-column: span 2;">
+      <input type="tel" name="phone" placeholder="Phone Number" style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+    </div>
+    
+    <div style="grid-column: span 2;">
+      <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
+        <option value="">Expected Attendance *</option>
+        <option value="company">Company On-Site</option>
+        <option value="late">Will be late</option>
+        <option value="arrival">Arrival upon completion</option>
+        <option value="cannot">Cannot be present</option>
+        <option value="delegation">Full delegation</option>
+      </select>
+    </div>
+    
+    <!-- Hidden field for off-hours detection -->
+    <input type="hidden" name="off_hours" id="offHoursField" value="no">
+  </div>
+  
+  <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
+    Join Waitlist
+  </button>
+</form>
             
             <p style="font-size: 13px; color: #888; margin-top: 15px;">We respect your privacy. No spam, unsubscribe anytime.</p>
             
@@ -688,117 +689,28 @@
       }
     }
     
-    // Form Submission - FIXED for Google Apps Script
-    document.getElementById('launchForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const submitBtn = document.getElementById('submitBtn');
-      const originalText = submitBtn.textContent;
-      const form = this;
-      const messageContainer = document.getElementById('formMessage');
-      
-      // Clear previous messages
-      messageContainer.innerHTML = '';
-      
-      // Set timestamp and off-hours
-      const now = new Date();
-      const hour = now.getHours();
-      const isOffHours = (hour >= 21 || hour < 6);
-      
-      // Create hidden fields if they don't exist
-      let timeField = form.querySelector('input[name="timestamp"]');
-      if (!timeField) {
-        timeField = document.createElement('input');
-        timeField.type = 'hidden';
-        timeField.name = 'timestamp';
-        form.appendChild(timeField);
-      }
-      timeField.value = now.toISOString();
-      
-      let hoursField = form.querySelector('input[name="off_hours"]');
-      if (!hoursField) {
-        hoursField = document.createElement('input');
-        hoursField.type = 'hidden';
-        hoursField.name = 'off_hours';
-        form.appendChild(hoursField);
-      }
-      hoursField.value = isOffHours ? 'yes' : 'no';
-      
-      // Disable button
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Processing...';
-      
-      try {
-        // Collect form data
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((value, key) => {
-          data[key] = value;
-        });
-        
-        // Remove honeypot field
-        delete data._gotcha;
-        
-        console.log('Submitting data:', data);
-        
-        // Send to Google Script
-        const response = await fetch(form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
-        
-        const result = await response.json();
-        
-        if (result.status === 'success') {
-          // Show success message
-          messageContainer.innerHTML = `
-            <div class="success-message">
-              <i class="fas fa-check-circle"></i> You have been added to the waitlist. We will notify you as soon as we launch.
-              <div style="font-size: 12px; margin-top: 5px; color: #66bb6a;">
-                Your information has been saved successfully.
-              </div>
-            </div>
-          `;
-          
-          // Reset form
-          form.reset();
-          
-          // Telegram should have been sent automatically
-          console.log('✅ Form submitted successfully:', result);
-          
-          // Auto-remove success message after 10 seconds
-          setTimeout(() => {
-            const successMsg = messageContainer.querySelector('.success-message');
-            if (successMsg) {
-              successMsg.style.opacity = '0';
-              successMsg.style.transition = 'opacity 0.5s ease';
-              setTimeout(() => {
-                if (successMsg.parentNode === messageContainer) {
-                  successMsg.remove();
-                }
-              }, 500);
-            }
-          }, 10000);
-        } else {
-          throw new Error(result.message || 'Submission failed');
-        }
-      } catch (error) {
-        console.error('Form submission error:', error);
-        messageContainer.innerHTML = `
-          <div class="error-message">
-            <i class="fas fa-exclamation-circle"></i> Something went wrong. Please try again or contact us directly.
-            <div style="font-size: 12px; margin-top: 5px; color: #ef5350;">
-              Error: ${error.message}
-            </div>
-          </div>
-        `;
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-      }
-    });
+    // Form Submission - NEW VERSION (No CORS issues)
+document.getElementById('launchForm').addEventListener('submit', function(e) {
+  // Set off-hours flag
+  const now = new Date();
+  const hour = now.getHours();
+  const isOffHours = (hour >= 21 || hour < 6);
+  
+  // Update the hidden field
+  const offHoursField = document.getElementById('offHoursField');
+  if (offHoursField) {
+    offHoursField.value = isOffHours ? 'yes' : 'no';
+  }
+  
+  // Show loading state
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Redirecting...';
+  
+  // Form will submit normally to Google Script page
+  // No need to prevent default or use fetch()
+  // The form will redirect to Google Script with all data
+});
     
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
