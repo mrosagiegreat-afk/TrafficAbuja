@@ -6,7 +6,7 @@
   <title>Success! - TrafficAbuja</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Reset & Base - FIXED for mobile - SAME AS INDEX.HTML */
+    /* Same as index.html - WHITE BACKGROUND */
     * {
       margin: 0;
       padding: 0;
@@ -25,12 +25,11 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.5;
       color: #1a1a1a;
-      background: #ffffff; /* WHITE BACKGROUND like index.html */
+      background: #ffffff; /* WHITE BACKGROUND */
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       touch-action: manipulation;
-      min-height: 100vh;
     }
 
     .container {
@@ -40,7 +39,7 @@
       padding: 0 20px;
     }
 
-    /* Header - SAME AS INDEX.HTML */
+    /* Header */
     .header {
       position: fixed;
       top: 0;
@@ -74,7 +73,6 @@
       color: #666;
     }
 
-    /* Navigation - SAME AS INDEX.HTML */
     .nav {
       display: flex;
       gap: 30px;
@@ -104,7 +102,7 @@
       padding: 5px;
     }
 
-    /* Success Hero Section - LIKE INDEX.HTML */
+    /* Success Hero Section */
     .hero-success {
       padding-top: 150px;
       padding-bottom: 80px;
@@ -121,7 +119,7 @@
       align-items: start;
     }
 
-    /* Success Container - SIMILAR TO FORM CONTAINER */
+    /* Success Container */
     .success-container {
       background: #f8f9fa;
       padding: 50px;
@@ -136,6 +134,12 @@
       margin-bottom: 30px;
       display: block;
       text-align: center;
+      animation: bounce 1s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
 
     h1 {
@@ -199,7 +203,7 @@
       text-align: center;
     }
 
-    /* Right Column: Contact Info - SAME AS INDEX.HTML */
+    /* Contact Section */
     .contact-section {
       padding: 0;
       margin: 0;
@@ -286,7 +290,7 @@
       color: white;
     }
 
-    /* Footer - SAME AS INDEX.HTML */
+    /* Footer */
     .footer {
       border-top: 1px solid #e0e0e0;
       padding: 40px 0;
@@ -319,76 +323,14 @@
       font-size: 14px;
     }
 
-    /* Responsive Design - SAME AS INDEX.HTML */
+    /* Responsive */
     @media (max-width: 768px) {
-      html {
-        font-size: 15px;
-      }
-      
-      .container {
-        padding: 0 15px;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      .nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        max-width: 300px;
-        height: 100vh;
-        background: white;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        padding: 80px 30px 30px;
-        transition: right 0.3s ease;
-        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
-        z-index: 1000;
-      }
-      
-      .nav.active {
-        right: 0;
-      }
-      
-      .nav a {
-        width: 100%;
-        padding: 15px 0;
-        border-bottom: 1px solid #e0e0e0;
-        font-size: 16px;
-      }
-      
-      .nav a:last-child {
-        border-bottom: none;
-      }
-      
-      .nav-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
-      }
-      
-      .nav-overlay.active {
-        display: block;
+      .hero-grid-success {
+        grid-template-columns: 1fr;
       }
       
       .hero-success {
         padding-top: 120px;
-        padding-bottom: 40px;
-        min-height: auto;
-      }
-      
-      .hero-grid-success {
-        grid-template-columns: 1fr;
-        gap: 40px;
       }
       
       .success-container {
@@ -398,36 +340,14 @@
       
       h1 {
         font-size: 2.2rem;
-        line-height: 1.2;
       }
       
       .contact-section {
-        padding: 0 !important;
-        margin: 0 !important;
         order: 2;
       }
-      
-      .contact-item {
-        flex-direction: row;
-        align-items: center;
-      }
-      
-      .footer-content {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-      }
-      
-      .footer-links {
-        gap: 20px;
-      }
     }
-
+    
     @media (max-width: 480px) {
-      .hero-success {
-        padding-top: 100px;
-      }
-      
       .success-container {
         padding: 25px;
       }
@@ -436,46 +356,9 @@
         font-size: 1.8rem;
       }
       
-      p {
-        font-size: 16px;
-      }
-      
       .checkmark {
         font-size: 60px;
       }
-      
-      .contact-icon {
-        width: 36px;
-        height: 36px;
-        margin-right: 12px;
-      }
-      
-      .social-links {
-        justify-content: center;
-      }
-      
-      .countdown-timer {
-        font-size: 28px;
-      }
-    }
-
-    /* Animation */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .success-container {
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    .checkmark {
-      animation: bounce 1s ease infinite;
     }
   </style>
 </head>
@@ -486,11 +369,10 @@
       <div class="header-content">
         <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
         
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
           <i class="fas fa-bars"></i>
         </button>
         
-        <!-- NAVIGATION: Only 2 items -->
         <nav class="nav" id="mainNav">
           <a href="inventory.html">Purchased Inventory/Hired Network</a>
           <a href="retainership.html">Retainership</a>
@@ -502,11 +384,11 @@
   <!-- Mobile Menu Overlay -->
   <div class="nav-overlay" id="navOverlay"></div>
 
-  <!-- Success Hero Section -->
+  <!-- Success Hero -->
   <section class="hero-success">
     <div class="container">
       <div class="hero-grid-success">
-        <!-- Left Column: Success Message -->
+        <!-- Left: Success Message -->
         <div class="success-container">
           <div class="checkmark">✅</div>
           <h1 id="greeting">You're on the Waitlist!</h1>
@@ -527,7 +409,7 @@
           </div>
         </div>
         
-        <!-- Right Column: Contact Info - SAME AS INDEX.HTML -->
+        <!-- Right: Contact Info -->
         <div class="contact-section">
           <h2 class="contact-title">Contact Information</h2>
           <p class="contact-subtitle">Get in touch with us through any of these channels</p>
@@ -575,13 +457,13 @@
           </div>
           
           <div class="social-links">
-            <a href="https://t.me/TrafficAbuja" class="social-link" target="_blank" aria-label="Telegram">
+            <a href="https://t.me/TrafficAbuja" class="social-link" target="_blank">
               <i class="fab fa-telegram"></i>
             </a>
-            <a href="https://instagram.com/TrafficAbuja" class="social-link" target="_blank" aria-label="Instagram">
+            <a href="https://instagram.com/TrafficAbuja" class="social-link" target="_blank">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://wa.me/2347047744310" class="social-link" target="_blank" aria-label="WhatsApp">
+            <a href="https://wa.me/2347047744310" class="social-link" target="_blank">
               <i class="fab fa-whatsapp"></i>
             </a>
           </div>
@@ -605,43 +487,21 @@
   </footer>
 
   <script>
-    // Mobile Menu Functionality - SAME AS INDEX.HTML
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navOverlay = document.getElementById('navOverlay');
-    
-    mobileMenuBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      mainNav.classList.toggle('active');
-      navOverlay.classList.toggle('active');
-      mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
-        ? '<i class="fas fa-times"></i>' 
-        : '<i class="fas fa-bars"></i>';
-    });
-    
-    navOverlay.addEventListener('click', function() {
-      mainNav.classList.remove('active');
-      navOverlay.classList.remove('active');
-      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-    });
-    
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const firstName = urlParams.get('first_name');
     const email = urlParams.get('email');
     
-    // Decode URL parameters
-    const decodedFirstName = firstName ? decodeURIComponent(firstName) : '';
-    const decodedEmail = email ? decodeURIComponent(email) : '';
-    
-    // Personalize the message
-    if (decodedFirstName) {
-      document.getElementById('greeting').textContent = `Thank you ${decodedFirstName}!`;
+    // Decode and personalize
+    if (firstName) {
+      const decodedName = decodeURIComponent(firstName);
+      document.getElementById('greeting').textContent = `Thank you ${decodedName}!`;
     }
     
-    if (decodedEmail) {
-      const message = document.getElementById('personalMessage');
-      message.innerHTML = `We've added <span class="highlight">${decodedEmail}</span> to our exclusive launch list.`;
+    if (email) {
+      const decodedEmail = decodeURIComponent(email);
+      document.getElementById('personalMessage').innerHTML = 
+        `We've added <span class="highlight">${decodedEmail}</span> to our exclusive launch list.`;
     }
     
     // Countdown timer
@@ -654,17 +514,9 @@
       
       if (seconds <= 0) {
         clearInterval(timer);
-        countdownElement.textContent = '0';
         window.location.href = 'https://trafficabuja.online';
       }
     }, 1000);
-    
-    // Optional: Store in localStorage to show welcome message on homepage
-    if (decodedFirstName) {
-      localStorage.setItem('trafficabuja_waitlist', 'joined');
-      localStorage.setItem('trafficabuja_user', decodedFirstName);
-      localStorage.setItem('trafficabuja_email', decodedEmail);
-    }
   </script>
 </body>
 </html>
