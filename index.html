@@ -467,6 +467,12 @@
         font-size: 3rem;
       }
     }
+
+    /* Spinner Animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -508,12 +514,13 @@
           <h1>Get Notified When We Launch</h1>
           <p>Join our exclusive waiting list and be the first to experience our revolutionary services transforming Abuja's connectivity.</p>
           
+          <!-- OPTIMIZED FORM CONTAINER -->
           <div class="form-container">
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <!-- FORM WITH NO JAVASCRIPT HANDLER - SUBMITS DIRECTLY -->
-            <form method="POST" action="https://script.google.com/macros/s/AKfycbypKGec_V0cVANRP0-exURWJhrSjyh5efl_UAFcRrBgiU-k0w7UJ0JvYWGlxXuluP_v/exec">
+            <!-- FORM -->
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbw7yXzsPW9YGGQqznOu9VrlU9BN-ar4In04EWvQxkrjUYcGZe2FCW0pd-zN52rituUb/exec" id="waitlistForm">
               <!-- Honeypot field -->
               <input type="text" name="_gotcha" style="display: none;">
               
@@ -548,13 +555,23 @@
                 <input type="hidden" name="off_hours" id="offHoursField" value="no">
               </div>
               
-              <button type="submit" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
-                Join Waitlist
+              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; position: relative;">
+                <span id="btnText">Join Waitlist</span>
+                <div id="btnSpinner" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                  <div style="width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite;"></div>
+                </div>
               </button>
             </form>
             
             <p style="font-size: 13px; color: #888; margin-top: 15px;">We respect your privacy. No spam, unsubscribe anytime.</p>
+            
+            <!-- Loading Overlay (hidden by default) -->
+            <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+              <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #1a1a1a; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+              <p style="margin-top: 20px; color: #666; font-size: 16px;">Processing your submission...</p>
+            </div>
           </div>
+          <!-- END FORM CONTAINER -->
         </div>
         
         <!-- Right Column: Contact Info -->
@@ -634,9 +651,9 @@
     </div>
   </footer>
 
-  <!-- MINIMAL JAVASCRIPT - ONLY FOR MOBILE MENU & OFF-HOURS BANNER -->
+  <!-- JAVASCRIPT -->
   <script>
-    // Mobile Menu Functionality ONLY
+    // Mobile Menu Functionality
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mainNav = document.getElementById('mainNav');
     const navOverlay = document.getElementById('navOverlay');
@@ -687,7 +704,7 @@
       }
     }
     
-    // Initialize everything when page loads
+    // Form submission loading state
     document.addEventListener('DOMContentLoaded', function() {
       setupOffHoursBanner();
       setOffHoursField();
@@ -698,6 +715,42 @@
       if (isOffHours) {
         bannerText.textContent = "We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.";
       }
+      
+      // Form loading state
+      const form = document.getElementById('waitlistForm');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const btnSpinner = document.getElementById('btnSpinner');
+      
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          // Set off-hours field
+          const now = new Date();
+          const hour = now.getHours();
+          const isOffHours = (hour >= 21 || hour < 6);
+          document.getElementById('offHoursField').value = isOffHours ? 'yes' : 'no';
+          
+          // Show loading state
+          btnText.style.opacity = '0';
+          btnSpinner.style.display = 'block';
+          submitBtn.disabled = true;
+          
+          // Show overlay after 500ms (if still loading)
+          setTimeout(() => {
+            if (submitBtn.disabled) { // Still loading
+              loadingOverlay.style.display = 'flex';
+            }
+          }, 500);
+        });
+      }
+      
+      // Hide overlay if page becomes visible again
+      document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible' && loadingOverlay) {
+          loadingOverlay.style.display = 'none';
+        }
+      });
     });
   </script>
 </body>
