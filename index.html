@@ -704,61 +704,51 @@
       }
     }
     
-    // Form Submission - UPDATED for reliability
+// Form Submission - FINAL FIX
 document.getElementById('launchForm').addEventListener('submit', function(e) {
-  e.preventDefault(); // Prevent default form submission
+  e.preventDefault(); // Stop form from submitting normally
   
   // Set off-hours flag
   const now = new Date();
   const hour = now.getHours();
   const isOffHours = (hour >= 21 || hour < 6);
-  
   document.getElementById('offHoursField').value = isOffHours ? 'yes' : 'no';
   
-  // Show loading overlay
-  const loadingOverlay = document.getElementById('loadingOverlay');
-  const submitBtn = document.getElementById('submitBtn');
-  
-  loadingOverlay.style.display = 'flex';
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Submitting...';
+  // Show loading
+  document.getElementById('loadingOverlay').style.display = 'flex';
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').textContent = 'Submitting...';
   
   // Get form data
   const formData = new FormData(this);
   const firstName = formData.get('first_name') || '';
   const email = formData.get('email') || '';
   
-  // YOUR GOOGLE SCRIPT URL
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbxDAWwdiOC9dN1eQKubud5aPoPCaMbcWgYqKQ559ptPwxCPam_rvywrQY_EwvWR5vo/exec';
+  // DON'T submit to Google Script at all!
+  // Instead, save to localStorage and redirect immediately
   
-  // Create hidden iframe method (more reliable)
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.name = 'googleScriptFrame';
-  iframe.id = 'googleScriptFrame';
-  document.body.appendChild(iframe);
-  
-  // Build URL with parameters
-  const params = new URLSearchParams();
+  // Save form data to localStorage
+  const formDataObj = {};
   for (const [key, value] of formData) {
-    params.append(key, value);
+    formDataObj[key] = value;
   }
+  localStorage.setItem('pending_submission', JSON.stringify(formDataObj));
   
-  // Set iframe src to submit to Google Script
-  iframe.src = `${scriptURL}?${params.toString()}`;
-  
-  // After 1 second, redirect to success page
+  // Redirect IMMEDIATELY to success.html
   setTimeout(() => {
     window.location.href = `https://trafficabuja.online/success.html?first_name=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`;
-  }, 1000);
+  }, 500);
   
-  // Clean up iframe after 5 seconds
-  setTimeout(() => {
-    if (iframe.parentNode) {
-      iframe.parentNode.removeChild(iframe);
-    }
-  }, 5000);
-});    
+  // In the background, send data to Google Script via image pixel
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxDAWwdiOC9dN1eQKubud5aPoPCaMbcWgYqKQ559ptPwxCPam_rvywrQY_EwvWR5vo/exec';
+  const params = new URLSearchParams(formDataObj).toString();
+  
+  // Use image pixel method (no CORS issues)
+  const img = new Image();
+  img.src = `${scriptURL}?${params}&pixel=1`;
+  img.style.display = 'none';
+  document.body.appendChild(img);
+});
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       setupOffHoursBanner();
