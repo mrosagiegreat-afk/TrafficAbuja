@@ -1,238 +1,670 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Success! - TrafficAbuja</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-text-size-adjust: 100%;
-            -moz-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.5;
-            color: #1a1a1a;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        .success-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            color: #333;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .checkmark {
-            font-size: 80px;
-            color: #4CAF50;
-            margin-bottom: 20px;
-            animation: bounce 1s ease infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-            line-height: 1.2;
-        }
-        
-        .highlight {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        
-        p {
-            margin-bottom: 15px;
-            font-size: 17px;
-            color: #555;
-        }
-        
-        .countdown-box {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            color: #666;
-            font-size: 15px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .countdown-box p {
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
-        
-        .countdown-timer {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1a1a1a;
-            margin: 10px 0;
-        }
-        
-        .status-list {
-            text-align: left;
-            margin: 20px 0;
-        }
-        
-        .status-list li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .status-list i {
-            margin-right: 10px;
-            color: #4CAF50;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 30px;
-            display: inline-block;
-        }
-        
-        .logo sup {
-            font-size: 10px;
-            vertical-align: super;
-            color: #666;
-        }
-        
-        @media (max-width: 768px) {
-            .success-container {
-                padding: 30px 20px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .checkmark {
-                font-size: 60px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 15px;
-            }
-            
-            .success-container {
-                padding: 25px 15px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            p {
-                font-size: 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <title>Success! - TrafficAbuja</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & Base - FIXED for mobile - SAME AS INDEX.HTML */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    html {
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background: #ffffff; /* WHITE BACKGROUND like index.html */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      touch-action: manipulation;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header - SAME AS INDEX.HTML */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 15px 0;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo sup {
+      font-size: 10px;
+      vertical-align: super;
+      color: #666;
+    }
+
+    /* Navigation - SAME AS INDEX.HTML */
+    .nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav a {
+      color: #444;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      color: #000;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #1a1a1a;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    /* Success Hero Section - LIKE INDEX.HTML */
+    .hero-success {
+      padding-top: 150px;
+      padding-bottom: 80px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: #ffffff; /* WHITE BACKGROUND */
+    }
+
+    .hero-grid-success {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* Success Container - SIMILAR TO FORM CONTAINER */
+    .success-container {
+      background: #f8f9fa;
+      padding: 50px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      grid-column: 1;
+    }
+
+    .checkmark {
+      font-size: 80px;
+      color: #4CAF50;
+      margin-bottom: 30px;
+      display: block;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+      color: #1a1a1a;
+    }
+
+    .highlight {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 25px;
+      max-width: 500px;
+    }
+
+    .status-list {
+      margin: 30px 0;
+    }
+
+    .status-list li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .status-list i {
+      margin-right: 15px;
+      color: #4CAF50;
+      font-size: 18px;
+    }
+
+    .countdown-box {
+      margin-top: 40px;
+      padding: 25px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .countdown-box p {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .countdown-timer {
+      font-size: 32px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    /* Right Column: Contact Info - SAME AS INDEX.HTML */
+    .contact-section {
+      padding: 0;
+      margin: 0;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .contact-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+    }
+
+    .contact-subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    .contact-info {
+      margin-bottom: 40px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: #f8f9fa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .contact-icon i {
+      color: #1a1a1a;
+      font-size: 18px;
+    }
+
+    .contact-details h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #1a1a1a;
+    }
+
+    .contact-details p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+      max-width: none;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    /* Footer - SAME AS INDEX.HTML */
+    .footer {
+      border-top: 1px solid #e0e0e0;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-links a:hover {
+      color: #1a1a1a;
+    }
+
+    .copyright {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Responsive Design - SAME AS INDEX.HTML */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+      
+      .container {
+        padding: 0 15px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 80px 30px 30px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+        z-index: 1000;
+      }
+      
+      .nav.active {
+        right: 0;
+      }
+      
+      .nav a {
+        width: 100%;
+        padding: 15px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 16px;
+      }
+      
+      .nav a:last-child {
+        border-bottom: none;
+      }
+      
+      .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      
+      .nav-overlay.active {
+        display: block;
+      }
+      
+      .hero-success {
+        padding-top: 120px;
+        padding-bottom: 40px;
+        min-height: auto;
+      }
+      
+      .hero-grid-success {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .success-container {
+        padding: 30px;
+        order: 1;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+        line-height: 1.2;
+      }
+      
+      .contact-section {
+        padding: 0 !important;
+        margin: 0 !important;
+        order: 2;
+      }
+      
+      .contact-item {
+        flex-direction: row;
+        align-items: center;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      
+      .footer-links {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-success {
+        padding-top: 100px;
+      }
+      
+      .success-container {
+        padding: 25px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      p {
+        font-size: 16px;
+      }
+      
+      .checkmark {
+        font-size: 60px;
+      }
+      
+      .contact-icon {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .countdown-timer {
+        font-size: 28px;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-container {
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .checkmark {
+      animation: bounce 1s ease infinite;
+    }
+  </style>
 </head>
 <body>
-    <div class="success-container">
-        <div class="logo">TrafficAbuja<sup>®</sup></div>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
         
-        <div class="checkmark">✅</div>
-        <h1 id="greeting">You're on the Waitlist!</h1>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
         
-        <p id="personalMessage">Thank you! We've added your email to our exclusive launch list.</p>
-        
-        <div class="status-list">
+        <!-- NAVIGATION: Only 2 items -->
+        <nav class="nav" id="mainNav">
+          <a href="inventory.html">Purchased Inventory/Hired Network</a>
+          <a href="retainership.html">Retainership</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Success Hero Section -->
+  <section class="hero-success">
+    <div class="container">
+      <div class="hero-grid-success">
+        <!-- Left Column: Success Message -->
+        <div class="success-container">
+          <div class="checkmark">✅</div>
+          <h1 id="greeting">You're on the Waitlist!</h1>
+          
+          <p id="personalMessage">Thank you! We've added your email to our exclusive launch list.</p>
+          
+          <div class="status-list">
             <li><i class="fas fa-check-circle"></i> Data saved to our database</li>
             <li><i class="fas fa-check-circle"></i> Notification sent to our team</li>
             <li><i class="fas fa-check-circle"></i> You're now in our priority queue</li>
-        </div>
-        
-        <div class="countdown-box">
+          </div>
+          
+          <div class="countdown-box">
             <p>We'll notify you as soon as TrafficAbuja goes live.</p>
             <p>Redirecting to homepage in:</p>
             <div class="countdown-timer" id="countdown">5</div>
             <p>seconds...</p>
+          </div>
         </div>
         
-        <p style="margin-top: 20px; font-size: 14px; color: #888;">
-            Need help? Contact us at <a href="mailto:info@trafficabuja.online" style="color: #667eea;">info@trafficabuja.online</a>
-        </p>
-    </div>
-
-    <script>
-        // Get URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const firstName = urlParams.get('first_name');
-        const email = urlParams.get('email');
-        
-        // Decode URL parameters
-        const decodedFirstName = firstName ? decodeURIComponent(firstName) : '';
-        const decodedEmail = email ? decodeURIComponent(email) : '';
-        
-        // Personalize the message
-        if (decodedFirstName) {
-            document.getElementById('greeting').textContent = `Thank you ${decodedFirstName}!`;
-        }
-        
-        if (decodedEmail) {
-            const message = document.getElementById('personalMessage');
-            message.innerHTML = `We've added <span class="highlight">${decodedEmail}</span> to our exclusive launch list.`;
-        }
-        
-        // Countdown timer
-        let seconds = 5;
-        const countdownElement = document.getElementById('countdown');
-        
-        const timer = setInterval(() => {
-            seconds--;
-            countdownElement.textContent = seconds;
+        <!-- Right Column: Contact Info - SAME AS INDEX.HTML -->
+        <div class="contact-section">
+          <h2 class="contact-title">Contact Information</h2>
+          <p class="contact-subtitle">Get in touch with us through any of these channels</p>
+          
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Address</h4>
+                <p>3, Michael Jackson Cresent<br>Off Tai Solarin Avenue, Gwarinpa<br>F.C.T., Nigeria</p>
+              </div>
+            </div>
             
-            if (seconds <= 0) {
-                clearInterval(timer);
-                window.location.href = 'https://trafficabuja.online';
-            }
-        }, 1000);
-        
-        // Optional: Store in localStorage to show welcome message on homepage
-        if (decodedFirstName) {
-            localStorage.setItem('trafficabuja_waitlist', 'joined');
-            localStorage.setItem('trafficabuja_user', decodedFirstName);
-            localStorage.setItem('trafficabuja_email', decodedEmail);
-        }
-        
-        // Add animation class after page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelector('.success-container').classList.add('loaded');
-        });
-    </script>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Phone / WhatsApp</h4>
+                <p>+234 7047744310</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-telegram"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Telegram</h4>
+                <p>@TrafficAbuja</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-instagram"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Instagram</h4>
+                <p>@TrafficAbuja</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="https://t.me/TrafficAbuja" class="social-link" target="_blank" aria-label="Telegram">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="https://instagram.com/TrafficAbuja" class="social-link" target="_blank" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/2347047744310" class="social-link" target="_blank" aria-label="WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="copyright">
+          © 2023 TrafficAbuja. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu Functionality - SAME AS INDEX.HTML
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    mobileMenuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mainNav.classList.toggle('active');
+      navOverlay.classList.toggle('active');
+      mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+    
+    navOverlay.addEventListener('click', function() {
+      mainNav.classList.remove('active');
+      navOverlay.classList.remove('active');
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+    
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const firstName = urlParams.get('first_name');
+    const email = urlParams.get('email');
+    
+    // Decode URL parameters
+    const decodedFirstName = firstName ? decodeURIComponent(firstName) : '';
+    const decodedEmail = email ? decodeURIComponent(email) : '';
+    
+    // Personalize the message
+    if (decodedFirstName) {
+      document.getElementById('greeting').textContent = `Thank you ${decodedFirstName}!`;
+    }
+    
+    if (decodedEmail) {
+      const message = document.getElementById('personalMessage');
+      message.innerHTML = `We've added <span class="highlight">${decodedEmail}</span> to our exclusive launch list.`;
+    }
+    
+    // Countdown timer
+    let seconds = 5;
+    const countdownElement = document.getElementById('countdown');
+    
+    const timer = setInterval(() => {
+      seconds--;
+      countdownElement.textContent = seconds;
+      
+      if (seconds <= 0) {
+        clearInterval(timer);
+        countdownElement.textContent = '0';
+        window.location.href = 'https://trafficabuja.online';
+      }
+    }, 1000);
+    
+    // Optional: Store in localStorage to show welcome message on homepage
+    if (decodedFirstName) {
+      localStorage.setItem('trafficabuja_waitlist', 'joined');
+      localStorage.setItem('trafficabuja_user', decodedFirstName);
+      localStorage.setItem('trafficabuja_email', decodedEmail);
+    }
+  </script>
 </body>
 </html>
