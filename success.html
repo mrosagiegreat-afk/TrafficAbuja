@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Success! - TrafficAbuja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .success-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            color: #333;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .checkmark {
+            font-size: 80px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+        
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 17px;
+            color: #555;
+        }
+        
+        .countdown-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            color: #666;
+            font-size: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .countdown-box p {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .countdown-timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin: 10px 0;
+        }
+        
+        .status-list {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .status-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-list i {
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        
+        .logo sup {
+            font-size: 10px;
+            vertical-align: super;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .success-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .checkmark {
+                font-size: 60px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .success-container {
+                padding: 25px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="logo">TrafficAbuja<sup>®</sup></div>
+        
+        <div class="checkmark">✅</div>
+        <h1 id="greeting">You're on the Waitlist!</h1>
+        
+        <p id="personalMessage">Thank you! We've added your email to our exclusive launch list.</p>
+        
+        <div class="status-list">
+            <li><i class="fas fa-check-circle"></i> Data saved to our database</li>
+            <li><i class="fas fa-check-circle"></i> Notification sent to our team</li>
+            <li><i class="fas fa-check-circle"></i> You're now in our priority queue</li>
+        </div>
+        
+        <div class="countdown-box">
+            <p>We'll notify you as soon as TrafficAbuja goes live.</p>
+            <p>Redirecting to homepage in:</p>
+            <div class="countdown-timer" id="countdown">5</div>
+            <p>seconds...</p>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 14px; color: #888;">
+            Need help? Contact us at <a href="mailto:info@trafficabuja.online" style="color: #667eea;">info@trafficabuja.online</a>
+        </p>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const firstName = urlParams.get('first_name');
+        const email = urlParams.get('email');
+        
+        // Decode URL parameters
+        const decodedFirstName = firstName ? decodeURIComponent(firstName) : '';
+        const decodedEmail = email ? decodeURIComponent(email) : '';
+        
+        // Personalize the message
+        if (decodedFirstName) {
+            document.getElementById('greeting').textContent = `Thank you ${decodedFirstName}!`;
+        }
+        
+        if (decodedEmail) {
+            const message = document.getElementById('personalMessage');
+            message.innerHTML = `We've added <span class="highlight">${decodedEmail}</span> to our exclusive launch list.`;
+        }
+        
+        // Countdown timer
+        let seconds = 5;
+        const countdownElement = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = seconds;
+            
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.location.href = 'https://trafficabuja.online';
+            }
+        }, 1000);
+        
+        // Optional: Store in localStorage to show welcome message on homepage
+        if (decodedFirstName) {
+            localStorage.setItem('trafficabuja_waitlist', 'joined');
+            localStorage.setItem('trafficabuja_user', decodedFirstName);
+            localStorage.setItem('trafficabuja_email', decodedEmail);
+        }
+        
+        // Add animation class after page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.success-container').classList.add('loaded');
+        });
+    </script>
+</body>
+</html>
