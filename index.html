@@ -523,46 +523,46 @@
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <form id="launchForm" method="POST" action="https://script.google.com/macros/s/AKfycbz5bvTJM60l_U0ltbl0AlVYMGAGxXQ2VHXdxPICmI4QFdK1at6XPAwO2EeUqumER_Yw/exec">
-  <!-- Honeypot field -->
-  <input type="text" name="_gotcha" style="display: none;">
-  
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-    <div>
-      <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div>
-      <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div style="grid-column: span 2;">
-      <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div style="grid-column: span 2;">
-      <input type="tel" name="phone" placeholder="Phone Number" style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div style="grid-column: span 2;">
-      <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
-        <option value="">Expected Attendance *</option>
-        <option value="company">Company On-Site</option>
-        <option value="late">Will be late</option>
-        <option value="arrival">Arrival upon completion</option>
-        <option value="cannot">Cannot be present</option>
-        <option value="delegation">Full delegation</option>
-      </select>
-    </div>
-    
-    <!-- Hidden field for off-hours detection -->
-    <input type="hidden" name="off_hours" id="offHoursField" value="no">
-  </div>
-  
-  <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
-    Join Waitlist
-  </button>
-</form>
+            <form id="launchForm" method="POST" action="https://script.google.com/macros/s/AKfycbxvFYPoYj58XzP1XRBZxHwmsFnAvQk4Ej1wxFm5p2StQ_mrwWa7A54BMEnqEzYnlBM1/exec">
+              <!-- Honeypot field -->
+              <input type="text" name="_gotcha" style="display: none;">
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <div>
+                  <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div>
+                  <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <input type="tel" name="phone" placeholder="Phone Number" style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
+                    <option value="">Expected Attendance *</option>
+                    <option value="company">Company On-Site</option>
+                    <option value="late">Will be late</option>
+                    <option value="arrival">Arrival upon completion</option>
+                    <option value="cannot">Cannot be present</option>
+                    <option value="delegation">Full delegation</option>
+                  </select>
+                </div>
+                
+                <!-- Hidden field for off-hours detection -->
+                <input type="hidden" name="off_hours" id="offHoursField" value="no">
+              </div>
+              
+              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
+                Join Waitlist
+              </button>
+            </form>
             
             <p style="font-size: 13px; color: #888; margin-top: 15px;">We respect your privacy. No spam, unsubscribe anytime.</p>
             
@@ -689,28 +689,75 @@
       }
     }
     
-    // Form Submission - NEW VERSION (No CORS issues)
-document.getElementById('launchForm').addEventListener('submit', function(e) {
-  // Set off-hours flag
-  const now = new Date();
-  const hour = now.getHours();
-  const isOffHours = (hour >= 21 || hour < 6);
-  
-  // Update the hidden field
-  const offHoursField = document.getElementById('offHoursField');
-  if (offHoursField) {
-    offHoursField.value = isOffHours ? 'yes' : 'no';
-  }
-  
-  // Show loading state
-  const submitBtn = document.getElementById('submitBtn');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Redirecting...';
-  
-  // Form will submit normally to Google Script page
-  // No need to prevent default or use fetch()
-  // The form will redirect to Google Script with all data
-});
+    // FIXED Form Submission Handler
+    document.getElementById('launchForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form submission
+      
+      // Set off-hours flag
+      const now = new Date();
+      const hour = now.getHours();
+      const isOffHours = (hour >= 21 || hour < 6);
+      
+      // Update the hidden field
+      const offHoursField = document.getElementById('offHoursField');
+      if (offHoursField) {
+        offHoursField.value = isOffHours ? 'yes' : 'no';
+      }
+      
+      // Show loading state
+      const submitBtn = document.getElementById('submitBtn');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+      
+      // Show loading message
+      const messageDiv = document.getElementById('formMessage');
+      messageDiv.innerHTML = `
+        <div class="success-message">
+          <i class="fas fa-spinner fa-spin"></i> Submitting your information...
+        </div>
+      `;
+      
+      // Submit via fetch with timeout
+      const formData = new FormData(this);
+      
+      fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      })
+      .then(() => {
+        // Show success message
+        messageDiv.innerHTML = `
+          <div class="success-message">
+            <strong>✅ Success!</strong> You've been added to the waitlist. 
+            You will be redirected to a confirmation page...
+          </div>
+        `;
+        
+        // Reset form
+        this.reset();
+        
+        // Submit the form normally (to show Google Apps Script page)
+        setTimeout(() => {
+          this.submit();
+        }, 2000);
+      })
+      .catch(error => {
+        // Fallback: Submit the old-fashioned way
+        console.log('Using form submission fallback');
+        messageDiv.innerHTML = `
+          <div class="success-message">
+            <strong>⏳ Processing...</strong> Redirecting to submission page...
+          </div>
+        `;
+        
+        // Submit form normally
+        setTimeout(() => {
+          this.submit();
+        }, 1500);
+      });
+    });
     
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
