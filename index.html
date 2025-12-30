@@ -545,14 +545,14 @@
                 </div>
                 
                 <div style="grid-column: span 2;">
-  <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
-    <option value="" disabled selected hidden>Service Type *</option>
-    <option value="company">Company On-Site</option>
-    <option value="late">Arrival Will Be Delayed</option>
-    <option value="cannot">Can’t Be Present</option>
-    <option value="delegation">Orchestrate an Experience (₦999,999 Minimum Threshold)</option>
-  </select>
-</div>
+                  <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
+                    <option value="" disabled selected hidden>Service Type *</option>
+                    <option value="company">Company On-Site</option>
+                    <option value="late">Arrival Will Be Delayed</option>
+                    <option value="cannot">Can't Be Present</option>
+                    <option value="delegation">Orchestrate an Experience (₦999,999 Minimum Threshold)</option>
+                  </select>
+                </div>
                 
                 <!-- Hidden field for off-hours detection -->
                 <input type="hidden" name="off_hours" id="offHoursField" value="no">
@@ -688,10 +688,8 @@
       }
     }
     
-    // FIXED Form Submission Handler
+    // SIMPLE Form Submission Handler - LET FORM SUBMIT NATURALLY
     document.getElementById('launchForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent default form submission
-      
       // Set off-hours flag
       const now = new Date();
       const hour = now.getHours();
@@ -705,11 +703,10 @@
       
       // Show loading state
       const submitBtn = document.getElementById('submitBtn');
-      const originalText = submitBtn.textContent;
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Processing...';
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
       
-      // Show loading message
+      // Show message
       const messageDiv = document.getElementById('formMessage');
       messageDiv.innerHTML = `
         <div class="success-message">
@@ -717,45 +714,9 @@
         </div>
       `;
       
-      // Submit via fetch with timeout
-      const formData = new FormData(this);
-      
-      fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors'
-      })
-      .then(() => {
-        // Show success message
-        messageDiv.innerHTML = `
-          <div class="success-message">
-            <strong>✅ Success!</strong> You've been added to the waitlist. 
-            You will be redirected to a confirmation page...
-          </div>
-        `;
-        
-        // Reset form
-        this.reset();
-        
-        // Submit the form normally (to show Google Apps Script page)
-        setTimeout(() => {
-          this.submit();
-        }, 2000);
-      })
-      .catch(error => {
-        // Fallback: Submit the old-fashioned way
-        console.log('Using form submission fallback');
-        messageDiv.innerHTML = `
-          <div class="success-message">
-            <strong>⏳ Processing...</strong> Redirecting to submission page...
-          </div>
-        `;
-        
-        // Submit form normally
-        setTimeout(() => {
-          this.submit();
-        }, 1500);
-      });
+      // Let form submit naturally to Google Apps Script
+      // Form will redirect to Google Apps Script success page
+      // No need to prevent default or use fetch
     });
     
     // Initialize
