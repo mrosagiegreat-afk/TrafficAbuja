@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- CRITICAL FIX: Proper viewport to prevent zoom/messy mobile display -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <title>TrafficAbuja | Coming Soon</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,14 +11,14 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-text-size-adjust: 100%; /* Prevent font scaling on iOS */
+      -webkit-text-size-adjust: 100%;
       -moz-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
     }
 
     html {
-      font-size: 16px; /* Fixed base size */
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      font-size: 16px;
+      overflow-x: hidden;
     }
 
     body {
@@ -30,7 +29,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
-      touch-action: manipulation; /* Better touch response */
+      touch-action: manipulation;
     }
 
     .container {
@@ -40,7 +39,7 @@
       padding: 0 20px;
     }
 
-    /* Header - SIMPLIFIED navigation */
+    /* Header */
     .header {
       position: fixed;
       top: 0;
@@ -74,7 +73,7 @@
       color: #666;
     }
 
-    /* Navigation - ONLY 2 ITEMS as requested */
+    /* Navigation */
     .nav {
       display: flex;
       gap: 30px;
@@ -94,7 +93,7 @@
       color: #000;
     }
 
-    /* Mobile Menu Button - HIDDEN on desktop */
+    /* Mobile Menu Button */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -167,13 +166,13 @@
       font-size: 15px;
     }
 
-    /* FIXED: Contact Section - NO BOX, NO BORDER, NO OUTLINE */
+    /* Contact Section */
     .contact-section {
-      padding: 0; /* REMOVED padding */
-      margin: 0; /* REMOVED margin */
-      background: transparent !important; /* FORCED transparent */
-      border: none !important; /* FORCED no border */
-      box-shadow: none !important; /* FORCED no shadow */
+      padding: 0;
+      margin: 0;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
     .contact-title {
@@ -332,11 +331,8 @@
       font-size: 14px;
     }
 
-    /* =============================== */
-    /* RESPONSIVE DESIGN - FIXED MOBILE */
-    /* =============================== */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-      /* Force proper mobile rendering */
       html {
         font-size: 15px;
       }
@@ -345,12 +341,10 @@
         padding: 0 15px;
       }
       
-      /* Mobile menu button */
       .mobile-menu-btn {
         display: block;
       }
       
-      /* Navigation hidden on mobile */
       .nav {
         position: fixed;
         top: 0;
@@ -383,7 +377,6 @@
         border-bottom: none;
       }
       
-      /* Overlay */
       .nav-overlay {
         display: none;
         position: fixed;
@@ -399,11 +392,10 @@
         display: block;
       }
       
-      /* Hero adjustments */
       .hero {
         padding-top: 120px;
         padding-bottom: 40px;
-        min-height: auto; /* Fix for mobile height */
+        min-height: auto;
       }
       
       .hero-grid {
@@ -420,14 +412,13 @@
         padding: 25px;
       }
       
-      /* Contact section mobile adjustments */
       .contact-section {
         padding: 0 !important;
         margin: 0 !important;
       }
       
       .contact-item {
-        flex-direction: row; /* Keep side-by-side on mobile */
+        flex-direction: row;
         align-items: center;
       }
       
@@ -467,7 +458,6 @@
       }
     }
 
-    /* Tablet specific */
     @media (min-width: 769px) and (max-width: 1024px) {
       .hero-grid {
         gap: 40px;
@@ -496,11 +486,10 @@
           <i class="fas fa-bars"></i>
         </button>
         
-        <!-- NAVIGATION: Only 2 items as requested -->
+        <!-- Navigation -->
         <nav class="nav" id="mainNav">
           <a href="inventory.html">Purchased Inventory/Hired Network</a>
           <a href="retainership.html">Retainership</a>
-          <!-- Privacy Policy REMOVED from nav (only in footer) -->
         </nav>
       </div>
     </div>
@@ -523,7 +512,8 @@
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <form id="launchForm" method="GET" action="https://script.google.com/macros/s/AKfycbxnmGFDOxutYOXO6B_UpVbfRBZKd5hnTh02ttglF3GX7HgtzjoupJ91e7pIoZju8u23/exec">
+            <!-- FORM WITH NO JAVASCRIPT HANDLER - SUBMITS DIRECTLY -->
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbypKGec_V0cVANRP0-exURWJhrSjyh5efl_UAFcRrBgiU-k0w7UJ0JvYWGlxXuluP_v/exec">
               <!-- Honeypot field -->
               <input type="text" name="_gotcha" style="display: none;">
               
@@ -541,7 +531,7 @@
                 </div>
                 
                 <div style="grid-column: span 2;">
-                  <input type="tel" name="phone" placeholder="Phone Number  *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                  <input type="tel" name="phone" placeholder="Phone Number *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
                 </div>
                 
                 <div style="grid-column: span 2;">
@@ -558,19 +548,16 @@
                 <input type="hidden" name="off_hours" id="offHoursField" value="no">
               </div>
               
-              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
+              <button type="submit" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
                 Join Waitlist
               </button>
             </form>
             
             <p style="font-size: 13px; color: #888; margin-top: 15px;">We respect your privacy. No spam, unsubscribe anytime.</p>
-            
-            <!-- Message container -->
-            <div id="formMessage"></div>
           </div>
         </div>
         
-        <!-- Right Column: Contact Info - NO BOX, NO BORDER -->
+        <!-- Right Column: Contact Info -->
         <div class="contact-section">
           <h2 class="contact-title">Contact Information</h2>
           <p class="contact-subtitle">Get in touch with us through any of these channels</p>
@@ -637,7 +624,6 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        <!-- Privacy Policy ONLY in footer (not in navigation) -->
         <div class="footer-links">
           <a href="privacy.html">Privacy Policy</a>
         </div>
@@ -648,8 +634,9 @@
     </div>
   </footer>
 
+  <!-- MINIMAL JAVASCRIPT - ONLY FOR MOBILE MENU & OFF-HOURS BANNER -->
   <script>
-    // Mobile Menu Functionality
+    // Mobile Menu Functionality ONLY
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mainNav = document.getElementById('mainNav');
     const navOverlay = document.getElementById('navOverlay');
@@ -669,7 +656,7 @@
       mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
     });
     
-    // Off-Hours Detection
+    // Off-Hours Banner
     function checkBusinessHours() {
       const now = new Date();
       const hour = now.getHours();
@@ -688,42 +675,24 @@
       }
     }
     
-    // SIMPLE Form Submission Handler - LET FORM SUBMIT NATURALLY
-    document.getElementById('launchForm').addEventListener('submit', function(e) {
-      // Set off-hours flag
+    // Set off-hours field on page load
+    function setOffHoursField() {
       const now = new Date();
       const hour = now.getHours();
       const isOffHours = (hour >= 21 || hour < 6);
-      
-      // Update the hidden field
       const offHoursField = document.getElementById('offHoursField');
+      
       if (offHoursField) {
         offHoursField.value = isOffHours ? 'yes' : 'no';
       }
-      
-      // Show loading state
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-      
-      // Show message
-      const messageDiv = document.getElementById('formMessage');
-      messageDiv.innerHTML = `
-        <div class="success-message">
-          <i class="fas fa-spinner fa-spin"></i> Submitting your information...
-        </div>
-      `;
-      
-      // Let form submit naturally to Google Apps Script
-      // Form will redirect to Google Apps Script success page
-      // No need to prevent default or use fetch
-    });
+    }
     
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', function() {
       setupOffHoursBanner();
+      setOffHoursField();
       
-      // Update banner text based on time
+      // Update banner text
       const isOffHours = checkBusinessHours();
       const bannerText = document.getElementById('offHoursText');
       if (isOffHours) {
@@ -733,4 +702,3 @@
   </script>
 </body>
 </html>
-
