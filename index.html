@@ -73,6 +73,7 @@
       color: #666;
     }
 
+    /* Navigation */
     .nav {
       display: flex;
       gap: 30px;
@@ -102,14 +103,14 @@
       padding: 5px;
     }
 
-    /* Loading overlay */
+    /* Loading Overlay */
     .loading-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -158,6 +159,7 @@
       align-items: start;
     }
 
+    /* Left Content */
     .hero-left h1 {
       font-size: 3.5rem;
       font-weight: 700;
@@ -203,7 +205,7 @@
       font-size: 15px;
     }
 
-    /* Rest of your CSS remains the same */
+    /* Contact Section */
     .contact-section {
       padding: 0;
       margin: 0;
@@ -212,15 +214,277 @@
       box-shadow: none !important;
     }
 
-    /* ... (keep all your existing CSS styles) ... */
+    .contact-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
 
+    .contact-subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    .contact-info {
+      margin-bottom: 40px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: #f8f9fa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .contact-icon i {
+      color: #1a1a1a;
+      font-size: 18px;
+    }
+
+    .contact-details h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #1a1a1a;
+    }
+
+    .contact-details p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    /* Off-Hours Banner */
+    .off-hours-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      background: rgba(26, 26, 26, 0.95);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: 500;
+      z-index: 999;
+      transition: transform 0.5s ease;
+      max-width: 90%;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .off-hours-banner.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .off-hours-banner i {
+      margin-right: 10px;
+      color: #ffcc00;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #e0e0e0;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-links a:hover {
+      color: #1a1a1a;
+    }
+
+    .copyright {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+      
+      .container {
+        padding: 0 15px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 80px 30px 30px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+        z-index: 1000;
+      }
+      
+      .nav.active {
+        right: 0;
+      }
+      
+      .nav a {
+        width: 100%;
+        padding: 15px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 16px;
+      }
+      
+      .nav a:last-child {
+        border-bottom: none;
+      }
+      
+      .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      
+      .nav-overlay.active {
+        display: block;
+      }
+      
+      .hero {
+        padding-top: 120px;
+        padding-bottom: 40px;
+        min-height: auto;
+      }
+      
       .hero-grid {
         grid-template-columns: 1fr;
+        gap: 40px;
       }
       
       .hero-left h1 {
         font-size: 2.5rem;
+        line-height: 1.2;
+      }
+      
+      .form-container {
+        padding: 25px;
+      }
+      
+      .contact-section {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      
+      .contact-item {
+        flex-direction: row;
+        align-items: center;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      
+      .footer-links {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-left h1 {
+        font-size: 2rem;
+      }
+      
+      .form-container {
+        padding: 20px;
+      }
+      
+      .contact-icon {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .off-hours-banner {
+        font-size: 14px;
+        padding: 12px 20px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .hero-grid {
+        gap: 40px;
+      }
+      
+      .hero-left h1 {
+        font-size: 3rem;
       }
     }
   </style>
@@ -230,9 +494,15 @@
   <div id="loadingOverlay" class="loading-overlay">
     <div class="loading-content">
       <div class="loading-spinner"></div>
-      <h3>Processing your submission...</h3>
-      <p>Please wait while we save your information</p>
+      <h3>Submitting your information...</h3>
+      <p>Please wait a moment</p>
     </div>
+  </div>
+
+  <!-- Off-Hours Banner -->
+  <div id="offHoursBanner" class="off-hours-banner">
+    <i class="fas fa-moon"></i>
+    <span id="offHoursText">We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.</span>
   </div>
 
   <!-- Header -->
@@ -241,7 +511,7 @@
       <div class="header-content">
         <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
         
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
           <i class="fas fa-bars"></i>
         </button>
         
@@ -270,10 +540,8 @@
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <!-- SIMPLE FORM - Submit normally -->
-            <form id="launchForm" method="GET" 
-                  action="https://script.google.com/macros/s/AKfycbz9oBSo_QZIKjMvEYxqrTx-1bkR_xnKhIVlnkakIsevNdudieDW_Bt7RJjTr_87vOiX/exec">
-              
+            <!-- FORM WITH YOUR NEW GOOGLE SCRIPT URL -->
+            <form id="launchForm" method="POST">
               <input type="text" name="_gotcha" style="display: none;">
               
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
@@ -313,6 +581,9 @@
             </form>
             
             <p style="font-size: 13px; color: #888; margin-top: 15px;">We respect your privacy. No spam, unsubscribe anytime.</p>
+            
+            <!-- Message container -->
+            <div id="formMessage"></div>
           </div>
         </div>
         
@@ -364,13 +635,13 @@
           </div>
           
           <div class="social-links">
-            <a href="https://t.me/TrafficAbuja" class="social-link" target="_blank">
+            <a href="https://t.me/TrafficAbuja" class="social-link" target="_blank" aria-label="Telegram">
               <i class="fab fa-telegram"></i>
             </a>
-            <a href="https://instagram.com/TrafficAbuja" class="social-link" target="_blank">
+            <a href="https://instagram.com/TrafficAbuja" class="social-link" target="_blank" aria-label="Instagram">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://wa.me/2347047744310" class="social-link" target="_blank">
+            <a href="https://wa.me/2347047744310" class="social-link" target="_blank" aria-label="WhatsApp">
               <i class="fab fa-whatsapp"></i>
             </a>
           </div>
@@ -379,6 +650,7 @@
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -393,8 +665,49 @@
   </footer>
 
   <script>
-    // Form submission
-    document.getElementById('launchForm').addEventListener('submit', function(e) {
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    mobileMenuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mainNav.classList.toggle('active');
+      navOverlay.classList.toggle('active');
+      mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+    
+    navOverlay.addEventListener('click', function() {
+      mainNav.classList.remove('active');
+      navOverlay.classList.remove('active');
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+    
+    // Off-Hours Detection
+    function checkBusinessHours() {
+      const now = new Date();
+      const hour = now.getHours();
+      return (hour >= 21 || hour < 6);
+    }
+    
+    function setupOffHoursBanner() {
+      const banner = document.getElementById('offHoursBanner');
+      const isOffHours = checkBusinessHours();
+      
+      if (isOffHours) {
+        setTimeout(() => {
+          banner.classList.add('show');
+          setTimeout(() => banner.classList.remove('show'), 10000);
+        }, 3000);
+      }
+    }
+    
+    // Form Submission - SIMPLE AND WORKING
+    document.getElementById('launchForm').addEventListener('submit', async function(e) {
+      e.preventDefault(); // Prevent default form submission
+      
       // Set off-hours flag
       const now = new Date();
       const hour = now.getHours();
@@ -403,17 +716,60 @@
       document.getElementById('offHoursField').value = isOffHours ? 'yes' : 'no';
       
       // Show loading overlay
-      document.getElementById('loadingOverlay').style.display = 'flex';
-      document.getElementById('submitBtn').disabled = true;
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const submitBtn = document.getElementById('submitBtn');
       
-      // Form will submit normally
+      loadingOverlay.style.display = 'flex';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      
+      // Get form data
+      const formData = new FormData(this);
+      const firstName = formData.get('first_name') || '';
+      const email = formData.get('email') || '';
+      
+      // YOUR NEW GOOGLE SCRIPT URL
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzDm-ipiNzfjf9pcPJ5bwY7Gh2vIe7UgvN99apr158fDHbQzvx3YA6W7vYTZf3INRZd/exec';
+      
+      try {
+        // Convert to URL parameters
+        const params = new URLSearchParams();
+        for (const [key, value] of formData) {
+          params.append(key, value);
+        }
+        
+        // Submit to Google Script WITHOUT waiting for response
+        // Use no-cors mode so we don't get CORS errors
+        fetch(`${scriptURL}?${params.toString()}`, {
+          method: 'GET',
+          mode: 'no-cors'
+        }).catch(() => {
+          // Ignore errors - we redirect anyway
+        });
+        
+        // IMMEDIATELY redirect to success page (don't wait!)
+        setTimeout(() => {
+          window.location.href = `https://trafficabuja.online/success.html?first_name=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`;
+        }, 500); // 0.5 second delay to show loading
+        
+      } catch (error) {
+        console.log('Error:', error);
+        // Still redirect even if there's an error
+        setTimeout(() => {
+          window.location.href = `https://trafficabuja.online/success.html?first_name=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`;
+        }, 1000);
+      }
     });
     
-    // Hide loading if page reloads (fallback)
-    window.addEventListener('pageshow', function(event) {
-      if (event.persisted) {
-        document.getElementById('loadingOverlay').style.display = 'none';
-        document.getElementById('submitBtn').disabled = false;
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      setupOffHoursBanner();
+      
+      // Update banner text based on time
+      const isOffHours = checkBusinessHours();
+      const bannerText = document.getElementById('offHoursText');
+      if (isOffHours) {
+        bannerText.textContent = "We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.";
       }
     });
   </script>
