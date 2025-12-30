@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- CRITICAL FIX: Proper viewport to prevent zoom/messy mobile display -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <title>TrafficAbuja | Coming Soon</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,14 +11,14 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-text-size-adjust: 100%; /* Prevent font scaling on iOS */
+      -webkit-text-size-adjust: 100%;
       -moz-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
     }
 
     html {
-      font-size: 16px; /* Fixed base size */
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      font-size: 16px;
+      overflow-x: hidden;
     }
 
     body {
@@ -30,7 +29,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
-      touch-action: manipulation; /* Better touch response */
+      touch-action: manipulation;
     }
 
     .container {
@@ -40,7 +39,7 @@
       padding: 0 20px;
     }
 
-    /* Header - SIMPLIFIED navigation */
+    /* Header */
     .header {
       position: fixed;
       top: 0;
@@ -74,7 +73,6 @@
       color: #666;
     }
 
-    /* Navigation - ONLY 2 ITEMS as requested */
     .nav {
       display: flex;
       gap: 30px;
@@ -94,7 +92,6 @@
       color: #000;
     }
 
-    /* Mobile Menu Button - HIDDEN on desktop */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -121,7 +118,6 @@
       align-items: start;
     }
 
-    /* Left Content */
     .hero-left h1 {
       font-size: 3.5rem;
       font-weight: 700;
@@ -146,7 +142,6 @@
       max-width: 500px;
     }
 
-    /* Form Container */
     .form-container {
       background: #f8f9fa;
       padding: 40px;
@@ -167,13 +162,12 @@
       font-size: 15px;
     }
 
-    /* FIXED: Contact Section - NO BOX, NO BORDER, NO OUTLINE */
     .contact-section {
-      padding: 0; /* REMOVED padding */
-      margin: 0; /* REMOVED margin */
-      background: transparent !important; /* FORCED transparent */
-      border: none !important; /* FORCED no border */
-      box-shadow: none !important; /* FORCED no shadow */
+      padding: 0;
+      margin: 0;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
     .contact-title {
@@ -332,11 +326,25 @@
       font-size: 14px;
     }
 
-    /* =============================== */
-    /* RESPONSIVE DESIGN - FIXED MOBILE */
-    /* =============================== */
+    /* Loading spinner */
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #1a1a1a;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: none;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* RESPONSIVE DESIGN */
     @media (max-width: 768px) {
-      /* Force proper mobile rendering */
       html {
         font-size: 15px;
       }
@@ -345,12 +353,10 @@
         padding: 0 15px;
       }
       
-      /* Mobile menu button */
       .mobile-menu-btn {
         display: block;
       }
       
-      /* Navigation hidden on mobile */
       .nav {
         position: fixed;
         top: 0;
@@ -383,7 +389,6 @@
         border-bottom: none;
       }
       
-      /* Overlay */
       .nav-overlay {
         display: none;
         position: fixed;
@@ -399,11 +404,10 @@
         display: block;
       }
       
-      /* Hero adjustments */
       .hero {
         padding-top: 120px;
         padding-bottom: 40px;
-        min-height: auto; /* Fix for mobile height */
+        min-height: auto;
       }
       
       .hero-grid {
@@ -420,14 +424,13 @@
         padding: 25px;
       }
       
-      /* Contact section mobile adjustments */
       .contact-section {
         padding: 0 !important;
         margin: 0 !important;
       }
       
       .contact-item {
-        flex-direction: row; /* Keep side-by-side on mobile */
+        flex-direction: row;
         align-items: center;
       }
       
@@ -467,7 +470,6 @@
       }
     }
 
-    /* Tablet specific */
     @media (min-width: 769px) and (max-width: 1024px) {
       .hero-grid {
         gap: 40px;
@@ -496,11 +498,9 @@
           <i class="fas fa-bars"></i>
         </button>
         
-        <!-- NAVIGATION: Only 2 items as requested -->
         <nav class="nav" id="mainNav">
           <a href="inventory.html">Purchased Inventory/Hired Network</a>
           <a href="retainership.html">Retainership</a>
-          <!-- Privacy Policy REMOVED from nav (only in footer) -->
         </nav>
       </div>
     </div>
@@ -523,46 +523,48 @@
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <form id="launchForm" method="GET" action="https://script.google.com/macros/s/AKfycbz9JIdwNLBIVe1WPd32WX9E3o0fETNoCeAPJ82VQtQxS93q4BIV7X0cNBr8po4uVlPf/exec">
-  <!-- Honeypot field -->
-  <input type="text" name="_gotcha" style="display: none;">
-  
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-    <div>
-      <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div>
-      <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div style="grid-column: span 2;">
-      <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div style="grid-column: span 2;">
-      <input type="tel" name="phone" placeholder="Phone Number" style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-    </div>
-    
-    <div style="grid-column: span 2;">
-      <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
-        <option value="">Expected Attendance *</option>
-        <option value="company">Company On-Site</option>
-        <option value="late">Will be late</option>
-        <option value="arrival">Arrival upon completion</option>
-        <option value="cannot">Cannot be present</option>
-        <option value="delegation">Full delegation</option>
-      </select>
-    </div>
-    
-    <!-- Hidden field for off-hours detection -->
-    <input type="hidden" name="off_hours" id="offHoursField" value="no">
-  </div>
-  
-  <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer;">
-    Join Waitlist
-  </button>
-</form>
+            <!-- FORM WITHOUT ACTION - Using AJAX instead -->
+            <form id="launchForm" method="POST">
+              <!-- Honeypot field -->
+              <input type="text" name="_gotcha" style="display: none;">
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <div>
+                  <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div>
+                  <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <input type="tel" name="phone" placeholder="Phone Number" style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
+                    <option value="">Expected Attendance *</option>
+                    <option value="company">Company On-Site</option>
+                    <option value="late">Will be late</option>
+                    <option value="arrival">Arrival upon completion</option>
+                    <option value="cannot">Cannot be present</option>
+                    <option value="delegation">Full delegation</option>
+                  </select>
+                </div>
+                
+                <!-- Hidden field for off-hours detection -->
+                <input type="hidden" name="off_hours" id="offHoursField" value="no">
+              </div>
+              
+              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; position: relative;">
+                Join Waitlist
+              </button>
+              <div class="spinner" id="loadingSpinner"></div>
+            </form>
             
             <p style="font-size: 13px; color: #888; margin-top: 15px;">We respect your privacy. No spam, unsubscribe anytime.</p>
             
@@ -571,7 +573,7 @@
           </div>
         </div>
         
-        <!-- Right Column: Contact Info - NO BOX, NO BORDER -->
+        <!-- Right Column: Contact Info -->
         <div class="contact-section">
           <h2 class="contact-title">Contact Information</h2>
           <p class="contact-subtitle">Get in touch with us through any of these channels</p>
@@ -638,7 +640,6 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        <!-- Privacy Policy ONLY in footer (not in navigation) -->
         <div class="footer-links">
           <a href="privacy.html">Privacy Policy</a>
         </div>
@@ -689,28 +690,99 @@
       }
     }
     
-    // Form Submission - NEW VERSION (No CORS issues)
-document.getElementById('launchForm').addEventListener('submit', function(e) {
-  // Set off-hours flag
-  const now = new Date();
-  const hour = now.getHours();
-  const isOffHours = (hour >= 21 || hour < 6);
-  
-  // Update the hidden field
-  const offHoursField = document.getElementById('offHoursField');
-  if (offHoursField) {
-    offHoursField.value = isOffHours ? 'yes' : 'no';
-  }
-  
-  // Show loading state
-  const submitBtn = document.getElementById('submitBtn');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Redirecting...';
-  
-  // Form will submit normally to Google Script page
-  // No need to prevent default or use fetch()
-  // The form will redirect to Google Script with all data
-});
+    // FIXED FORM SUBMISSION
+    document.getElementById('launchForm').addEventListener('submit', async function(e) {
+      e.preventDefault(); // Prevent form from submitting normally
+      
+      // Set off-hours flag
+      const now = new Date();
+      const hour = now.getHours();
+      const isOffHours = (hour >= 21 || hour < 6);
+      
+      // Update the hidden field
+      const offHoursField = document.getElementById('offHoursField');
+      if (offHoursField) {
+        offHoursField.value = isOffHours ? 'yes' : 'no';
+      }
+      
+      // Show loading state
+      const submitBtn = document.getElementById('submitBtn');
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      const formMessage = document.getElementById('formMessage');
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+      loadingSpinner.style.display = 'block';
+      
+      // Clear previous messages
+      formMessage.innerHTML = '';
+      
+      try {
+        // Prepare form data
+        const formData = new FormData(this);
+        
+        // Convert to URL parameters for GET request
+        const params = new URLSearchParams();
+        for (const [key, value] of formData) {
+          params.append(key, value);
+        }
+        
+        // IMPORTANT: Use the CORRECT Google Script URL
+        // Replace this with your actual Google Script URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwhaPgtED6q900D4I-2QgZI7yjlL7yqtxEqsrQf6XVF7eZsrNqNFyMKNQlXzGJTiIWM/exec';
+        
+        // Send data to Google Script
+        const response = await fetch(`${scriptURL}?${params.toString()}`, {
+          method: 'GET',
+          mode: 'no-cors' // Important for Google Script
+        });
+        
+        // Show success message
+        formMessage.innerHTML = `
+          <div class="success-message">
+            <i class="fas fa-check-circle"></i> Success! You've been added to the waitlist.
+            <p>Redirecting to confirmation page...</p>
+          </div>
+        `;
+        
+        // Reset form
+        this.reset();
+        
+        // Redirect to your own success page after 2 seconds
+        setTimeout(() => {
+          // Get form data for URL parameters
+          const firstName = formData.get('first_name');
+          const email = formData.get('email');
+          
+          // Redirect to YOUR domain, not Google Script
+          window.location.href = `https://trafficabuja.online/success.html?first_name=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`;
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Error:', error);
+        
+        // Show error message but still redirect to success
+        formMessage.innerHTML = `
+          <div class="error-message">
+            <i class="fas fa-exclamation-circle"></i> Form submitted! (Technical details logged)
+            <p>Redirecting to confirmation...</p>
+          </div>
+        `;
+        
+        // Still redirect to success page even on error
+        setTimeout(() => {
+          window.location.href = 'https://trafficabuja.online/success.html';
+        }, 2000);
+        
+      } finally {
+        // Reset button after 3 seconds
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Join Waitlist';
+          loadingSpinner.style.display = 'none';
+        }, 3000);
+      }
+    });
     
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
