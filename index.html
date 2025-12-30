@@ -523,7 +523,7 @@
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <form id="launchForm" method="GET" action="https://script.google.com/macros/s/AKfycbz4mOeMgUlDbqMb4w2LfrF8zH9ajpEKmbwXlsVApAjWXWCQXCxhWwqkhUtiMcFcA9bJ/exec">
+            <form id="launchForm" method="GET" action="https://script.google.com/macros/s/AKfycbwGU_uErp_dZSuxBy9lo9OF3FJHwu5V5yz72feHnXVW2aLIfXK-tHpzF5uKFyi9t2JP/exec">
               <!-- Honeypot field -->
               <input type="text" name="_gotcha" style="display: none;">
               
@@ -689,75 +689,37 @@
       }
     }
     
-    // FIXED Form Submission Handler
-    document.getElementById('launchForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent default form submission
-      
-      // Set off-hours flag
-      const now = new Date();
-      const hour = now.getHours();
-      const isOffHours = (hour >= 21 || hour < 6);
-      
-      // Update the hidden field
-      const offHoursField = document.getElementById('offHoursField');
-      if (offHoursField) {
-        offHoursField.value = isOffHours ? 'yes' : 'no';
-      }
-      
-      // Show loading state
-      const submitBtn = document.getElementById('submitBtn');
-      const originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Processing...';
-      
-      // Show loading message
-      const messageDiv = document.getElementById('formMessage');
-      messageDiv.innerHTML = `
-        <div class="success-message">
-          <i class="fas fa-spinner fa-spin"></i> Submitting your information...
-        </div>
-      `;
-      
-      // Submit via fetch with timeout
-      const formData = new FormData(this);
-      
-      fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors'
-      })
-      .then(() => {
-        // Show success message
-        messageDiv.innerHTML = `
-          <div class="success-message">
-            <strong>✅ Success!</strong> You've been added to the waitlist. 
-            You will be redirected to a confirmation page...
-          </div>
-        `;
-        
-        // Reset form
-        this.reset();
-        
-        // Submit the form normally (to show Google Apps Script page)
-        setTimeout(() => {
-          this.submit();
-        }, 2000);
-      })
-      .catch(error => {
-        // Fallback: Submit the old-fashioned way
-        console.log('Using form submission fallback');
-        messageDiv.innerHTML = `
-          <div class="success-message">
-            <strong>⏳ Processing...</strong> Redirecting to submission page...
-          </div>
-        `;
-        
-        // Submit form normally
-        setTimeout(() => {
-          this.submit();
-        }, 1500);
-      });
-    });
+    // SIMPLE & RELIABLE Form Submission Handler
+document.getElementById('launchForm').addEventListener('submit', function(e) {
+  // NO e.preventDefault() - let the form submit normally
+  
+  // Set off-hours flag
+  const now = new Date();
+  const hour = now.getHours();
+  const isOffHours = (hour >= 21 || hour < 6);
+  
+  // Update the hidden field
+  const offHoursField = document.getElementById('offHoursField');
+  if (offHoursField) {
+    offHoursField.value = isOffHours ? 'yes' : 'no';
+  }
+  
+  // Show loading state
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+  
+  // Show a simple loading message
+  const messageDiv = document.getElementById('formMessage');
+  messageDiv.innerHTML = `
+    <div class="success-message" style="background: #f0f9ff; border-color: #0ea5e9; color: #0369a1;">
+      <i class="fas fa-spinner fa-spin"></i> Please wait, submitting your information...
+    </div>
+  `;
+  
+  // THAT'S IT! The form will submit normally to Google Apps Script
+  // The Apps Script will handle the redirect to your success page
+});
     
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
