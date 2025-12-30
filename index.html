@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- CRITICAL FIX: Proper viewport to prevent zoom/messy mobile display -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <title>TrafficAbuja | Coming Soon</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,14 +11,14 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-text-size-adjust: 100%; /* Prevent font scaling on iOS */
+      -webkit-text-size-adjust: 100%;
       -moz-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
     }
 
     html {
-      font-size: 16px; /* Fixed base size */
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      font-size: 16px;
+      overflow-x: hidden;
     }
 
     body {
@@ -30,7 +29,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
-      touch-action: manipulation; /* Better touch response */
+      touch-action: manipulation;
     }
 
     .container {
@@ -40,7 +39,7 @@
       padding: 0 20px;
     }
 
-    /* Header - SIMPLIFIED navigation */
+    /* Header */
     .header {
       position: fixed;
       top: 0;
@@ -74,7 +73,7 @@
       color: #666;
     }
 
-    /* Navigation - ONLY 2 ITEMS as requested */
+    /* Navigation */
     .nav {
       display: flex;
       gap: 30px;
@@ -94,7 +93,6 @@
       color: #000;
     }
 
-    /* Mobile Menu Button - HIDDEN on desktop */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -103,6 +101,43 @@
       color: #1a1a1a;
       cursor: pointer;
       padding: 5px;
+    }
+
+    /* Redirect Overlay - NEW */
+    .redirect-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      display: none;
+    }
+
+    .redirect-content {
+      text-align: center;
+      padding: 40px;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .redirect-spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #1a1a1a;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* Hero Section */
@@ -167,13 +202,13 @@
       font-size: 15px;
     }
 
-    /* FIXED: Contact Section - NO BOX, NO BORDER, NO OUTLINE */
+    /* Contact Section */
     .contact-section {
-      padding: 0; /* REMOVED padding */
-      margin: 0; /* REMOVED margin */
-      background: transparent !important; /* FORCED transparent */
-      border: none !important; /* FORCED no border */
-      box-shadow: none !important; /* FORCED no shadow */
+      padding: 0;
+      margin: 0;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
     .contact-title {
@@ -299,45 +334,6 @@
       border: 1px solid #fecaca;
     }
 
-    /* Loading overlay */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      display: none;
-    }
-
-    .loading-content {
-      background: white;
-      padding: 40px;
-      border-radius: 15px;
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-    }
-
-    .loading-spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #4CAF50;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 20px;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     /* Footer */
     .footer {
       border-top: 1px solid #e0e0e0;
@@ -375,7 +371,6 @@
     /* RESPONSIVE DESIGN - FIXED MOBILE */
     /* =============================== */
     @media (max-width: 768px) {
-      /* Force proper mobile rendering */
       html {
         font-size: 15px;
       }
@@ -384,12 +379,10 @@
         padding: 0 15px;
       }
       
-      /* Mobile menu button */
       .mobile-menu-btn {
         display: block;
       }
       
-      /* Navigation hidden on mobile */
       .nav {
         position: fixed;
         top: 0;
@@ -422,7 +415,6 @@
         border-bottom: none;
       }
       
-      /* Overlay */
       .nav-overlay {
         display: none;
         position: fixed;
@@ -438,11 +430,10 @@
         display: block;
       }
       
-      /* Hero adjustments */
       .hero {
         padding-top: 120px;
         padding-bottom: 40px;
-        min-height: auto; /* Fix for mobile height */
+        min-height: auto;
       }
       
       .hero-grid {
@@ -459,14 +450,13 @@
         padding: 25px;
       }
       
-      /* Contact section mobile adjustments */
       .contact-section {
         padding: 0 !important;
         margin: 0 !important;
       }
       
       .contact-item {
-        flex-direction: row; /* Keep side-by-side on mobile */
+        flex-direction: row;
         align-items: center;
       }
       
@@ -504,9 +494,12 @@
         font-size: 14px;
         padding: 12px 20px;
       }
+      
+      .redirect-content {
+        padding: 30px 20px;
+      }
     }
 
-    /* Tablet specific */
     @media (min-width: 769px) and (max-width: 1024px) {
       .hero-grid {
         gap: 40px;
@@ -519,15 +512,12 @@
   </style>
 </head>
 <body>
-  <!-- Loading Overlay -->
-  <div id="loadingOverlay" class="loading-overlay">
-    <div class="loading-content">
-      <div class="loading-spinner"></div>
+  <!-- Redirect Overlay -->
+  <div id="redirectOverlay" class="redirect-overlay">
+    <div class="redirect-content">
+      <div class="redirect-spinner"></div>
       <h3>Processing your submission...</h3>
-      <p>Saving to database and sending notifications</p>
-      <p style="font-size: 14px; color: #666; margin-top: 20px;">
-        You'll be redirected to the success page in a moment
-      </p>
+      <p>You will be redirected to the success page</p>
     </div>
   </div>
 
@@ -547,11 +537,9 @@
           <i class="fas fa-bars"></i>
         </button>
         
-        <!-- NAVIGATION: Only 2 items as requested -->
         <nav class="nav" id="mainNav">
           <a href="inventory.html">Purchased Inventory/Hired Network</a>
           <a href="retainership.html">Retainership</a>
-          <!-- Privacy Policy REMOVED from nav (only in footer) -->
         </nav>
       </div>
     </div>
@@ -574,8 +562,8 @@
             <h2 class="form-title">Join Waitlist</h2>
             <p class="form-subtitle">Provide your details to be among the first notified.</p>
             
-            <!-- UPDATED FORM with new Google Script URL -->
-            <form id="launchForm" method="GET" action="https://script.google.com/macros/s/AKfycbyiGAtpHkWrX4pOVd7viv7J99h_zerjAJDnOy3X8TKs99nQyH-DjJ-HQOHfhRjwHR7n/exec">
+            <!-- FORM WITH NEW GOOGLE SCRIPT URL -->
+            <form id="launchForm" method="GET">
               <!-- Honeypot field -->
               <input type="text" name="_gotcha" style="display: none;">
               
@@ -623,7 +611,7 @@
           </div>
         </div>
         
-        <!-- Right Column: Contact Info - NO BOX, NO BORDER -->
+        <!-- Right Column: Contact Info -->
         <div class="contact-section">
           <h2 class="contact-title">Contact Information</h2>
           <p class="contact-subtitle">Get in touch with us through any of these channels</p>
@@ -690,7 +678,6 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        <!-- Privacy Policy ONLY in footer (not in navigation) -->
         <div class="footer-links">
           <a href="privacy.html">Privacy Policy</a>
         </div>
@@ -741,8 +728,10 @@
       }
     }
     
-    // Form Submission
+    // Form Submission - NEW VERSION (works with immediate redirect)
     document.getElementById('launchForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form submission
+      
       // Set off-hours flag
       const now = new Date();
       const hour = now.getHours();
@@ -754,23 +743,63 @@
         offHoursField.value = isOffHours ? 'yes' : 'no';
       }
       
-      // Show loading overlay
-      const loadingOverlay = document.getElementById('loadingOverlay');
-      const submitBtn = document.getElementById('submitBtn');
+      // Show redirect overlay IMMEDIATELY
+      const redirectOverlay = document.getElementById('redirectOverlay');
+      redirectOverlay.style.display = 'flex';
       
-      loadingOverlay.style.display = 'flex';
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Processing...';
+      // Get form data
+      const formData = new FormData(this);
+      const firstName = formData.get('first_name') || '';
+      const email = formData.get('email') || '';
       
-      // Form will submit normally to Google Script page
-      // The loading overlay will show until redirect happens
+      // Build the Google Script URL
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbz9oBSo_QZIKjMvEYxqrTx-1bkR_xnKhIVlnkakIsevNdudieDW_Bt7RJjTr_87vOiX/exec';
       
-      // Hide loading after 10 seconds (fallback)
+      // Create URL parameters
+      const params = new URLSearchParams();
+      for (const [key, value] of formData) {
+        params.append(key, value);
+      }
+      
+      // Create hidden iframe to submit to Google Script
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.name = 'googleScriptFrame';
+      iframe.id = 'googleScriptFrame';
+      document.body.appendChild(iframe);
+      
+      // Create a form that targets the iframe
+      const hiddenForm = document.createElement('form');
+      hiddenForm.method = 'GET';
+      hiddenForm.action = scriptURL;
+      hiddenForm.target = 'googleScriptFrame';
+      hiddenForm.style.display = 'none';
+      
+      // Add all form fields to hidden form
+      for (const [key, value] of formData) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        hiddenForm.appendChild(input);
+      }
+      
+      document.body.appendChild(hiddenForm);
+      
+      // Submit the form to Google Script
+      hiddenForm.submit();
+      
+      // After submitting to Google Script, redirect to success page
+      // Google Script will also redirect, but this ensures it happens
       setTimeout(() => {
-        loadingOverlay.style.display = 'none';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Join Waitlist';
-      }, 10000);
+        window.location.href = `https://trafficabuja.online/success.html?first_name=${encodeURIComponent(firstName)}&email=${encodeURIComponent(email)}`;
+      }, 1000); // 1 second delay
+      
+      // Clean up
+      setTimeout(() => {
+        if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+        if (hiddenForm.parentNode) hiddenForm.parentNode.removeChild(hiddenForm);
+      }, 5000);
     });
     
     // Initialize
@@ -782,22 +811,6 @@
       const bannerText = document.getElementById('offHoursText');
       if (isOffHours) {
         bannerText.textContent = "We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.";
-      }
-      
-      // Check if we're coming back from success page
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('success') === 'true') {
-        // Show success message if redirected back from success page
-        const formMessage = document.getElementById('formMessage');
-        formMessage.innerHTML = `
-          <div class="success-message">
-            <i class="fas fa-check-circle"></i> Successfully added to waitlist!
-            <p>Thank you for joining. You'll be notified when we launch.</p>
-          </div>
-        `;
-        
-        // Clear the success parameter from URL
-        window.history.replaceState({}, document.title, window.location.pathname);
       }
     });
   </script>
