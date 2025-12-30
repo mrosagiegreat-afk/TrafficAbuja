@@ -517,6 +517,35 @@
         window.location.href = 'https://trafficabuja.online';
       }
     }, 1000);
+
+    // In success.html, add this at the end of the script section:
+
+// Check if we have pending submission data
+const pendingData = localStorage.getItem('pending_submission');
+if (pendingData) {
+  try {
+    const formData = JSON.parse(pendingData);
+    
+    // Send to Google Script from success page
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxDAWwdiOC9dN1eQKubud5aPoPCaMbcWgYqKQ559ptPwxCPam_rvywrQY_EwvWR5vo/exec';
+    const params = new URLSearchParams(formData).toString();
+    
+    // Send via fetch with no-cors
+    fetch(`${scriptURL}?${params}`, {
+      method: 'GET',
+      mode: 'no-cors'
+    }).catch(() => {
+      // Ignore errors
+    });
+    
+    // Clear the pending data
+    localStorage.removeItem('pending_submission');
+    
+  } catch (e) {
+    console.log('Error processing pending data:', e);
+  }
+}
   </script>
 </body>
 </html>
+
