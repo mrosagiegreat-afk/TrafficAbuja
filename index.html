@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <!-- Cache control to prevent browser caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>TrafficAbuja | Excellence</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & Base - FIXED for mobile */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    html {
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      touch-action: manipulation;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 15px 0;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo sup {
+      font-size: 10px;
+      vertical-align: super;
+      color: #666;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav a {
+      color: #444;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      color: #000;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #1a1a1a;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 100px;
+      padding-bottom: 80px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* Left Content */
+    .hero-left h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .coming-soon {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .hero-left p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 40px;
+      max-width: 500px;
+    }
+
+    /* Form Container */
+    .form-container {
+      background: #f8f9fa;
+      padding: 40px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .form-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .form-subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: 0;
+      margin: 0;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .contact-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .contact-subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    .contact-info {
+      margin-bottom: 40px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: #f8f9fa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .contact-icon i {
+      color: #1a1a1a;
+      font-size: 18px;
+    }
+
+    .contact-details h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #1a1a1a;
+    }
+
+    .contact-details p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    /* Off-Hours Banner */
+    .off-hours-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      background: rgba(26, 26, 26, 0.95);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: 500;
+      z-index: 999;
+      transition: transform 0.5s ease;
+      max-width: 90%;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .off-hours-banner.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .off-hours-banner i {
+      margin-right: 10px;
+      color: #ffcc00;
+    }
+
+    /* Success/Error Messages */
+    .success-message {
+      background: #f0f9f0;
+      color: #2e7d32;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 20px;
+      border: 1px solid #c8e6c9;
+    }
+
+    .error-message {
+      background: #fff5f5;
+      color: #dc2626;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 20px;
+      border: 1px solid #fecaca;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #e0e0e0;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-links a:hover {
+      color: #1a1a1a;
+    }
+
+    .copyright {
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+      
+      .container {
+        padding: 0 15px;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 80px 30px 30px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+        z-index: 1000;
+      }
+      
+      .nav.active {
+        right: 0;
+      }
+      
+      .nav a {
+        width: 100%;
+        padding: 15px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 16px;
+      }
+      
+      .nav a:last-child {
+        border-bottom: none;
+      }
+      
+      .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      
+      .nav-overlay.active {
+        display: block;
+      }
+      
+      .hero {
+        padding-top: 120px;
+        padding-bottom: 40px;
+        min-height: auto;
+      }
+      
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .hero-left h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+      }
+      
+      .form-container {
+        padding: 25px;
+      }
+      
+      .contact-section {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      
+      .contact-item {
+        flex-direction: row;
+        align-items: center;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      
+      .footer-links {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-left h1 {
+        font-size: 2rem;
+      }
+      
+      .form-container {
+        padding: 20px;
+      }
+      
+      .contact-icon {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .off-hours-banner {
+        font-size: 14px;
+        padding: 12px 20px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .hero-grid {
+        gap: 40px;
+      }
+      
+      .hero-left h1 {
+        font-size: 3rem;
+      }
+    }
+
+    /* Spinner Animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .coming-soon {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  /* Optional festive additions: */
+  color: #d4af37; /* Gold color for celebration */
+  text-transform: uppercase;
+}
+  </style>
+</head>
+<body>
+  <!-- Off-Hours Banner -->
+  <div id="offHoursBanner" class="off-hours-banner">
+    <i class="fas fa-moon"></i>
+    <span id="offHoursText">We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Navigation -->
+        <nav class="nav" id="mainNav">
+          <a href="inventory.html">Purchased Inventory/Hired Network</a>
+          <a href="retainership.html">Retainership</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left Column: Form -->
+        <div class="hero-left">
+          <span class="coming-soon">CHEERS TO 2026. <br> HAPPY NEW YEAR! </span>
+          <h1>YOU'RE NOT LATE;<br>IF THAT HELPS.</h1>
+          <p> Care for what you would rather not attend to, while you focus on your priorities </p>
+          
+          <!-- OPTIMIZED FORM CONTAINER -->
+          <div class="form-container">
+            <h2 class="form-title"> i.e., Maitama, Asokoro, and surrounding areas.</h2>
+            <p class="form-subtitle">Set things in motion. Make a request.</p>
+            
+            <!-- FORM -->
+            <form method="POST" action="https://script.google.com/macros/s/AKfycby5wHYLm1352Ovu5-EJCJ7p9YSf3gMN4_n6CBZs8ajfL2-ZaQuJxEMdM5-DCSKHKaDD/exec" id="waitlistForm">
+              <!-- Honeypot field -->
+              <input type="text" name="_gotcha" style="display: none;">
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <div>
+                  <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div>
+                  <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <input type="tel" name="phone" placeholder="Phone Number *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                </div>
+                
+                <div style="grid-column: span 2;">
+                  <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
+                    <option value="" disabled selected hidden>Service Type *</option>
+                    <option value="trafficabuja_live">TrafficAbuja LIVE</option>
+                    <option value="trafficabuja_at_it_first">TrafficAbuja AT-IT-FIRST</option>
+                    <option value="experience_orchestration">Experience an Orchestration</option>
+                    <option value="naming_rights_perpetuity">Naming Rights & Perpetuity (i.e., monuments only)</option>
+                  </select>
+                </div>
+                
+                <!-- Hidden field for off-hours detection -->
+                <input type="hidden" name="off_hours" id="offHoursField" value="no">
+              </div>
+              
+              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; position: relative;">
+                <span id="btnText">CLICK</span>
+                <div id="btnSpinner" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                  <div style="width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite;"></div>
+                </div>
+              </button>
+            </form>
+            
+            <p style="font-size: 13px; color: #888; margin-top: 15px;">In some cases, response times may exceed the standard 9-minute window.</p>
+            
+            <!-- Loading Overlay (hidden by default) -->
+            <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+              <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #1a1a1a; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+              <p style="margin-top: 20px; color: #666; font-size: 16px;">Processing your submission...</p>
+            </div>
+          </div>
+          <!-- END FORM CONTAINER -->
+        </div>
+        
+        <!-- Right Column: Contact Info -->
+        <div class="contact-section">
+          <h2 class="contact-title">Contact Information</h2>
+          <p class="contact-subtitle">Get in touch with us through any of these channels</p>
+          
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Address</h4>
+                <p>13, Michael Jackson Cresent<br>Off Tai Solarin Avenue, Gwarinpa<br>F.C.T., Nigeria</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Customer Service</h4>
+                <p>+234 7047744310</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-telegram"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Telegram</h4>
+                <p>@TrafficAbuja</p>
+              </div>
+            </div>
+            
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-instagram"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Instagram</h4>
+                <p>@TrafficAbuja</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="https://t.me/TrafficAbuja" class="social-link" target="_blank" aria-label="Telegram">
+              <i class="fab fa-telegram"></i>
+            </a>
+            <a href="https://instagram.com/TrafficAbuja" class="social-link" target="_blank" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/2347047744310" class="social-link" target="_blank" aria-label="WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="copyright">
+          © 2026 TrafficAbuja. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Mobile Menu Functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    mobileMenuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mainNav.classList.toggle('active');
+      navOverlay.classList.toggle('active');
+      mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+    
+    navOverlay.addEventListener('click', function() {
+      mainNav.classList.remove('active');
+      navOverlay.classList.remove('active');
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+    
+    // Off-Hours Banner
+    function checkBusinessHours() {
+      const now = new Date();
+      const hour = now.getHours();
+      return (hour >= 21 || hour < 6);
+    }
+    
+    function setupOffHoursBanner() {
+      const banner = document.getElementById('offHoursBanner');
+      const isOffHours = checkBusinessHours();
+      
+      if (isOffHours) {
+        setTimeout(() => {
+          banner.classList.add('show');
+          setTimeout(() => banner.classList.remove('show'), 10000);
+        }, 3000);
+      }
+    }
+    
+    // Set off-hours field on page load
+    function setOffHoursField() {
+      const now = new Date();
+      const hour = now.getHours();
+      const isOffHours = (hour >= 21 || hour < 6);
+      const offHoursField = document.getElementById('offHoursField');
+      
+      if (offHoursField) {
+        offHoursField.value = isOffHours ? 'yes' : 'no';
+      }
+    }
+    
+    // Form submission loading state
+    document.addEventListener('DOMContentLoaded', function() {
+      setupOffHoursBanner();
+      setOffHoursField();
+      
+      // Update banner text
+      const isOffHours = checkBusinessHours();
+      const bannerText = document.getElementById('offHoursText');
+      if (isOffHours) {
+        bannerText.textContent = "We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.";
+      }
+      
+      // Form loading state
+      const form = document.getElementById('waitlistForm');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const btnSpinner = document.getElementById('btnSpinner');
+      
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          // Set off-hours field
+          const now = new Date();
+          const hour = now.getHours();
+          const isOffHours = (hour >= 21 || hour < 6);
+          document.getElementById('offHoursField').value = isOffHours ? 'yes' : 'no';
+          
+          // Show loading state
+          btnText.style.opacity = '0';
+          btnSpinner.style.display = 'block';
+          submitBtn.disabled = true;
+          
+          // Show overlay after 500ms (if still loading)
+          setTimeout(() => {
+            if (submitBtn.disabled) { // Still loading
+              loadingOverlay.style.display = 'flex';
+            }
+          }, 500);
+        });
+      }
+      
+      // Hide overlay if page becomes visible again
+      document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible' && loadingOverlay) {
+          loadingOverlay.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+
