@@ -134,13 +134,16 @@
       letter-spacing: -1px;
     }
 
-    .coming-soon {
+    /* Live Date Display */
+    .live-date {
       display: inline-block;
       font-size: 14px;
       font-weight: 600;
       color: #666;
       margin-bottom: 20px;
       letter-spacing: 1px;
+      color: #d4af37; /* Gold color for celebration */
+      text-transform: uppercase;
     }
 
     .hero-left p {
@@ -535,6 +538,10 @@
         font-size: 14px;
         padding: 12px 20px;
       }
+      
+      .live-date {
+        font-size: 13px;
+      }
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
@@ -564,18 +571,6 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    .coming-soon {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #666;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-  /* Optional festive additions: */
-  color: #d4af37; /* Gold color for celebration */
-  text-transform: uppercase;
-}
   </style>
 </head>
 <body>
@@ -613,84 +608,83 @@
       <div class="hero-grid">
         <!-- Left Column: Form -->
         <div class="hero-left">
-          <span class="coming-soon">CHEERS TO 2026.</span>
+          <!-- Live Date Display -->
+          <span class="live-date" id="liveDate">Loading date...</span>
+          
           <h1>NOT TOO FAR,<br>NOT TOO LATE,<br>NEVER SOLO.</h1>
           <p> i.e., Maitama, Asokoro, and surrounding areas fall within service range. </p>
           
-          <!-- OPTIMIZED FORM CONTAINER -->
-            <!-- Statistics Section - CLEAN VERSION -->
-            <div class="stats-section">
-              <div class="stat-item">
-                <div class="stat-percentage">99%</div>
-                <div class="stat-label">Personalization</div>
-              </div>
-              
-              <div class="stat-item">
-                <div class="stat-percentage">99%</div>
-                <div class="stat-label">Data Privacy</div>
-              </div>
-              
-              <div class="stat-item">
-                <div class="stat-percentage">100%</div>
-                <div class="stat-label">Adaptive Service</div>
-              </div>
+          <!-- Statistics Section - CLEAN VERSION -->
+          <div class="stats-section">
+            <div class="stat-item">
+              <div class="stat-percentage">99%</div>
+              <div class="stat-label">Personalization</div>
             </div>
             
-            <p class="form-subtitle">Set things in motion. Make a request.</p>
+            <div class="stat-item">
+              <div class="stat-percentage">99%</div>
+              <div class="stat-label">Data Privacy</div>
+            </div>
             
-            <!-- FORM -->
-            <form method="POST" action="https://script.google.com/macros/s/AKfycby5wHYLm1352Ovu5-EJCJ7p9YSf3gMN4_n6CBZs8ajfL2-ZaQuJxEMdM5-DCSKHKaDD/exec" id="waitlistForm">
-              <!-- Honeypot field -->
-              <input type="text" name="_gotcha" style="display: none;">
-              
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                <div>
-                  <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div>
-                  <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div style="grid-column: span 2;">
-                  <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div style="grid-column: span 2;">
-                  <input type="tel" name="phone" placeholder="Phone Number *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
-                </div>
-                
-                <div style="grid-column: span 2;">
-                  <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
-                    <option value="" disabled selected hidden>Service Type *</option>
-                    <option value="trafficabuja_live">TrafficAbuja LIVE</option>
-                    <option value="trafficabuja_at_it_first">TrafficAbuja AT-IT-FIRST</option>
-                    <option value="experience_orchestration">Experience an Orchestration</option>
-                    <option value="naming_rights_perpetuity">Naming Rights & Perpetuity (i.e., monuments only)</option>
-                  </select>
-                </div>
-                
-                <!-- Hidden field for off-hours detection -->
-                <input type="hidden" name="off_hours" id="offHoursField" value="no">
-              </div>
-              
-              <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; position: relative;">
-                <span id="btnText">CLICK</span>
-                <div id="btnSpinner" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
-                  <div style="width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite;"></div>
-                </div>
-              </button>
-            </form>
-            
-            <p style="font-size: 13px; color: #888; margin-top: 15px; text-align: center;">In some cases, response times may exceed the standard 9-minute window.</p>
-            
-            <!-- Loading Overlay (hidden by default) -->
-            <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
-              <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #1a1a1a; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-              <p style="margin-top: 20px; color: #666; font-size: 16px;">Processing your submission...</p>
+            <div class="stat-item">
+              <div class="stat-percentage">100%</div>
+              <div class="stat-label">Adaptive Service</div>
             </div>
           </div>
-          <!-- END FORM CONTAINER -->
+          
+          <p class="form-subtitle">Set things in motion. Make a request.</p>
+          
+          <!-- FORM -->
+          <form method="POST" action="https://script.google.com/macros/s/AKfycby5wHYLm1352Ovu5-EJCJ7p9YSf3gMN4_n6CBZs8ajfL2-ZaQuJxEMdM5-DCSKHKaDD/exec" id="waitlistForm">
+            <!-- Honeypot field -->
+            <input type="text" name="_gotcha" style="display: none;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+              <div>
+                <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+              </div>
+              
+              <div>
+                <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+              </div>
+              
+              <div style="grid-column: span 2;">
+                <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+              </div>
+              
+              <div style="grid-column: span 2;">
+                <input type="tel" name="phone" placeholder="Phone Number *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+              </div>
+              
+              <div style="grid-column: span 2;">
+                <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
+                  <option value="" disabled selected hidden>Service Type *</option>
+                  <option value="trafficabuja_live">TrafficAbuja LIVE</option>
+                  <option value="trafficabuja_at_it_first">TrafficAbuja AT-IT-FIRST</option>
+                  <option value="experience_orchestration">Experience an Orchestration</option>
+                  <option value="naming_rights_perpetuity">Naming Rights & Perpetuity (i.e., monuments only)</option>
+                </select>
+              </div>
+              
+              <!-- Hidden field for off-hours detection -->
+              <input type="hidden" name="off_hours" id="offHoursField" value="no">
+            </div>
+            
+            <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; position: relative;">
+              <span id="btnText">CLICK</span>
+              <div id="btnSpinner" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                <div style="width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite;"></div>
+              </div>
+            </button>
+          </form>
+          
+          <p style="font-size: 13px; color: #888; margin-top: 15px; text-align: center;">In some cases, response times may exceed the standard 9-minute window.</p>
+          
+          <!-- Loading Overlay (hidden by default) -->
+          <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+            <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #1a1a1a; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="margin-top: 20px; color: #666; font-size: 16px;">Processing your submission...</p>
+          </div>
         </div>
         
         <!-- Right Column: Contact Info -->
@@ -772,6 +766,37 @@
 
   <!-- JAVASCRIPT -->
   <script>
+    // Format date function - returns "Friday, 2nd January"
+    function getFormattedDate() {
+      const now = new Date();
+      
+      // Get day of week
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const dayOfWeek = days[now.getDay()];
+      
+      // Get day of month with ordinal suffix
+      const day = now.getDate();
+      let suffix = 'th';
+      if (day === 1 || day === 21 || day === 31) suffix = 'st';
+      else if (day === 2 || day === 22) suffix = 'nd';
+      else if (day === 3 || day === 23) suffix = 'rd';
+      
+      // Get month name
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                     'July', 'August', 'September', 'October', 'November', 'December'];
+      const month = months[now.getMonth()];
+      
+      return `${dayOfWeek}, ${day}${suffix} ${month}`;
+    }
+    
+    // Update the date display
+    function updateLiveDate() {
+      const dateElement = document.getElementById('liveDate');
+      if (dateElement) {
+        dateElement.textContent = getFormattedDate();
+      }
+    }
+
     // Mobile Menu Functionality
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mainNav = document.getElementById('mainNav');
@@ -825,6 +850,9 @@
     
     // Form submission loading state
     document.addEventListener('DOMContentLoaded', function() {
+      // Update live date on page load
+      updateLiveDate();
+      
       setupOffHoursBanner();
       setOffHoursField();
       
