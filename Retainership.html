@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- ADD BASE TAG FOR BETTER PATH RESOLUTION -->
+  <base href="./">
   <title>Retainership | TrafficAbuja</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -17,12 +19,16 @@
       line-height: 1.6;
       color: #1a1a1a;
       background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     
     .container {
       max-width: 800px;
       margin: 0 auto;
       padding: 0 20px;
+      flex: 1;
     }
     
     .header {
@@ -36,6 +42,8 @@
       font-weight: 700;
       color: #1a1a1a;
       text-decoration: none;
+      display: inline-block;
+      margin-bottom: 15px;
     }
     
     .logo sup {
@@ -45,14 +53,21 @@
     }
     
     .back-btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       margin-top: 20px;
-      padding: 10px 20px;
+      padding: 12px 24px;
       background: #1a1a1a;
       color: white;
       text-decoration: none;
       border-radius: 4px;
       font-weight: 500;
+      transition: background 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: #333;
     }
     
     .content {
@@ -70,6 +85,7 @@
       padding: 40px;
       border-radius: 8px;
       margin-bottom: 30px;
+      border: 1px solid #e0e0e0;
     }
     
     p {
@@ -113,6 +129,17 @@
       color: #666;
     }
     
+    .footer a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer a:hover {
+      color: #1a1a1a;
+      text-decoration: underline;
+    }
+    
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
@@ -121,15 +148,21 @@
       .terms {
         padding: 25px;
       }
+      
+      .back-btn {
+        padding: 10px 20px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
+      <a href="./index.html" class="logo">TrafficAbuja<sup>®</sup></a>
       <div>
-        <a href="index.html" class="back-btn">← Back to Home</a>
+        <a href="./index.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
       </div>
     </header>
     
@@ -156,7 +189,7 @@
     
     <footer class="footer">
       <p>© 2026 TrafficAbuja. All rights reserved.</p>
-      <p><a href="privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></p>
+      <p><a href="./privacy.html">Privacy Policy</a></p>
     </footer>
   </div>
 </body>
