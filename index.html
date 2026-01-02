@@ -328,23 +328,36 @@
       color: #ffcc00;
     }
 
-    /* Success/Error Messages */
+    /* Success/Error Messages - UPDATED */
     .success-message {
       background: #f0f9f0;
       color: #2e7d32;
-      padding: 15px;
-      border-radius: 4px;
-      margin-top: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
       border: 1px solid #c8e6c9;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+      font-size: 16px;
+      font-weight: 500;
     }
 
     .error-message {
       background: #fff5f5;
       color: #dc2626;
-      padding: 15px;
-      border-radius: 4px;
-      margin-top: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
       border: 1px solid #fecaca;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Footer */
@@ -577,7 +590,7 @@
   <!-- Off-Hours Banner -->
   <div id="offHoursBanner" class="off-hours-banner">
     <i class="fas fa-moon"></i>
-    <span id="offHoursText">(11:00 PM - 8:00 AM) We're offline. </span>
+    <span id="offHoursText">(11:00 PM - 8:00 AM). </span>
   </div>
 
   <!-- Header -->
@@ -634,30 +647,30 @@
           
           <p class="form-subtitle">Set things in motion. Make a request.</p>
           
-          <!-- FORM -->
+          <!-- FORM - UPDATED WITH iOS ZOOM FIXES -->
           <form method="POST" action="https://script.google.com/macros/s/AKfycby5wHYLm1352Ovu5-EJCJ7p9YSf3gMN4_n6CBZs8ajfL2-ZaQuJxEMdM5-DCSKHKaDD/exec" id="waitlistForm">
             <!-- Honeypot field -->
             <input type="text" name="_gotcha" style="display: none;">
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
               <div>
-                <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
               </div>
               
               <div>
-                <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
               </div>
               
               <div style="grid-column: span 2;">
-                <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
               </div>
               
               <div style="grid-column: span 2;">
-                <input type="tel" name="phone" placeholder="Phone Number *" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px;">
+                <input type="tel" name="phone" placeholder="Phone Number *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
               </div>
               
               <div style="grid-column: span 2;">
-                <select name="attendance" required style="width: 100%; padding: 12px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 15px; background: white; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
+                <select name="attendance" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; background: white; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
                   <option value="" disabled selected hidden>Service Type *</option>
                   <option value="trafficabuja_live">TrafficAbuja LIVE</option>
                   <option value="trafficabuja_at_it_first">TrafficAbuja AT-IT-FIRST</option>
@@ -670,7 +683,7 @@
               <input type="hidden" name="off_hours" id="offHoursField" value="no">
             </div>
             
-            <button type="submit" id="submitBtn" style="width: 100%; padding: 14px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; position: relative;">
+            <button type="submit" id="submitBtn" style="width: 100%; padding: 16px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 17px; font-weight: 600; cursor: pointer; position: relative; -webkit-appearance: none; appearance: none; touch-action: manipulation;">
               <span id="btnText">CLICK</span>
               <div id="btnSpinner" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
                 <div style="width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite;"></div>
@@ -770,18 +783,15 @@
     function getFormattedDate() {
       const now = new Date();
       
-      // Get day of week
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const dayOfWeek = days[now.getDay()];
       
-      // Get day of month with ordinal suffix
       const day = now.getDate();
       let suffix = 'th';
       if (day === 1 || day === 21 || day === 31) suffix = 'st';
       else if (day === 2 || day === 22) suffix = 'nd';
       else if (day === 3 || day === 23) suffix = 'rd';
       
-      // Get month name
       const months = ['January', 'February', 'March', 'April', 'May', 'June', 
                      'July', 'August', 'September', 'October', 'November', 'December'];
       const month = months[now.getMonth()];
@@ -817,11 +827,11 @@
       mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
     });
     
-    // Off-Hours Banner
+    // Off-Hours Banner - UPDATED TO 11PM-8AM
     function checkBusinessHours() {
       const now = new Date();
       const hour = now.getHours();
-      return (hour >= 21 || hour < 6);
+      return (hour >= 23 || hour < 8); // 11PM - 8AM
     }
     
     function setupOffHoursBanner() {
@@ -840,7 +850,7 @@
     function setOffHoursField() {
       const now = new Date();
       const hour = now.getHours();
-      const isOffHours = (hour >= 21 || hour < 6);
+      const isOffHours = (hour >= 23 || hour < 8); // Updated to 11PM-8AM
       const offHoursField = document.getElementById('offHoursField');
       
       if (offHoursField) {
@@ -848,7 +858,7 @@
       }
     }
     
-    // Form submission loading state
+    // FIXED FORM SUBMISSION - AJAX to prevent zoom issues
     document.addEventListener('DOMContentLoaded', function() {
       // Update live date on page load
       updateLiveDate();
@@ -860,10 +870,10 @@
       const isOffHours = checkBusinessHours();
       const bannerText = document.getElementById('offHoursText');
       if (isOffHours) {
-        bannerText.textContent = "(11:00 PM - 8:00 AM) We're offline.";
+        bannerText.textContent = "(11:00 PM - 8:00 AM)";
       }
       
-      // Form loading state
+      // Form submission with AJAX to prevent page reload/zoom
       const form = document.getElementById('waitlistForm');
       const loadingOverlay = document.getElementById('loadingOverlay');
       const submitBtn = document.getElementById('submitBtn');
@@ -872,10 +882,12 @@
       
       if (form) {
         form.addEventListener('submit', function(e) {
+          e.preventDefault(); // Prevent default form submission that causes zoom
+          
           // Set off-hours field
           const now = new Date();
           const hour = now.getHours();
-          const isOffHours = (hour >= 21 || hour < 6);
+          const isOffHours = (hour >= 23 || hour < 8);
           document.getElementById('offHoursField').value = isOffHours ? 'yes' : 'no';
           
           // Show loading state
@@ -889,6 +901,72 @@
               loadingOverlay.style.display = 'flex';
             }
           }, 500);
+          
+          // Submit form via AJAX to prevent page reload
+          const formData = new FormData(form);
+          
+          // AJAX submission
+          fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Important for Google Apps Script
+          })
+          .then(() => {
+            // Remove any existing messages
+            const existingMessages = document.querySelectorAll('.success-message, .error-message');
+            existingMessages.forEach(msg => msg.remove());
+            
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.innerHTML = '<strong>🎉 You\'ve joined our waiting list!</strong><br>We\'ll get back to you shortly.';
+            
+            // Insert success message after the form
+            form.parentNode.insertBefore(successMessage, form.nextSibling);
+            
+            // Scroll to show the message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Reset form
+            form.reset();
+            
+            // Hide loading states
+            btnText.style.opacity = '1';
+            btnSpinner.style.display = 'none';
+            submitBtn.disabled = false;
+            loadingOverlay.style.display = 'none';
+            
+            // Remove success message after 8 seconds
+            setTimeout(() => {
+              successMessage.remove();
+            }, 8000);
+          })
+          .catch(error => {
+            // Remove any existing messages
+            const existingMessages = document.querySelectorAll('.success-message, .error-message');
+            existingMessages.forEach(msg => msg.remove());
+            
+            // Show error message
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.innerHTML = '<strong>⚠️ Something went wrong!</strong><br>Please try again or contact us directly.';
+            
+            // Insert error message after the form
+            form.parentNode.insertBefore(errorMessage, form.nextSibling);
+            
+            // Hide loading states
+            btnText.style.opacity = '1';
+            btnSpinner.style.display = 'none';
+            submitBtn.disabled = false;
+            loadingOverlay.style.display = 'none';
+            
+            // Remove error message after 8 seconds
+            setTimeout(() => {
+              errorMessage.remove();
+            }, 8000);
+            
+            console.error('Form submission error:', error);
+          });
         });
       }
       
@@ -897,6 +975,23 @@
         if (document.visibilityState === 'visible' && loadingOverlay) {
           loadingOverlay.style.display = 'none';
         }
+      });
+    });
+    
+    // Prevent iOS zoom on input focus
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('input, select, textarea');
+      
+      inputs.forEach(input => {
+        // Set font size to 16px to prevent iOS zoom
+        if (input.type !== 'hidden') {
+          input.style.fontSize = '16px';
+        }
+        
+        // Prevent double-tap zoom on iOS
+        input.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+        }, { passive: false });
       });
     });
   </script>
