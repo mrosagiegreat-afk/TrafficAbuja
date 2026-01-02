@@ -163,12 +163,53 @@
       font-size: 20px;
       font-weight: 600;
       margin-bottom: 10px;
+      text-align: center;
     }
 
     .form-subtitle {
       color: #666;
       margin-bottom: 30px;
       font-size: 15px;
+      text-align: center;
+    }
+
+    /* Statistics Section - CLEAN VERSION */
+    .stats-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin: 20px 0 25px 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      max-width: 150px;
+    }
+
+    .stat-percentage {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 5px;
+      background: linear-gradient(90deg, #1a1a1a, #444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #333;
+      line-height: 1.2;
     }
 
     /* Contact Section */
@@ -417,6 +458,23 @@
         padding: 25px;
       }
       
+      .stats-section {
+        gap: 25px;
+        margin: 15px 0 20px 0;
+      }
+      
+      .stat-item {
+        max-width: 120px;
+      }
+      
+      .stat-percentage {
+        font-size: 2rem;
+      }
+      
+      .stat-label {
+        font-size: 0.85rem;
+      }
+      
       .contact-section {
         padding: 0 !important;
         margin: 0 !important;
@@ -447,6 +505,22 @@
         padding: 20px;
       }
       
+      .stats-section {
+        gap: 15px;
+      }
+      
+      .stat-item {
+        max-width: 100px;
+      }
+      
+      .stat-percentage {
+        font-size: 1.8rem;
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+      }
+      
       .contact-icon {
         width: 36px;
         height: 36px;
@@ -470,6 +544,18 @@
       
       .hero-left h1 {
         font-size: 3rem;
+      }
+      
+      .stats-section {
+        gap: 30px;
+      }
+      
+      .stat-item {
+        max-width: 130px;
+      }
+      
+      .stat-percentage {
+        font-size: 2.2rem;
       }
     }
 
@@ -527,13 +613,29 @@
       <div class="hero-grid">
         <!-- Left Column: Form -->
         <div class="hero-left">
-          <span class="coming-soon">CHEERS TO 2026. <br> HAPPY NEW YEAR! </span>
-          <h1>YOU'RE NOT LATE;<br>IF THAT HELPS.</h1>
-          <p> Care for what you would rather not attend to, while you focus on your priorities </p>
+          <span class="coming-soon">CHEERS TO 2026.</span>
+          <h1>NOT TOO FAR,<br>NOT TOO LATE,<br>NEVER SOLO.</h1>
+          <p> i.e., Maitama, Asokoro, and surrounding areas fall within service range. </p>
           
           <!-- OPTIMIZED FORM CONTAINER -->
-          <div class="form-container">
-            <h2 class="form-title"> i.e., Maitama, Asokoro, and surrounding areas.</h2>
+            <!-- Statistics Section - CLEAN VERSION -->
+            <div class="stats-section">
+              <div class="stat-item">
+                <div class="stat-percentage">99%</div>
+                <div class="stat-label">Data Privacy</div>
+              </div>
+              
+              <div class="stat-item">
+                <div class="stat-percentage">99%</div>
+                <div class="stat-label">Personalization</div>
+              </div>
+              
+              <div class="stat-item">
+                <div class="stat-percentage">100%</div>
+                <div class="stat-label">Adaptive Service</div>
+              </div>
+            </div>
+            
             <p class="form-subtitle">Set things in motion. Make a request.</p>
             
             <!-- FORM -->
@@ -580,7 +682,7 @@
               </button>
             </form>
             
-            <p style="font-size: 13px; color: #888; margin-top: 15px;">In some cases, response times may exceed the standard 9-minute window.</p>
+            <p style="font-size: 13px; color: #888; margin-top: 15px; text-align: center;">In some cases, response times may exceed the standard 9-minute window.</p>
             
             <!-- Loading Overlay (hidden by default) -->
             <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
@@ -772,5 +874,3 @@
   </script>
 </body>
 </html>
-
-
