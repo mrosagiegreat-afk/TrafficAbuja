@@ -582,7 +582,7 @@
   <!-- Off-Hours Banner -->
   <div id="offHoursBanner" class="off-hours-banner">
     <i class="fas fa-moon"></i>
-    <span id="offHoursText">We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.</span>
+    <span id="offHoursText">(11:00 PM - 8:00 AM daily) We're offline. </span>
   </div>
 
   <!-- Header -->
@@ -622,12 +622,12 @@
             <div class="stats-section">
               <div class="stat-item">
                 <div class="stat-percentage">99%</div>
-                <div class="stat-label">Data Privacy</div>
+                <div class="stat-label">Personalization</div>
               </div>
               
               <div class="stat-item">
                 <div class="stat-percentage">99%</div>
-                <div class="stat-label">Personalization</div>
+                <div class="stat-label">Data Privacy</div>
               </div>
               
               <div class="stat-item">
@@ -832,7 +832,7 @@
       const isOffHours = checkBusinessHours();
       const bannerText = document.getElementById('offHoursText');
       if (isOffHours) {
-        bannerText.textContent = "We're currently offline (9:00 PM - 6:00 AM daily). Your submission will be queued and processed during business hours.";
+        bannerText.textContent = "(11:00 PM - 8:00 AM daily) We're offline.";
       }
       
       // Form loading state
