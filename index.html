@@ -590,7 +590,7 @@
   <!-- Off-Hours Banner -->
   <div id="offHoursBanner" class="off-hours-banner">
     <i class="fas fa-moon"></i>
-    <span id="offHoursText">(11:00 PM - 8:00 AM). </span>
+    <span id="offHoursText">(11:00 PM - 8:00 AM) We're offline. </span>
   </div>
 
   <!-- Header -->
@@ -647,7 +647,7 @@
           
           <p class="form-subtitle">Set things in motion. Make a request.</p>
           
-          <!-- FORM - UPDATED WITH iOS ZOOM FIXES -->
+          <!-- FORM - FIXED FOR MOBILE TOUCH -->
           <form method="POST" action="https://script.google.com/macros/s/AKfycby5wHYLm1352Ovu5-EJCJ7p9YSf3gMN4_n6CBZs8ajfL2-ZaQuJxEMdM5-DCSKHKaDD/exec" id="waitlistForm">
             <!-- Honeypot field -->
             <input type="text" name="_gotcha" style="display: none;">
@@ -683,7 +683,7 @@
               <input type="hidden" name="off_hours" id="offHoursField" value="no">
             </div>
             
-            <button type="submit" id="submitBtn" style="width: 100%; padding: 16px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 17px; font-weight: 600; cursor: pointer; position: relative; -webkit-appearance: none; appearance: none; touch-action: manipulation;">
+            <button type="submit" id="submitBtn" style="width: 100%; padding: 16px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 17px; font-weight: 600; cursor: pointer; position: relative; -webkit-appearance: none; appearance: none;">
               <span id="btnText">CLICK</span>
               <div id="btnSpinner" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
                 <div style="width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite;"></div>
@@ -777,7 +777,7 @@
     </div>
   </footer>
 
-  <!-- JAVASCRIPT -->
+  <!-- JAVASCRIPT - FIXED TOUCH ISSUES -->
   <script>
     // Format date function - returns "Friday, 2nd January"
     function getFormattedDate() {
@@ -870,7 +870,7 @@
       const isOffHours = checkBusinessHours();
       const bannerText = document.getElementById('offHoursText');
       if (isOffHours) {
-        bannerText.textContent = "(11:00 PM - 8:00 AM)";
+        bannerText.textContent = "(11:00 PM - 8:00 AM) We're offline.";
       }
       
       // Form submission with AJAX to prevent page reload/zoom
@@ -978,21 +978,37 @@
       });
     });
     
-    // Prevent iOS zoom on input focus
+    // Simple iOS zoom fix without blocking touch
     document.addEventListener('DOMContentLoaded', function() {
       const inputs = document.querySelectorAll('input, select, textarea');
       
+      // Just ensure font size is 16px for iOS
       inputs.forEach(input => {
-        // Set font size to 16px to prevent iOS zoom
         if (input.type !== 'hidden') {
           input.style.fontSize = '16px';
         }
-        
-        // Prevent double-tap zoom on iOS
-        input.addEventListener('touchstart', function(e) {
-          e.preventDefault();
-        }, { passive: false });
       });
+      
+      // Simple viewport fix for iOS
+      let viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        // Store original viewport content
+        const originalContent = viewport.content;
+        
+        // Update viewport on focus to prevent zoom
+        inputs.forEach(input => {
+          input.addEventListener('focus', function() {
+            viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0';
+          });
+          
+          input.addEventListener('blur', function() {
+            // Small delay before restoring
+            setTimeout(() => {
+              viewport.content = originalContent;
+            }, 100);
+          });
+        });
+      }
     });
   </script>
 </body>
