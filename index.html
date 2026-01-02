@@ -582,7 +582,7 @@
   <!-- Off-Hours Banner -->
   <div id="offHoursBanner" class="off-hours-banner">
     <i class="fas fa-moon"></i>
-    <span id="offHoursText">(11:00 PM - 8:00 AM daily) We're offline. </span>
+    <span id="offHoursText">(11:00 PM - 8:00 AM) We're offline. </span>
   </div>
 
   <!-- Header -->
@@ -832,7 +832,7 @@
       const isOffHours = checkBusinessHours();
       const bannerText = document.getElementById('offHoursText');
       if (isOffHours) {
-        bannerText.textContent = "(11:00 PM - 8:00 AM daily) We're offline.";
+        bannerText.textContent = "(11:00 PM - 8:00 AM) We're offline.";
       }
       
       // Form loading state
