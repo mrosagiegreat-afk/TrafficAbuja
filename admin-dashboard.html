@@ -1568,7 +1568,7 @@ async getAffiliates() {
         beneficiaries: affiliate.beneficiaries || [], 
         account_details: affiliate.account_details || affiliate.accountDetails || '',
         appearances: affiliate.appearances || '100 off 100',
-        performance_score: parseInt(affiliate.performance_score || affiliate.performanceScore) || 100
+        request_rate: parseInt(document.getElementById('requestRate').value) || 0,
     };
 
     try {
@@ -1863,7 +1863,7 @@ async populateProfileForm(affiliate) {
                 document.getElementById('password').value = affiliate.password || '';
                 document.getElementById('accountDetails').value = affiliate.account_details || ''; 
                 document.getElementById('appearances').value = affiliate.appearances || '100 off 100';
-                document.getElementById('performanceScore').value = affiliate.performance_score || 100;
+                document.getElementById('requestRate').value = affiliate.request_rate || 0;
 
                 // 3. SAFE BENEFICIARY PARSING (Stops the Mobile Crash)
                 let beneficiaries = [];
@@ -2308,7 +2308,7 @@ affiliate.performance_score = parseInt(document.getElementById('requestRate').va
                         beneficiaries: [],
                         accountDetails: '',
                         appearances: '0 off 0', // CHANGED: Start with 0 events
-                        performanceScore: 100
+                        request_rate: 0,
                     };
                     
                     const savedAffiliate = await this.db.saveAffiliate(affiliate);
