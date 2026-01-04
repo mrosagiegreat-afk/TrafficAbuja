@@ -962,6 +962,41 @@ async function loadAffiliateData() {
         }
     }
 
+    // --- PASTE THIS DIRECTLY BELOW THE BRACKET ABOVE ---
+    function loadEvents(events) {
+        const eventsList = document.getElementById('eventsList');
+        if (!eventsList) return;
+        
+        eventsList.innerHTML = '';
+        
+        if (!events || events.length === 0) {
+            eventsList.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; color: #666;">
+                    <i class="fas fa-calendar-times" style="font-size: 48px; margin-bottom: 20px;"></i>
+                    <p>No completed events yet</p>
+                </div>
+            `;
+            return;
+        }
+
+        events.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event-item';
+            eventElement.dataset.id = event.id;
+            
+            const eventDate = new Date(event.date);
+            const timeAgo = typeof getTimeAgo === 'function' ? getTimeAgo(eventDate) : 'Recently';
+            
+            eventElement.innerHTML = `
+                <div class="event-title">${event.title || 'Untitled Event'}</div>
+                <div class="event-time">Completed ${timeAgo}</div>
+            `;
+            
+            eventElement.addEventListener('click', () => showEventDetails(event));
+            eventsList.appendChild(eventElement);
+        });
+    }
+
     // Show event details in main content
     function showEventDetails(event) {
         emptyState.style.display = 'none';
