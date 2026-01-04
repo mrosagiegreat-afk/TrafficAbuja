@@ -910,30 +910,31 @@ if (typeof window.supabase !== 'undefined') {
             if (profileError) throw profileError;
 
 // --- THE SAFE FIX START ---
-            let finalBeneficiaryList = [];
+let finalBeneficiaryList = [];
 
-            if (data.beneficiaries) {
-                if (typeof data.beneficiaries === 'string') {
-                    try {
-                        finalBeneficiaryList = JSON.parse(data.beneficiaries);
-                        if (typeof finalBeneficiaryList === 'string') {
-                            finalBeneficiaryList = JSON.parse(finalBeneficiaryList);
-                        }
-                    } catch (e) {
-                        console.error("Format error:", e);
-                        finalBeneficiaryList = [];
-                    }
-                } else if (Array.isArray(data.beneficiaries)) {
-                    finalBeneficiaryList = data.beneficiaries;
-                }
+// CHANGED 'data' TO 'affiliate' below
+if (affiliate && affiliate.beneficiaries) {
+    if (typeof affiliate.beneficiaries === 'string') {
+        try {
+            finalBeneficiaryList = JSON.parse(affiliate.beneficiaries);
+            if (typeof finalBeneficiaryList === 'string') {
+                finalBeneficiaryList = JSON.parse(finalBeneficiaryList);
             }
+        } catch (e) {
+            console.error("Format error:", e);
+            finalBeneficiaryList = [];
+        }
+    } else if (Array.isArray(affiliate.beneficiaries)) {
+        finalBeneficiaryList = affiliate.beneficiaries;
+    }
+}
 
-            // 1. Update the screen with the clean list
-            renderBeneficiaries(finalBeneficiaryList);
+// 1. Update the screen
+renderBeneficiaries(finalBeneficiaryList);
 
-            // 2. Attach the list back to the user data
-            data.beneficiaries = finalBeneficiaryList; 
-            // --- THE SAFE FIX END ---
+// 2. Update the object
+affiliate.beneficiaries = finalBeneficiaryList; 
+// --- THE SAFE FIX END ---
 
             // 3. Fetch events using data.id (NOT affiliate.id)
             const { data: events, error: eventsError } = await supabaseClient
