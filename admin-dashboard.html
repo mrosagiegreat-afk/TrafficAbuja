@@ -1313,25 +1313,29 @@
                     </div>
                     
                     <div class="form-section">
-                        <h3>Appearances & Performance</h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="appearances">
-                                    Appearances
-                                    <i class="fas fa-edit" title="Edit"></i>
-                                </label>
-                                <input type="text" id="appearances" name="appearances" value="100 off 100">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="performanceScore">
-                                    Performance Score
-                                    <i class="fas fa-edit" title="Edit"></i>
-                                </label>
-                                <input type="number" id="performanceScore" name="performanceScore" min="0" max="100" step="1" value="100">
-                            </div>
-                        </div>
-                    </div>
+
+    <h3>Appearances & Request Rate</h3>
+    <div class="form-grid">
+        <div class="form-group">
+            <label for="appearances">
+                Appearances (Completed/Total)
+                <i class="fas fa-edit" title="Edit"></i>
+            </label>
+            <input type="text" id="appearances" name="appearances" placeholder="e.g., 50 off 100">
+        </div>
+        
+        <div class="form-group">
+            <label for="requestRate">
+                Request Rate (%)
+                <i class="fas fa-edit" title="Edit"></i>
+            </label>
+            <input type="number" id="requestRate" name="requestRate" min="0" max="100" step="1" placeholder="0-100">
+            <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                Will update affiliate dashboard progress bar
+            </div>
+        </div>
+    </div>
+</div>
                     
                     <div class="form-section">
                         <h3>Completed Events</h3>
@@ -2216,7 +2220,9 @@ renderBeneficiaries(beneficiaries) {
                     affiliate.password = document.getElementById('password').value;
                     affiliate.account_details = document.getElementById('accountDetails').value; 
                     affiliate.appearances = document.getElementById('appearances').value;
-                    affiliate.performance_score = parseInt(document.getElementById('performanceScore').value) || 100;
+
+                    // Request Rate is now stored in performance_score column (for backward compatibility)
+affiliate.performance_score = parseInt(document.getElementById('requestRate').value) || 0;
                     
                     // 2. Collect beneficiaries
                     const beneficiaryNames = document.querySelectorAll('input[name="beneficiaryName[]"]');
@@ -2567,12 +2573,6 @@ renderBeneficiaries(beneficiaries) {
             }, 100);
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            // Only initialize if Supabase is already loaded, otherwise it will be initialized by the script's onload
-            if (supabaseClient) {
-    initApp();
-            }
-        });
     </script>
 </body>
 </html>
