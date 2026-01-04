@@ -77,24 +77,38 @@
       color: #666;
     }
 
-    /* Navigation */
+    /* Navigation - Icon Only */
     .nav {
       display: flex;
-      gap: 30px;
+      gap: 15px;
       align-items: center;
     }
 
-    .nav a {
-      color: #444;
+    .nav-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a1a;
       text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      transition: color 0.3s ease;
-      white-space: nowrap;
+      transition: all 0.3s ease;
+      font-size: 18px;
+      border: 2px solid #e0e0e0;
     }
 
-    .nav a:hover {
-      color: #000;
+    .nav-icon:hover {
+      background: #1a1a1a;
+      color: white;
+      border-color: #1a1a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-icon i {
+      margin-right: 0;
     }
 
     /* Mobile Menu Button */
@@ -426,15 +440,22 @@
         right: 0;
       }
       
-      .nav a {
+      .nav-icon {
         width: 100%;
-        padding: 15px 0;
-        border-bottom: 1px solid #e0e0e0;
+        height: 60px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #e0e0e0;
+        justify-content: flex-start;
+        padding-left: 20px;
         font-size: 16px;
       }
       
-      .nav a:last-child {
-        border-bottom: none;
+      .nav-icon::after {
+        content: attr(title);
+        margin-left: 15px;
+        font-size: 15px;
+        font-weight: 500;
       }
       
       .nav-overlay {
@@ -553,6 +574,10 @@
       .live-date {
         font-size: 13px;
       }
+      
+      .nav-icon::after {
+        font-size: 14px;
+      }
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
@@ -601,14 +626,17 @@
           <i class="fas fa-bars"></i>
         </button>
         
-        <!-- Navigation -->
+        <!-- Navigation - Icon Only -->
         <nav class="nav" id="mainNav">
-<a href="./inventory.html">Purchased Inventory/Hired Network</a>
-<a href="./retainership.html">Retainership</a>
-<a href="affiliatelogin.html" style="color: #1a1a1a; font-weight: 600;">
-    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>
-    Affiliate Login
-  </a>
+          <a href="./retainership.html" class="nav-icon" title="Retainership">
+            <i class="fas fa-handshake"></i>
+          </a>
+          <a href="./inventory.html" class="nav-icon" title="Purchased Inventory/Hired Network">
+            <i class="fas fa-shopping-bag"></i>
+          </a>
+          <a href="affiliatelogin.html" class="nav-icon" title="Affiliate Login">
+            <i class="fas fa-sign-in-alt"></i>
+          </a>
         </nav>
       </div>
     </div>
@@ -828,6 +856,62 @@
       mainNav.classList.remove('active');
       navOverlay.classList.remove('active');
       mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+    
+    // Desktop Tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+      const navIcons = document.querySelectorAll('.nav-icon');
+      
+      // Only add tooltips on desktop
+      if (window.innerWidth > 768) {
+        navIcons.forEach(icon => {
+          const title = icon.getAttribute('title');
+          if (title) {
+            // Remove default title behavior
+            icon.removeAttribute('title');
+            
+            // Create custom tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.textContent = title;
+            tooltip.style.cssText = `
+              position: absolute;
+              background: #1a1a1a;
+              color: white;
+              padding: 6px 12px;
+              border-radius: 6px;
+              font-size: 13px;
+              font-weight: 500;
+              white-space: nowrap;
+              opacity: 0;
+              visibility: hidden;
+              transition: all 0.3s ease;
+              transform: translateY(-10px);
+              pointer-events: none;
+              z-index: 1001;
+              top: 100%;
+              left: 50%;
+              transform: translateX(-50%) translateY(-10px);
+            `;
+            
+            icon.style.position = 'relative';
+            icon.appendChild(tooltip);
+            
+            // Show tooltip on hover
+            icon.addEventListener('mouseenter', function(e) {
+              tooltip.style.opacity = '1';
+              tooltip.style.visibility = 'visible';
+              tooltip.style.transform = 'translateX(-50%) translateY(5px)';
+            });
+            
+            icon.addEventListener('mouseleave', function(e) {
+              tooltip.style.opacity = '0';
+              tooltip.style.visibility = 'hidden';
+              tooltip.style.transform = 'translateX(-50%) translateY(-10px)';
+            });
+          }
+        });
+      }
     });
     
     // Off-Hours Banner - UPDATED TO 11PM-8AM
