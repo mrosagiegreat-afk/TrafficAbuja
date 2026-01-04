@@ -1118,33 +1118,33 @@ function updateProfilePanel(affiliate) {
             `;
         }
   
-        
-        // Update appearances
-        const appearances = affiliate.appearances || '100 off 100';
-        const [completed, total] = appearances.split(' off ').map(Number);
-        const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
-        
-        document.getElementById('profileAppearances').innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
-                <div>
-                    <div style="font-size: 32px; font-weight: 800; color: #1a1a1a; line-height: 1;">${completed || 0}</div>
-                    <div style="font-size: 14px; color: #666; margin-top: 4px;">Events completed</div>
-                </div>
-                <div style="width: 60px; height: 60px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-check-circle" style="font-size: 24px; color: #4caf50;"></i>
-                </div>
-            </div>
-            
-            <div style="padding-top: 20px; border-top: 1px solid #f0f0f0;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="color: #666; font-size: 14px;">Request Rate</span>
-                    <span style="font-weight: 600; color: #1a1a1a; font-size: 16px;">${completionRate}%</span>
-                </div>
-                <div style="height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden;">
-                    <div style="width: ${completionRate}%; height: 100%; background: #4caf50; border-radius: 3px;"></div>
-                </div>
-            </div>
-        `;
+       // Update appearances
+const appearances = affiliate.appearances || '100 off 100';
+const [completed, total] = appearances.split(' off ').map(Number);
+// Use performance_score field as Request Rate (0-100)
+const requestRate = affiliate.performance_score || 0;
+
+document.getElementById('profileAppearances').innerHTML = `
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
+        <div>
+            <div style="font-size: 32px; font-weight: 800; color: #1a1a1a; line-height: 1;">${completed || 0}</div>
+            <div style="font-size: 14px; color: #666; margin-top: 4px;">Events completed</div>
+        </div>
+        <div style="width: 60px; height: 60px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-check-circle" style="font-size: 24px; color: #4caf50;"></i>
+        </div>
+    </div>
+    
+    <div style="padding-top: 20px; border-top: 1px solid #f0f0f0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="color: #666; font-size: 14px;">Request Rate</span>
+            <span style="font-weight: 600; color: #1a1a1a; font-size: 16px;">${requestRate}%</span>
+        </div>
+        <div style="height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden;">
+            <div style="width: ${requestRate}%; height: 100%; background: #4caf50; border-radius: 3px;"></div>
+        </div>
+    </div>
+`;
     }
 
     // Helper function to get time ago string
