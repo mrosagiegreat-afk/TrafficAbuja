@@ -1842,38 +1842,42 @@ async saveEvent(event) {
             }
             
             // CHANGED: Made async
-            async populateProfileForm(affiliate) {
-                // Update profile header
-                const firstLetter = affiliate.name.charAt(0).toUpperCase();
+async populateProfileForm(affiliate) {
+                // 1. Update profile header
+                const firstLetter = affiliate.name ? affiliate.name.charAt(0).toUpperCase() : '?';
                 document.getElementById('profileIcon').textContent = firstLetter;
-                document.getElementById('profileName').textContent = affiliate.name;
-                document.getElementById('profilePhone').textContent = affiliate.phone;
+                document.getElementById('profileName').textContent = affiliate.name || 'Unknown';
+                document.getElementById('profilePhone').textContent = affiliate.phone || 'No Phone';
                 
-                // Populate form fields
+                // 2. Populate standard form fields
                 document.getElementById('name').value = affiliate.name || '';
                 document.getElementById('phone').value = affiliate.phone || '';
                 document.getElementById('address').value = affiliate.address || '';
                 document.getElementById('email').value = affiliate.email || '';
                 document.getElementById('education').value = affiliate.education || '';
-                document.getElementById('userId').value = affiliate.user_id || ''; // CHANGED: user_id not userId
+                document.getElementById('userId').value = affiliate.user_id || ''; 
                 document.getElementById('password').value = affiliate.password || '';
-                document.getElementById('accountDetails').value = affiliate.account_details || ''; // CHANGED: account_details not accountDetails
+                document.getElementById('accountDetails').value = affiliate.account_details || ''; 
                 document.getElementById('appearances').value = affiliate.appearances || '100 off 100';
-                document.getElementById('performanceScore').value = affiliate.performance_score || 100; // CHANGED: performance_score not performanceScore
-                
-                // Parse beneficiaries JSON
+                document.getElementById('performanceScore').value = affiliate.performance_score || 100;
+
+                // 3. SAFE BENEFICIARY PARSING (Stops the Mobile Crash)
                 let beneficiaries = [];
                 try {
-                    beneficiaries = affiliate.beneficiaries ? JSON.parse(affiliate.beneficiaries) : [];
+                    if (Array.isArray(affiliate.beneficiaries)) {
+                        // If it's already a real list, use it
+                        beneficiaries = affiliate.beneficiaries;
+                    } else if (typeof affiliate.beneficiaries === 'string' && affiliate.beneficiaries.trim() !== "") {
+                        // If it's a string, try to parse it
+                        beneficiaries = JSON.parse(affiliate.beneficiaries);
+                    }
                 } catch (e) {
                     console.error('Error parsing beneficiaries:', e);
-                    beneficiaries = [];
+                    beneficiaries = []; // Fallback to empty list on error
                 }
                 
-                // Populate beneficiaries
+                // 4. Update UI sections
                 this.renderBeneficiaries(beneficiaries);
-                
-                // Render events preview
                 await this.renderEventsPreview();
             }
             
