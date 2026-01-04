@@ -890,9 +890,9 @@ if (typeof window.supabase !== 'undefined') {
     const closeProfile = document.getElementById('closeProfile');
 
 // Load affiliate data from Supabase
-    async function loadAffiliateData() {
+async function loadAffiliateData() {
         try {
-            // 1. Get the Login ID (e.g., 'test123') from localStorage
+            // 1. Get the Login ID from localStorage
             const userLoginId = localStorage.getItem('affiliate_user_id');
             
             if (!userLoginId) {
@@ -900,7 +900,7 @@ if (typeof window.supabase !== 'undefined') {
                 return;
             }
 
-            // 2. Fetch profile - Matching 'user_id' column
+            // 2. Fetch profile
             const { data: affiliate, error: profileError } = await supabaseClient
                 .from('affiliates')
                 .select('*')
@@ -909,10 +909,8 @@ if (typeof window.supabase !== 'undefined') {
             
             if (profileError) throw profileError;
 
-// --- THE FINAL CORRECTED FIX ---
+            // 3. SAFE BENEFICIARY PARSING
             let finalBeneficiaryList = [];
-
-            // We use 'affiliate' because that is the name you used in Step 2 above
             if (affiliate && affiliate.beneficiaries) {
                 if (typeof affiliate.beneficiaries === 'string') {
                     try {
@@ -929,13 +927,14 @@ if (typeof window.supabase !== 'undefined') {
                 }
             }
 
-            // 1. Update the beneficiaries UI
-            renderBeneficiaries(finalBeneficiaryList);
+            // 4. Update the beneficiaries UI
+            if (typeof renderBeneficiaries === 'function') {
+                renderBeneficiaries(finalBeneficiaryList);
+            }
 
-            // 2. IMPORTANT: Attach the clean list back to the affiliate object
             affiliate.beneficiaries = finalBeneficiaryList; 
 
-            // 3. Fetch events (This creates the 'events' variable so it's not undefined)
+            // 5. Fetch events (This creates the 'events' variable)
             const { data: events, error: eventsError } = await supabaseClient
                 .from('events')
                 .select('*')
@@ -944,12 +943,11 @@ if (typeof window.supabase !== 'undefined') {
 
             if (eventsError) throw eventsError;
 
-            // 4. Update the rest of the UI
+            // 6. Update the rest of the UI
             updateProfilePanel(affiliate);
             loadEvents(events || []);
-            // --- END OF FIX ---
-                        
-            // 5. Select first event if available
+            
+            // 7. Select first event if available
             if (events && events.length > 0) {
                 showEventDetails(events[0]);
                 const firstEventElement = document.querySelector('.event-item');
@@ -958,25 +956,10 @@ if (typeof window.supabase !== 'undefined') {
             
         } catch (error) {
             console.error('Detailed Error Context:', error);
-            showErrorState(); 
-        }        
-        events.forEach(event => {
-            const eventElement = document.createElement('div');
-            eventElement.className = 'event-item';
-            eventElement.dataset.id = event.id;
-            
-            // Format date for display
-            const eventDate = new Date(event.date);
-            const timeAgo = getTimeAgo(eventDate);
-            
-            eventElement.innerHTML = `
-                <div class="event-title">${event.title}</div>
-                <div class="event-time">Completed ${timeAgo}</div>
-            `;
-            
-            eventElement.addEventListener('click', () => showEventDetails(event));
-            eventsList.appendChild(eventElement);
-        });
+            if (typeof showErrorState === 'function') {
+                showErrorState();
+            }
+        }
     }
 
     // Show event details in main content
