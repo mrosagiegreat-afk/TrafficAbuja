@@ -43,7 +43,7 @@
       padding: 0 20px;
     }
 
-    /* Header */
+    /* Header - FIXED FOR MOBILE */
     .header {
       position: fixed;
       top: 0;
@@ -54,7 +54,7 @@
       -webkit-backdrop-filter: blur(10px);
       z-index: 1000;
       border-bottom: 1px solid #e0e0e0;
-      padding: 15px 0;
+      padding: 12px 0;
     }
 
     .header-content {
@@ -69,6 +69,7 @@
       color: #1a1a1a;
       text-decoration: none;
       letter-spacing: -0.5px;
+      flex-shrink: 0;
     }
 
     .logo sup {
@@ -77,10 +78,10 @@
       color: #666;
     }
 
-    /* Navigation - Icon Only */
+    /* Navigation - COMPACT ON MOBILE */
     .nav {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       align-items: center;
     }
 
@@ -97,6 +98,7 @@
       transition: all 0.3s ease;
       font-size: 18px;
       border: 2px solid #e0e0e0;
+      position: relative;
     }
 
     .nav-icon:hover {
@@ -111,15 +113,40 @@
       margin-right: 0;
     }
 
-    /* Mobile Menu Button */
+    /* Desktop Tooltips */
+    .nav-icon .tooltip {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      background: #1a1a1a;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 1001;
+      margin-top: 10px;
+    }
+
+    .nav-icon:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(5px);
+    }
+
+    /* Remove the mobile menu button since we're showing icons on mobile */
     .mobile-menu-btn {
       display: none;
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: #1a1a1a;
-      cursor: pointer;
-      padding: 5px;
+    }
+
+    .nav-overlay {
+      display: none;
     }
 
     /* Hero Section */
@@ -405,7 +432,7 @@
       font-size: 14px;
     }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE - FIXED FOR COMPACT MOBILE LAYOUT */
     @media (max-width: 768px) {
       html {
         font-size: 15px;
@@ -415,62 +442,29 @@
         padding: 0 15px;
       }
       
-      .mobile-menu-btn {
-        display: block;
+      .header {
+        padding: 10px 0;
       }
       
+      .logo {
+        font-size: 20px;
+      }
+      
+      /* Compact navigation for mobile */
       .nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        max-width: 300px;
-        height: 100vh;
-        background: white;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        padding: 80px 30px 30px;
-        transition: right 0.3s ease;
-        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
-        z-index: 1000;
-      }
-      
-      .nav.active {
-        right: 0;
+        gap: 8px;
       }
       
       .nav-icon {
-        width: 100%;
-        height: 60px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        border: 1px solid #e0e0e0;
-        justify-content: flex-start;
-        padding-left: 20px;
+        width: 40px;
+        height: 40px;
         font-size: 16px;
+        border-width: 1px;
       }
       
-      .nav-icon::after {
-        content: attr(title);
-        margin-left: 15px;
-        font-size: 15px;
-        font-weight: 500;
-      }
-      
-      .nav-overlay {
+      /* Hide tooltips on mobile */
+      .nav-icon .tooltip {
         display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
-      }
-      
-      .nav-overlay.active {
-        display: block;
       }
       
       .hero {
@@ -532,6 +526,29 @@
     }
 
     @media (max-width: 480px) {
+      .header {
+        padding: 8px 0;
+      }
+      
+      .container {
+        padding: 0 12px;
+      }
+      
+      .logo {
+        font-size: 18px;
+      }
+      
+      /* Even more compact on small phones */
+      .nav {
+        gap: 6px;
+      }
+      
+      .nav-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+      
       .hero-left h1 {
         font-size: 2rem;
       }
@@ -574,9 +591,22 @@
       .live-date {
         font-size: 13px;
       }
+    }
+
+    /* Extra small phones */
+    @media (max-width: 360px) {
+      .logo {
+        font-size: 16px;
+      }
       
-      .nav-icon::after {
-        font-size: 14px;
+      .nav {
+        gap: 4px;
+      }
+      
+      .nav-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
       }
     }
 
@@ -622,28 +652,24 @@
       <div class="header-content">
         <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
         
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-          <i class="fas fa-bars"></i>
-        </button>
-        
-        <!-- Navigation - Icon Only -->
+        <!-- Navigation - Icon Only, always visible -->
         <nav class="nav" id="mainNav">
           <a href="./retainership.html" class="nav-icon" title="Retainership">
             <i class="fas fa-handshake"></i>
+            <div class="tooltip">Retainership</div>
           </a>
           <a href="./inventory.html" class="nav-icon" title="Purchased Inventory/Hired Network">
             <i class="fas fa-shopping-bag"></i>
+            <div class="tooltip">Inventory/Network</div>
           </a>
           <a href="affiliatelogin.html" class="nav-icon" title="Affiliate Login">
             <i class="fas fa-sign-in-alt"></i>
+            <div class="tooltip">Affiliate Login</div>
           </a>
         </nav>
       </div>
     </div>
   </header>
-
-  <!-- Mobile Menu Overlay -->
-  <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -838,80 +864,12 @@
       }
     }
 
-    // Mobile Menu Functionality
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    const navOverlay = document.getElementById('navOverlay');
-    
-    mobileMenuBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      mainNav.classList.toggle('active');
-      navOverlay.classList.toggle('active');
-      mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
-        ? '<i class="fas fa-times"></i>' 
-        : '<i class="fas fa-bars"></i>';
-    });
-    
-    navOverlay.addEventListener('click', function() {
-      mainNav.classList.remove('active');
-      navOverlay.classList.remove('active');
-      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-    });
-    
-    // Desktop Tooltips
+    // Desktop Tooltips - Simplified
     document.addEventListener('DOMContentLoaded', function() {
-      const navIcons = document.querySelectorAll('.nav-icon');
+      // Update live date on page load
+      updateLiveDate();
       
-      // Only add tooltips on desktop
-      if (window.innerWidth > 768) {
-        navIcons.forEach(icon => {
-          const title = icon.getAttribute('title');
-          if (title) {
-            // Remove default title behavior
-            icon.removeAttribute('title');
-            
-            // Create custom tooltip
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = title;
-            tooltip.style.cssText = `
-              position: absolute;
-              background: #1a1a1a;
-              color: white;
-              padding: 6px 12px;
-              border-radius: 6px;
-              font-size: 13px;
-              font-weight: 500;
-              white-space: nowrap;
-              opacity: 0;
-              visibility: hidden;
-              transition: all 0.3s ease;
-              transform: translateY(-10px);
-              pointer-events: none;
-              z-index: 1001;
-              top: 100%;
-              left: 50%;
-              transform: translateX(-50%) translateY(-10px);
-            `;
-            
-            icon.style.position = 'relative';
-            icon.appendChild(tooltip);
-            
-            // Show tooltip on hover
-            icon.addEventListener('mouseenter', function(e) {
-              tooltip.style.opacity = '1';
-              tooltip.style.visibility = 'visible';
-              tooltip.style.transform = 'translateX(-50%) translateY(5px)';
-            });
-            
-            icon.addEventListener('mouseleave', function(e) {
-              tooltip.style.opacity = '0';
-              tooltip.style.visibility = 'hidden';
-              tooltip.style.transform = 'translateX(-50%) translateY(-10px)';
-            });
-          }
-        });
-      }
+      // No mobile menu functionality needed anymore
     });
     
     // Off-Hours Banner - UPDATED TO 11PM-8AM
