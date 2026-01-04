@@ -40,121 +40,62 @@
             flex-direction: column;
         }
         
-        /* Top Navigation Bar */
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 15px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .top-nav-content {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1a1a1a;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-        
-        .logo sup {
-            font-size: 10px;
-            vertical-align: super;
-            color: #666;
-        }
-        
-        .search-bar {
-            flex: 1;
-            max-width: 400px;
-            margin: 0 30px;
-            position: relative;
-        }
-        
-        .search-bar input {
-            width: 100%;
-            padding: 12px 45px 12px 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 15px;
-            background: #f8f9fa;
-            transition: all 0.3s ease;
-        }
-        
-        .search-bar input:focus {
-            outline: none;
-            border-color: #1a1a1a;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
-        }
-        
-        .search-bar i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-            font-size: 18px;
-        }
-        
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .user-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #1a1a1a;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .user-icon:hover {
-            background: #333;
-            transform: scale(1.05);
-        }
-        
-        .logout-btn {
-            padding: 10px 20px;
-            background: #f8f9fa;
-            color: #666;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-        
-        .logout-btn:hover {
-            background: #1a1a1a;
-            color: white;
-            border-color: #1a1a1a;
-        }
+/* Updated Navigation Bar */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0; /* Slightly reduced padding */
+}
+
+.top-nav-content {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px; /* Reduced padding for mobile */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; /* NEW: Allows elements to wrap on small screens */
+    gap: 10px; /* NEW: Prevents items from touching when they wrap */
+}
+
+.search-bar {
+    flex: 1;
+    min-width: 200px; /* NEW: Ensures it doesn't get too tiny */
+    max-width: 400px;
+    margin: 0 15px; /* Reduced margin from 30px */
+    position: relative;
+}
+
+/* --- MOBILE SPECIFIC FIXES --- */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 20px; /* Smaller logo for mobile */
+    }
+
+    .search-bar {
+        order: 3; /* NEW: Moves search bar to its own line on very small screens */
+        margin: 5px 0;
+        max-width: 100%;
+        flex: 0 0 100%; /* Forces search to take full width if needed */
+    }
+
+    .user-menu {
+        gap: 10px; /* Tighter spacing */
+    }
+
+    .logout-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
         
         /* Main Content Area */
         .main-content {
