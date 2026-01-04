@@ -1122,7 +1122,7 @@ function updateProfilePanel(affiliate) {
 const appearances = affiliate.appearances || '100 off 100';
 const [completed, total] = appearances.split(' off ').map(Number);
 // Use performance_score field as Request Rate (0-100)
-const requestRate = affiliate.performance_score || 0;
+const requestRate = affiliate.request_rate || 0;
 
 document.getElementById('profileAppearances').innerHTML = `
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
