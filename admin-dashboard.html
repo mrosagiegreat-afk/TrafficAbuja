@@ -1556,22 +1556,21 @@ async getAffiliates() {
             async saveAffiliate(affiliate) {
     // 1. Prepare the data package. 
     // Left side = SQL Column Name | Right side = JavaScript Variable
-    const payload = {
-        name: affiliate.name,
-        phone: affiliate.phone,
-        address: affiliate.address,
-        email: affiliate.email || '',
-        education: affiliate.education || '',
-        user_id: affiliate.user_id || affiliate.userId, 
-        password: affiliate.password,
-        // Send the array directly so Supabase saves it as clean JSON
-        beneficiaries: affiliate.beneficiaries || [], 
-        account_details: affiliate.account_details || affiliate.accountDetails || '',
-        // Look at the ends of these lines:
-appearances: affiliate.appearances || '100 off 100', // <--- COMMA HERE
-request_rate: parseInt(document.getElementById('requestRate').value) || 0, // <--- COMMA HERE
-updated_at: new Date() // No comma needed on the last one
-    };
+const payload = {
+    name: affiliate.name,
+    phone: affiliate.phone,
+    address: affiliate.address,
+    email: affiliate.email || '',
+    education: affiliate.education || '',
+    user_id: affiliate.user_id || affiliate.userId, 
+    password: affiliate.password,
+    // Ensure this is sending the actual data from the form
+    beneficiaries: affiliate.beneficiaries || [], 
+    account_details: affiliate.account_details || '',
+    appearances: affiliate.appearances || '100 off 100',
+    request_rate: parseInt(document.getElementById('requestRate').value) || 0
+    // Notice: NO updated_at line here anymore!
+};
 
     try {
         if (affiliate.id) {
@@ -1865,7 +1864,12 @@ async populateProfileForm(affiliate) {
                 document.getElementById('password').value = affiliate.password || '';
                 document.getElementById('accountDetails').value = affiliate.account_details || ''; 
                 document.getElementById('appearances').value = affiliate.appearances || '100 off 100';
-                document.getElementById('requestRate').value = affiliate.request_rate || 0;
+
+// DELETE the old requestRate line and PASTE this exactly:
+const requestRateField = document.getElementById('requestRate');
+if (requestRateField) {
+    requestRateField.value = affiliate.request_rate || 0;
+}
 
                 // 3. SAFE BENEFICIARY PARSING (Stops the Mobile Crash)
                 let beneficiaries = [];
@@ -2224,7 +2228,7 @@ renderBeneficiaries(beneficiaries) {
                     affiliate.appearances = document.getElementById('appearances').value;
 
                     // Request Rate is now stored in performance_score column (for backward compatibility)
-affiliate.performance_score = parseInt(document.getElementById('requestRate').value) || 0;
+affiliate.request_rate = parseInt(document.getElementById('requestRate').value) || 0;
                     
                     // 2. Collect beneficiaries
                     const beneficiaryNames = document.querySelectorAll('input[name="beneficiaryName[]"]');
