@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <!-- Cache control to prevent browser caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>Affiliate Login | TrafficAbuja</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & Base - FIXED for mobile */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    html {
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      touch-action: manipulation;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 15px 0;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo sup {
+      font-size: 10px;
+      vertical-align: super;
+      color: #666;
+    }
+
+    /* Login Container */
+    .login-container {
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .login-left {
+      flex: 1;
+      padding-right: 60px;
+    }
+
+    .login-right {
+      flex: 1;
+      max-width: 450px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 50px 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e8e8e8;
+    }
+
+    .login-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #1a1a1a 0%, #444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .login-subtitle {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 40px;
+      max-width: 500px;
+    }
+
+    .login-form-title {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #1a1a1a;
+    }
+
+    .login-form-subtitle {
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+      font-size: 15px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 16px 18px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #fafafa;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #1a1a1a;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 18px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      background: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-divider {
+      text-align: center;
+      margin: 30px 0;
+      position: relative;
+    }
+
+    .login-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e8e8e8;
+    }
+
+    .login-divider span {
+      background: #fff;
+      padding: 0 20px;
+      color: #888;
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .back-home {
+      display: inline-block;
+      color: #666;
+      text-decoration: none;
+      font-size: 15px;
+      margin-top: 30px;
+      transition: color 0.3s ease;
+    }
+
+    .back-home:hover {
+      color: #1a1a1a;
+    }
+
+    .back-home i {
+      margin-right: 8px;
+    }
+
+    /* Messages */
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid #fcc;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .login-container {
+        flex-direction: column;
+        gap: 60px;
+      }
+      
+      .login-left {
+        padding-right: 0;
+        text-align: center;
+      }
+      
+      .login-right {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .login-title {
+        font-size: 2rem;
+      }
+      
+      .login-right {
+        padding: 35px 25px;
+      }
+      
+      .login-form-title {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-title {
+        font-size: 1.8rem;
+      }
+      
+      .login-right {
+        padding: 30px 20px;
+      }
+      
+      .form-input {
+        padding: 14px 16px;
+      }
+      
+      .login-btn {
+        padding: 16px;
+      }
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #1a1a1a;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav a {
+      color: #444;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 80px 30px 30px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+        z-index: 1000;
+      }
+      
+      .nav.active {
+        right: 0;
+      }
+      
+      .nav a {
+        width: 100%;
+        padding: 15px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 16px;
+      }
+      
+      .nav a:last-child {
+        border-bottom: none;
+      }
+      
+      .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      
+      .nav-overlay.active {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
+        
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Login Container -->
+  <div class="container">
+    <div class="login-container">
+      <!-- Left Content -->
+      <div class="login-left">
+        <p class="login-subtitle">
+          Access your dashboard to track completed schedules, client reviews and profile overview. 
+          All your engagements with TrafficAbuja in one secure location.
+        </p>
+        
+        <div style="margin-top: 60px;">
+          <h3 style="font-size: 20px; margin-bottom: 20px; color: #1a1a1a;"> You'll find:</h3>
+          <ul style="list-style: none;">
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+              <i class="fas fa-calendar-check" style="position: absolute; left: 0; top: 3px; color: #1a1a1a;"></i>
+              <strong style="color: #1a1a1a;">Where, When, What</strong>
+              <p style="color: #666; margin-top: 5px;">All completed events</p>
+            </li>
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+              <i class="fas fa-user-circle" style="position: absolute; left: 0; top: 3px; color: #1a1a1a;"></i>
+              <strong style="color: #1a1a1a;">Profile Overview</strong>
+              <p style="color: #666; margin-top: 5px;">Personal information & Beneficiary</p>
+            </li>
+            <li style="padding-left: 30px; position: relative;">
+              <i class="fas fa-history" style="position: absolute; left: 0; top: 3px; color: #1a1a1a;"></i>
+              <strong style="color: #1a1a1a;">Appearances & Request</strong>
+              <p style="color: #666; margin-top: 5px;">Track appearances and progress toward team participation.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Right Content - Login Form -->
+      <div class="login-right">
+        <h2 class="login-form-title">Sign In</h2>
+        <p class="login-form-subtitle">Enter your credentials to access your dashboard</p>
+        
+        <!-- Error Message (hidden by default) -->
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+        
+        <!-- Login Form -->
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">User ID</label>
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              class="form-input" 
+              placeholder="Enter your user ID"
+              required
+              style="font-size: 16px;"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-input" 
+              placeholder="Enter your password"
+              required
+              style="font-size: 16px;"
+            >
+          </div>
+          
+          <button type="submit" class="login-btn" id="loginBtn">
+            <span id="btnText">Sign In</span>
+            <div id="btnSpinner" style="display: none;">
+              <div class="spinner"></div>
+              <span>Authenticating...</span>
+            </div>
+          </button>
+          
+          <div class="login-divider">
+            <span>Need help?</span>
+          </div>
+          
+          <p style="text-align: center; color: #666; font-size: 14px; line-height: 1.6;">
+            Contact admin if you've forgotten your credentials. 
+          </p>
+        </form>
+        
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Supabase Configuration
+    const SUPABASE_URL = 'https://qoisqrzlfspzxtnkgyyr.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvaXNxcnpsZnNwenh0bmtneXlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY4MDA0MzMsImV4cCI6MjA4MjM3NjQzM30.jp97VkUx6IFARFzFw3YXJJfBZmdnnCPHM95Q1WAqHnc';
+
+    // Initialize Supabase client
+let supabaseClient;
+
+
+
+if (typeof window.supabase !== 'undefined') {
+
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+} else {
+
+    // If it's not loaded yet, wait for the script to finish
+
+    const script = document.querySelector('script[src*="supabase-js"]');
+
+    script.addEventListener('load', () => {
+
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        if (typeof initApp === 'function') initApp();
+
+    });
+
+}
+
+    // Check if already logged in
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('affiliate_logged_in') === 'true') {
+            const loginTime = parseInt(localStorage.getItem('affiliate_login_time') || '0');
+            const currentTime = new Date().getTime();
+            const hoursSinceLogin = (currentTime - loginTime) / (1000 * 60 * 60);
+            
+            // If logged in less than 8 hours ago, auto-redirect
+            if (hoursSinceLogin < 8) {
+                window.location.href = 'affiliatedashboard.html';
+            } else {
+                // Clear expired session
+                localStorage.removeItem('affiliate_logged_in');
+                localStorage.removeItem('affiliate_id');
+                localStorage.removeItem('affiliate_name');
+                localStorage.removeItem('affiliate_login_time');
+            }
+        }
+        
+        // iOS Zoom Fix
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.style.fontSize = '16px';
+        });
+    });
+
+    // Login Form Handler
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Hide any previous error
+        errorMessage.style.display = 'none';
+        
+        // Show loading state
+        btnText.style.display = 'none';
+        btnSpinner.style.display = 'inline-block';
+        loginBtn.disabled = true;
+        
+        try {
+    // THIS IS THE NEW LINE YOU NEED
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // CHANGE 'window.supabase' to 'supabaseClient'
+    const { data: affiliate, error } = await supabaseClient
+                .from('affiliates')
+                .select('*')
+                .eq('user_id', username)
+                .eq('password', password)
+                .single();
+            
+            if (error || !affiliate) {
+                throw new Error('Invalid credentials');
+            }
+            
+            // Store user session
+            localStorage.setItem('affiliate_logged_in', 'true');
+            localStorage.setItem('affiliate_id', affiliate.id);
+            localStorage.setItem('affiliate_user_id', affiliate.user_id);
+            localStorage.setItem('affiliate_name', affiliate.name);
+            localStorage.setItem('affiliate_login_time', new Date().getTime());
+            
+            // Redirect to dashboard
+            window.location.href = 'affiliatedashboard.html';
+            
+        } catch (error) {
+            console.error('Login error:', error);
+            errorMessage.textContent = 'Invalid credentials. Please contact admin.';
+            errorMessage.style.display = 'block';
+            
+            // Reset button state
+            btnText.style.display = 'inline';
+            btnSpinner.style.display = 'none';
+            loginBtn.disabled = false;
+        }
+    });
+
+    // Mobile Menu Functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.getElementById('navOverlay');
+
+    mobileMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+        mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+    });
+
+    navOverlay.addEventListener('click', function() {
+        mainNav.classList.remove('active');
+        navOverlay.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+  </script>
+</body>
+</html>
