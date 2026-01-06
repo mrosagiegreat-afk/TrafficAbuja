@@ -1,0 +1,3084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <title>Admin Dashboard | TrafficAbuja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        html {
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Updated Navigation Bar */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 10px 0;
+        }
+
+        .top-nav-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Logo - Fixed size */
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .logo sup {
+            font-size: 10px;
+            vertical-align: super;
+            color: #666;
+        }
+
+        /* Search bar - Takes available space */
+        .search-bar {
+            flex: 1;
+            position: relative;
+            min-width: 0;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        /* User menu - Fixed width items */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .logout-btn {
+            padding: 10px 16px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .logout-btn:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+            border: 2px solid #e0e0e0;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            display: flex;
+            flex: 1;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            overflow: hidden;
+        }
+        
+        /* Left Sidebar - Affiliates List */
+        .sidebar {
+            width: 320px;
+            background: #f8f9fa;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .create-btn {
+            width: 100%;
+            padding: 16px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        
+        .create-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(26, 26, 26, 0.15);
+        }
+        
+        .affiliates-count {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .affiliates-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px;
+        }
+        
+        .affiliate-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .affiliate-item:hover {
+            border-color: #1a1a1a;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .affiliate-item.active {
+            border-color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        .affiliate-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+        
+        .affiliate-phone {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .affiliate-id {
+            font-size: 12px;
+            color: #888;
+            font-family: monospace;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .events-count {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        
+        /* Right Content Area */
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #666;
+            text-align: center;
+        }
+        
+        .empty-state i {
+            font-size: 64px;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        .empty-state p {
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+        
+        /* Profile Edit Form */
+        .profile-form {
+            display: none;
+            max-width: 800px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .profile-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+        }
+        
+        .profile-info h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+        }
+        
+        .form-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .form-group label i {
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .form-group label i:hover {
+            color: #1a1a1a;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        /* Gratuity Section in Admin - NEW */
+        .gratuity-section-admin {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .gratuity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .gratuity-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .gratuity-card.naira {
+            border-color: #4CAF50;
+        }
+        
+        .gratuity-card.dollar {
+            border-color: #2196F3;
+        }
+        
+        .gratuity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gratuity-currency {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .gratuity-currency.naira i {
+            color: #4CAF50;
+        }
+        
+        .gratuity-currency.dollar i {
+            color: #2196F3;
+        }
+        
+        .gratuity-input {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1a1a1a;
+            padding: 10px 15px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .gratuity-input:focus {
+            border-color: #1a1a1a;
+            background: white;
+            outline: none;
+        }
+        
+        .gratuity-input.naira {
+            color: #4CAF50;
+        }
+        
+        .gratuity-input.dollar {
+            color: #2196F3;
+        }
+        
+        .beneficiary-item {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .beneficiary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .beneficiary-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .remove-beneficiary {
+            background: none;
+            border: none;
+            color: #dc2626;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px;
+        }
+        
+        .add-beneficiary-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            color: #666;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .add-beneficiary-btn:hover {
+            border-color: #1a1a1a;
+            color: #1a1a1a;
+            background: #f0f0f0;
+        }
+        
+        /* Events Preview Styles */
+        .events-preview {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .event-preview-item {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .event-preview-item:hover {
+            background: #f0f0f0;
+            border-color: #1a1a1a;
+        }
+        
+        .event-preview-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .event-preview-date {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .event-preview-address {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .event-preview-status {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .event-preview-status span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .event-review-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        
+        .view-all-events-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            color: #666;
+            width: 100%;
+        }
+        
+        .view-all-events-btn:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 40px;
+        }
+        
+        .save-btn,
+        .delete-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .save-btn {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .save-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(26, 26, 26, 0.15);
+        }
+        
+        .delete-btn {
+            background: #fff5f5;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .delete-btn:hover {
+            background: #fecaca;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.1);
+        }
+        
+        /* Events Section */
+        .events-section {
+            display: none;
+        }
+        
+        .event-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .event-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .add-event-btn {
+            padding: 12px 24px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .add-event-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        
+        .event-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .event-item:hover {
+            border-color: #1a1a1a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .event-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .event-title i {
+            color: #666;
+        }
+        
+        .event-datetime {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .event-address {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Event Requirements Section in Admin - NEW */
+        .event-requirements-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .requirements-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .requirements-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .requirement-item-admin {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .requirement-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .requirement-info i {
+            font-size: 18px;
+            color: #666;
+            width: 24px;
+        }
+        
+        .requirement-info span {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .requirement-toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .requirement-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .requirement-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .requirement-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        .requirement-toggle input:checked + .requirement-slider {
+            background-color: #4CAF50;
+        }
+        
+        .requirement-toggle input:checked + .requirement-slider:before {
+            transform: translateX(24px);
+        }
+        
+        .event-status {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .status-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .status-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .event-review {
+            background: #f0f9f0;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .review-label {
+            font-size: 14px;
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .review-text {
+            color: #1a1a1a;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        /* Create Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    overflow-y: auto !important;
+}
+        
+        .modal {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 85vh;
+    margin: 50px auto;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    animation: modalSlideIn 0.3s ease;
+}
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .modal-header h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+       .modal-body {
+    padding: 30px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+        
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        .cancel-btn,
+        .create-modal-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cancel-btn {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            color: #666;
+        }
+        
+        .cancel-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .create-modal-btn {
+            background: #1a1a1a;
+            border: none;
+            color: white;
+        }
+        
+        .create-modal-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        
+        /* Success/Error Messages */
+        .success-message,
+        .error-message {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 3000;
+            animation: slideInRight 0.3s ease;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .success-message {
+            background: #f0f9f0;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .error-message {
+            background: #fff5f5;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .spinner-circle {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1a1a1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .event-address {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 300px;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .affiliates-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .affiliate-item {
+                margin-bottom: 0;
+            }
+            
+            .content-area {
+                height: calc(100vh - 370px);
+            }
+            
+            .search-bar {
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                margin: 0;
+                order: 3;
+            }
+            
+            .user-menu {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .main-content {
+                margin-top: 120px;
+                height: calc(100vh - 120px);
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .gratuity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-status {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-address {
+                font-size: 24px;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .requirements-grid-admin {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .affiliates-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .event-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .add-event-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal {
+                margin: 10px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .modal-header,
+            .modal-footer {
+                padding: 20px;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+            
+            .cancel-btn,
+            .create-modal-btn {
+                width: 100%;
+            }
+        }
+
+        /* Mobile-specific fixes */
+        @media (max-width: 992px) {
+            .top-nav-content {
+                padding: 0 15px;
+                gap: 12px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .logout-btn span {
+                display: none;
+            }
+            
+            .logout-btn {
+                padding: 10px;
+                width: 40px;
+                height: 40px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 8px 0;
+            }
+            
+            .top-nav-content {
+                padding: 0 12px;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 18px;
+            }
+            
+            .search-bar input {
+                padding: 10px 14px 10px 38px;
+                font-size: 14px;
+            }
+            
+            .search-bar i {
+                left: 14px;
+                font-size: 14px;
+            }
+            
+            .logout-btn {
+                padding: 8px;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .user-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-nav-content {
+                padding: 0 10px;
+                gap: 8px;
+            }
+            
+            .logo {
+                font-size: 16px;
+            }
+            
+            .search-bar input {
+                padding: 8px 12px 8px 34px;
+                font-size: 13px;
+            }
+            
+            .logout-btn, .user-icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        /* Small phones - Fallback for very narrow screens */
+        @media (max-width: 360px) {
+            .logo {
+                font-size: 14px;
+            }
+            
+            .search-bar input {
+                padding: 6px 10px 6px 30px;
+                font-size: 12px;
+            }
+            
+            .search-bar i {
+                left: 10px;
+                font-size: 12px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner-circle"></div>
+        <div class="loading-text">Processing...</div>
+    </div>
+    
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="top-nav-content">
+            <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search profile by name or phone...">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <div class="user-menu">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> 
+                </button>
+                <div class="user-icon" id="userIcon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <button class="create-btn" id="createBtn">
+                    <i class="fas fa-plus-circle"></i> CREATE NEW PROFILE
+                </button>
+                <div class="affiliates-count" id="affiliatesCount">0 </div>
+            </div>
+            
+            <div class="affiliates-list" id="affiliatesList">
+                <!-- Affiliates will be loaded here -->
+            </div>
+        </aside>
+        
+        <!-- Right Content Area -->
+        <main class="content-area" id="contentArea">
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-users"></i>
+                <h3>No Profile Selected</h3>
+                <p>Select a profile from the list or create a new one to view and edit.</p>
+            </div>
+            
+            <!-- Profile Edit Form -->
+            <div class="profile-form" id="profileForm">
+                <div class="profile-header">
+                    <div class="profile-icon" id="profileIcon">A</div>
+                    <div class="profile-info">
+                        <h2 id="profileName">Loading...</h2>
+                        <p id="profilePhone">+234 ••••••••••</p>
+                        <p id="memberSinceAdmin" style="font-size: 14px; color: #888; margin-top: 5px;">Member since: Loading...</p>
+                    </div>
+                </div>
+                
+                <form id="editProfileForm">
+                    <!-- Gratuity Section - NEW -->
+                    <div class="form-section gratuity-section-admin">
+                        <h3>Gratuity Management</h3>
+                        <div class="gratuity-grid">
+                            <div class="gratuity-card naira">
+                                <div class="gratuity-currency naira">
+                                    <i class="fas fa-naira-sign"></i>
+                                    <span>NAIRA GRATUITY</span>
+                                </div>
+                                <input type="text" class="gratuity-input naira" id="nairaGratuity" 
+                                       value="₦0" placeholder="₦0">
+                            </div>
+                            
+                            <div class="gratuity-card dollar">
+                                <div class="gratuity-currency dollar">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span>DOLLAR GRATUITY</span>
+                                </div>
+                                <input type="text" class="gratuity-input dollar" id="dollarGratuity" 
+                                       value="$0" placeholder="$0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name">
+                                    Full Name
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">
+                                    Phone Number
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="address">
+                                    Address
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="text" id="address" name="address" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">
+                                    Email Address
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="email" id="email" name="email">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="education">
+                                    Education
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <select id="education" name="education">
+                                    <option value="">Select Education</option>
+                                    <option value="High School">High School</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Bachelor's">Bachelor's Degree</option>
+                                    <option value="Master's">Master's Degree</option>
+                                    <option value="PhD">PhD</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Login Credentials</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="userId">
+                                    User ID
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="text" id="userId" name="userId" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password">
+                                    Password
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="text" id="password" name="password" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Beneficiaries</h3>
+                        <div id="beneficiariesContainer">
+                            <!-- Beneficiaries will be added here -->
+                        </div>
+                        <button type="button" class="add-beneficiary-btn" id="addBeneficiaryBtn">
+                            <i class="fas fa-plus"></i> Add Beneficiary
+                        </button>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Account Details</h3>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="accountDetails">
+                                    Bank Account Information
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <textarea id="accountDetails" name="accountDetails" placeholder="Bank name, account number, account name..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Appearances & Request Rate</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="appearances">
+                                    Appearances (Completed/Total)
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="text" id="appearances" name="appearances" placeholder="e.g., 50 off 100">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="requestRate">
+                                    Request Rate (%)
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                </label>
+                                <input type="number" id="requestRate" name="requestRate" min="0" max="100" step="1" placeholder="0-100">
+                                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                    Updating progress bar
+                                </div>
+                            </div>
+
+                            <div class="verification-container" style="margin: 20px 0; padding: 15px; background: #f1f8e9; border: 2px solid #c8e6c9; border-radius: 12px; cursor: pointer; position: relative; z-index: 1;" onclick="const cb = document.getElementById('isVerified'); cb.checked = !cb.checked;">
+                                <div style="display: flex; align-items: center; gap: 15px; pointer-events: none;">
+                                    <input type="checkbox" id="isVerified" style="width: 25px; height: 25px; cursor: pointer; pointer-events: auto;" onclick="event.stopPropagation();">
+                                    <div>
+                                        <strong style="color: #2e7d32; font-size: 16px; display: block;">Verify Affiliate Account</strong>
+                                        <span style="color: #558b2f; font-size: 12px;">This badge will appear instantly on their dashboard.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Completed Events</h3>
+                        <div class="events-preview" id="eventsPreview">
+                            </div>
+                        
+                       <div style="display: flex; gap: 15px; margin-top: 20px;">
+    <button type="button" class="add-event-btn" id="addEventFromProfileBtn" style="flex: 1;">
+        <i class="fas fa-plus"></i> Add New Event
+    </button>
+    <button type="button" class="view-all-events-btn" id="viewAllEventsBtn" style="flex: 1;">
+        <i class="fas fa-list"></i> View All Events
+    </button>
+</div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="delete-btn" id="deleteBtn">
+                            <i class="fas fa-trash"></i> DELETE PROFILE
+                        </button>
+                        <button type="submit" class="save-btn" id="saveBtn">
+                            <i class="fas fa-save"></i> SAVE CHANGES
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Events Section -->
+<div class="events-section" id="eventsSection">
+    <div class="event-header">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <!-- Add this back button -->
+            <button class="back-btn" id="backToProfileBtn" style="background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 15px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #1a1a1a;">
+                <i class="fas fa-arrow-left"></i>
+                Back to Profile
+            </button>
+            <h2 id="eventsTitle">Events for <span id="selectedAffiliateName">Loading...</span></h2>
+        </div>
+        <button class="add-event-btn" id="addEventBtn">
+            <i class="fas fa-plus"></i> Add Event
+        </button>
+    </div>
+    
+    <div id="eventsList">
+        <!-- Events will be loaded here -->
+    </div>
+</div>
+        </main>
+    </div>
+    
+    <!-- Create Affiliate Modal -->
+    <div class="modal-overlay" id="createModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Create New Profile</h3>
+            </div>
+            <div class="modal-body">
+                <form id="createAffiliateForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="newName">Full Name *</label>
+                            <input type="text" id="newName" name="newName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newPhone">Phone Number *</label>
+                            <input type="tel" id="newPhone" name="newPhone" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="newAddress">Address *</label>
+                            <input type="text" id="newAddress" name="newAddress" required>
+                        </div>
+                        
+                        <div class="form-group">
+    <label for="newUserId">User ID *</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="newUserId" name="newUserId" required style="flex: 1;">
+        <button type="button" id="generateUserIdBtn" style="padding: 10px 15px; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; white-space: nowrap; flex-shrink: 0;">
+            <i class="fas fa-random"></i> Generate
+        </button>
+    </div>
+</div>
+                        
+                        <div class="form-group">
+                            <label for="newPassword">Password *</label>
+                            <input type="text" id="newPassword" name="newPassword" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" id="cancelCreateBtn">Cancel</button>
+                <button type="button" class="create-modal-btn" id="confirmCreateBtn">Create Profile</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Event Modal -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add New Event</h3>
+            </div>
+            <div class="modal-body">
+                <form id="createEventForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title *</label>
+                            <input type="text" id="eventTitle" name="eventTitle" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventDate">Date *</label>
+                            <input type="date" id="eventDate" name="eventDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventTime">Time *</label>
+                            <input type="time" id="eventTime" name="eventTime" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="eventAddress">Address *</label>
+                            <input type="text" id="eventAddress" name="eventAddress" required>
+                        </div>
+                        
+                        <!-- Event Requirements - NEW -->
+                        <div class="form-group full-width">
+                            <label>Event Requirements</label>
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <span style="font-weight: 500;">Photo Check-in</span>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" id="eventPhotoCheckin" name="eventPhotoCheckin">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <span style="font-weight: 500;">Videos</span>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" id="eventVideos" name="eventVideos">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <span style="font-weight: 500;">Live Video</span>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" id="eventLiveVideo" name="eventLiveVideo">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <span style="font-weight: 500;">Post-event Report</span>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" id="eventPostReport" name="eventPostReport">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timeArrived">Time Arrived</label>
+                            <input type="time" id="timeArrived" name="timeArrived">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timeLeft">Time Left</label>
+                            <input type="time" id="timeLeft" name="timeLeft">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="eventReview">Client Review</label>
+                            <textarea id="eventReview" name="eventReview" rows="3"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" id="cancelEventBtn">Cancel</button>
+                <button type="button" class="create-modal-btn" id="confirmEventBtn">Add Event</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+
+        
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://qoisqrzlfspzxtnkgyyr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvaXNxcnpsZnNwenh0bmtneXlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY4MDA0MzMsImV4cCI6MjA4MjM3NjQzM30.jp97VkUx6IFARFzFw3YXJJfBZmdnnCPHM95Q1WAqHnc';
+
+        // Initialize Supabase client
+        let supabaseClient;
+
+        if (typeof window.supabase !== 'undefined') {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } else {
+            const script = document.querySelector('script[src*="supabase-js"]');
+            script.addEventListener('load', () => {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                if (typeof initApp === 'function') initApp();
+            });
+        }
+            
+        // Dynamically load Supabase
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@supabase/supabase-js@2';
+        script.async = true;
+        
+        script.onload = function() {
+            console.log('Supabase library loaded dynamically');
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            
+            // Re-initialize the app after Supabase loads
+            if (typeof initApp === 'function') {
+                initApp();
+            }
+        };
+        
+        script.onerror = function() {
+            console.error('Failed to load Supabase library');
+            alert('Error: Cannot connect to database. Please refresh the page.');
+        };
+        
+        document.head.appendChild(script);   
+
+        // Database class using Supabase
+        class Database {
+            // Affiliates methods
+            async getAffiliates() {
+                const { data, error } = await supabaseClient
+                    .from('affiliates')
+                    .select('*')
+                    .order('name');
+                
+                if (error) throw error;
+                return data.map(a => ({...a, affiliate_id: a.user_id})); 
+            }
+            
+            async getAffiliate(id) {
+                const { data, error } = await supabaseClient
+                    .from('affiliates')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+                
+                if (error) throw error;
+                return data;
+            }
+            
+async saveAffiliate(affiliate) {
+    // Prepare the data package with new fields
+    const payload = {
+        name: affiliate.name,
+        phone: affiliate.phone,
+        address: affiliate.address,
+        email: affiliate.email || '',
+        education: affiliate.education || '',
+        user_id: affiliate.user_id || affiliate.userId,
+        password: affiliate.password,
+        beneficiaries: affiliate.beneficiaries || [],
+        account_details: affiliate.account_details || '',
+        appearances: affiliate.appearances || '100 off 100',
+        request_rate: parseInt(affiliate.request_rate) || 0,
+        naira_gratuity: affiliate.naira_gratuity || '₦0',
+        dollar_gratuity: affiliate.dollar_gratuity || '$0',
+        is_verified: affiliate.is_verified || false 
+    };
+
+    try {
+        if (affiliate.id) {
+            // UPDATE existing affiliate
+            const { data, error } = await supabaseClient
+                .from('affiliates')
+                .update(payload)
+                .eq('id', affiliate.id)
+                .select();
+            
+            if (error) throw error;
+            return data?.[0];
+        } else {
+            // FOR NEW AFFILIATE: Check if user_id already exists
+            const userId = payload.user_id;
+            
+            if (!userId || userId.trim() === '') {
+                throw new Error('User ID is required');
+            }
+            
+            // First check if user_id exists
+            const { data: existingAffiliate } = await supabaseClient
+                .from('affiliates')
+                .select('id, name')
+                .eq('user_id', userId)
+                .maybeSingle();
+            
+            if (existingAffiliate) {
+                throw new Error(`User ID "${userId}" is already used by "${existingAffiliate.name}". Please use a different User ID.`);
+            }
+            
+            // Insert new affiliate
+            const { data, error } = await supabaseClient
+                .from('affiliates')
+                .insert(payload)
+                .select();
+
+            if (error) throw error;
+            
+            return data?.[0];
+        }
+    } catch (error) {
+        console.error('Database Operation Failed:', error.message);
+        // Just throw the error - let the calling function handle the alert
+        throw error;
+    }
+}            
+            async deleteAffiliate(id) {
+    try {
+        // First, delete all events for this affiliate
+        await this.deleteAffiliateEvents(id);
+        
+        // Then delete the affiliate
+        const { error } = await supabaseClient
+            .from('affiliates')
+            .delete()
+            .eq('id', id);
+        
+        if (error) throw error;
+        
+        return true;
+    } catch (error) {
+        console.error('Error in deleteAffiliate:', error);
+        throw error;
+    }
+}
+            
+            // Events methods
+            async getEvents(affiliateId = null) {
+                let query = supabaseClient.from('events').select('*');
+                
+                if (affiliateId) {
+                    query = query.eq('affiliate_id', affiliateId);
+                }
+                
+                const { data, error } = await query.order('date', { ascending: false });
+                
+                if (error) throw error;
+                return data || [];
+            }
+            
+            async saveEvent(event) {
+    // Prepare the data package with event requirements
+    const eventData = {
+        affiliate_id: event.affiliate_id || event.affiliateId,
+        title: event.title,
+        date: event.date,
+        time: event.time,
+        address: event.address,
+        time_arrived: event.timeArrived || null,
+        time_left: event.timeLeft || null,
+        review: event.review || '',
+        photo_checkin: event.photoCheckin || false,
+        videos: event.videos || false,
+        live_video: event.liveVideo || false,
+        post_event_report: event.postEventReport || false
+    };
+
+    // DEBUG: Log what we're sending
+    console.log('Saving event data:', eventData);
+
+    try {
+        if (event.id && !event.isNew) {
+            // Update existing event
+            const { data, error } = await supabaseClient
+                .from('events')
+                .update(eventData)
+                .eq('id', event.id)
+                .select();
+            
+            if (error) throw error;
+            return data?.[0];
+        } else {
+            // Create new event
+            const { data, error } = await supabaseClient
+                .from('events')
+                .insert(eventData)
+                .select();
+
+            if (error) throw error;
+            return data?.[0];
+        }
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw error;
+    }
+}
+            
+            async deleteAffiliateEvents(affiliateId) {
+                const { error } = await supabaseClient
+                    .from('events')
+                    .delete()
+                    .eq('user_id', affiliateId);
+                
+                if (error) throw error;
+                return true;
+            }
+            
+            // Search methods
+            async searchAffiliates(query) {
+                if (!query) return this.getAffiliates();
+                
+                const { data, error } = await supabaseClient
+                    .from('affiliates')
+                    .select('*')
+                    .or(`name.ilike.%${query}%,phone.ilike.%${query}%,user_id.ilike.%${query}%`)
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                return data || [];
+            }
+            
+            // Generate ID for client-side use
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+        }
+        
+        // Application state
+        class AppState {
+            constructor() {
+                this.currentAffiliateId = null;
+                this.db = new Database();
+                this.init();
+            }
+            
+            init() {
+                this.renderAffiliates();
+                this.setupEventListeners();
+                this.checkAuth();
+            }
+            
+            checkAuth() {
+                const isLoggedIn = localStorage.getItem('admin_logged_in') === 'true';
+                if (!isLoggedIn) {
+                    window.location.href = 'admin.html';
+                }
+            }
+            
+            showMessage(message, type = 'success') {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `${type}-message`;
+                messageDiv.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${message}
+                `;
+                
+                document.body.appendChild(messageDiv);
+                
+                setTimeout(() => {
+                    messageDiv.style.animation = 'slideInRight 0.3s ease reverse';
+                    setTimeout(() => messageDiv.remove(), 300);
+                }, 3000);
+            }
+            
+            showLoading(show = true) {
+                const spinner = document.getElementById('loadingSpinner');
+                spinner.style.display = show ? 'flex' : 'none';
+            }
+            
+            // ADD THE selectAffiliate METHOD HERE ▼▼▼
+async selectAffiliate(affiliateId) {
+    try {
+        console.log('Selecting affiliate:', affiliateId);
+        this.showLoading(true);
+        this.currentAffiliateId = affiliateId;
+        
+        // Update UI to show selected state
+        document.querySelectorAll('.affiliate-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        const selectedItem = document.querySelector(`[data-id="${affiliateId}"]`);
+        if (selectedItem) {
+            selectedItem.classList.add('active');
+        }
+        
+        // Show profile form and hide other sections
+        document.getElementById('emptyState').style.display = 'none';
+        document.getElementById('profileForm').style.display = 'block';
+        document.getElementById('eventsSection').style.display = 'none';
+        
+        // Load the affiliate data
+        const affiliate = await this.db.getAffiliate(affiliateId);
+        if (!affiliate) {
+            this.showMessage('Affiliate not found', 'error');
+            return;
+        }
+        
+        // Store current affiliate
+        this.currentAffiliate = affiliate;
+        
+        // Populate the form with affiliate data
+        await this.populateProfileForm(affiliate);
+        
+        // Scroll to top
+        document.getElementById('contentArea').scrollTop = 0;
+        
+    } catch (error) {
+        console.error('Error selecting affiliate:', error);
+        this.showMessage('Failed to load affiliate profile', 'error');
+    } finally {
+        this.showLoading(false);
+    }
+}
+// END OF selectAffiliate METHOD ▲▲▲
+
+
+            backToProfile() {
+    if (!this.currentAffiliateId) return;
+    
+    // Show profile form, hide events
+    document.getElementById('profileForm').style.display = 'block';
+    document.getElementById('eventsSection').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'none';
+}
+
+// Add this method to your AppState class
+debugDatabaseState() {
+    console.log('Current Affiliate ID:', this.currentAffiliateId);
+    console.log('Current Affiliate:', this.currentAffiliate);
+    
+    // Check database connection
+    supabaseClient
+        .from('affiliates')
+        .select('count', { count: 'exact', head: true })
+        .then(({ count, error }) => {
+            console.log('Total affiliates in DB:', count, 'Error:', error);
+        });
+}
+
+            fixViewAllEventsButton() {
+    const viewAllBtn = document.getElementById('viewAllEventsBtn');
+    if (viewAllBtn) {
+        // Remove old click events
+        const newBtn = viewAllBtn.cloneNode(true);
+        viewAllBtn.parentNode.replaceChild(newBtn, viewAllBtn);
+        
+        // Add new click event
+        document.getElementById('viewAllEventsBtn').addEventListener('click', async () => {
+            if (this.currentAffiliateId) {
+                await this.showEvents();
+            } else {
+                this.showMessage('Please select a profile first', 'error');
+            }
+        });
+    }
+}
+
+            async renderAffiliates(searchQuery = '') {
+    try {
+        this.showLoading(true);
+        
+        // 1. Get all affiliates
+        const affiliates = searchQuery ? 
+            await this.db.searchAffiliates(searchQuery) : 
+            await this.db.getAffiliates();
+        
+        // 2. Get ALL events at once (outside the loop)
+        const allEvents = await this.db.getEvents();
+        
+        // 3. Count events per affiliate
+        const eventCounts = {};
+        allEvents.forEach(event => {
+            eventCounts[event.affiliate_id] = (eventCounts[event.affiliate_id] || 0) + 1;
+        });
+        
+        const listElement = document.getElementById('affiliatesList');
+        const countElement = document.getElementById('affiliatesCount');
+        
+        // 4. Clear the list completely
+        listElement.innerHTML = '';
+        countElement.textContent = `${affiliates.length} Affiliate${affiliates.length !== 1 ? 's' : ''}`;
+        
+        if (affiliates.length === 0) {
+            listElement.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; color: #666;">
+                    <i class="fas fa-users" style="font-size: 48px; margin-bottom: 20px;"></i>
+                    <p>No affiliates found</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // 5. Render all affiliates in ONE go (no async calls in loop)
+        for (const affiliate of affiliates) {
+            const eventCount = eventCounts[affiliate.id] || 0;
+            const isActive = this.currentAffiliateId === affiliate.id;
+            
+            const affiliateElement = document.createElement('div');
+            affiliateElement.className = `affiliate-item ${isActive ? 'active' : ''}`;
+            affiliateElement.dataset.id = affiliate.id;
+            
+            affiliateElement.innerHTML = `
+                <div class="affiliate-name">${affiliate.name}</div>
+                <div class="affiliate-phone">${affiliate.phone}</div>
+                <div class="affiliate-id">ID: ${affiliate.user_id}</div>
+                ${eventCount > 0 ? `<div class="events-count">${eventCount} event${eventCount !== 1 ? 's' : ''}</div>` : ''}
+            `;
+            
+            affiliateElement.addEventListener('click', (() => {
+    const affiliateId = affiliate.id;
+    return () => this.selectAffiliate(affiliateId);
+})());
+            
+            listElement.appendChild(affiliateElement);
+        }
+        
+        if (searchQuery && this.currentAffiliateId) {
+            const currentExists = affiliates.some(a => a.id === this.currentAffiliateId);
+            if (!currentExists) {
+                this.clearSelection();
+            }
+        }
+        
+    } catch (error) {
+        console.error('Error rendering affiliates:', error);
+        this.showMessage('Failed to load affiliates', 'error');
+    } finally {
+        this.showLoading(false);
+    }
+}            
+            async populateProfileForm(affiliate) {
+                // Update profile header
+                const firstLetter = affiliate.name ? affiliate.name.charAt(0).toUpperCase() : '?';
+                document.getElementById('profileIcon').textContent = firstLetter;
+                document.getElementById('profileName').textContent = affiliate.name || 'Unknown';
+                document.getElementById('profilePhone').textContent = affiliate.phone || 'No Phone';
+                
+                // Update member since
+                if (affiliate.created_at) {
+                    const createdDate = new Date(affiliate.created_at);
+                    const formattedDate = createdDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                    document.getElementById('memberSinceAdmin').textContent = `Member since: ${formattedDate}`;
+                }
+                
+                // Populate standard form fields
+                document.getElementById('name').value = affiliate.name || '';
+                document.getElementById('phone').value = affiliate.phone || '';
+                document.getElementById('address').value = affiliate.address || '';
+                document.getElementById('email').value = affiliate.email || '';
+                document.getElementById('education').value = affiliate.education || '';
+                document.getElementById('userId').value = affiliate.user_id || '';
+                document.getElementById('password').value = affiliate.password || '';
+                document.getElementById('accountDetails').value = affiliate.account_details || '';
+                document.getElementById('appearances').value = affiliate.appearances || '100 off 100';
+                document.getElementById('requestRate').value = affiliate.request_rate || 0;
+                
+                // Populate gratuity fields
+                document.getElementById('nairaGratuity').value = affiliate.naira_gratuity || '₦0';
+                document.getElementById('dollarGratuity').value = affiliate.dollar_gratuity || '$0';
+                document.getElementById('isVerified').checked = affiliate.is_verified || false;
+                
+                // Parse beneficiaries
+                let beneficiaries = [];
+                try {
+                    if (Array.isArray(affiliate.beneficiaries)) {
+                        beneficiaries = affiliate.beneficiaries;
+                    } else if (typeof affiliate.beneficiaries === 'string' && affiliate.beneficiaries.trim() !== "") {
+                        beneficiaries = JSON.parse(affiliate.beneficiaries);
+                    }
+                } catch (e) {
+                    console.error('Error parsing beneficiaries:', e);
+                    beneficiaries = [];
+                }
+                
+                // Update UI sections
+                this.renderBeneficiaries(beneficiaries);
+                await this.renderEventsPreview();
+            }
+            
+            renderBeneficiaries(beneficiaries) {
+                const container = document.getElementById('beneficiariesContainer');
+                if (!container) return;
+                
+                container.innerHTML = '';
+                const safeList = Array.isArray(beneficiaries) ? beneficiaries : [];
+                
+                safeList.forEach((beneficiary, index) => {
+                    const beneficiaryElement = document.createElement('div');
+                    beneficiaryElement.className = 'beneficiary-item';
+                    beneficiaryElement.innerHTML = `
+                        <div class="beneficiary-header">
+                            <h4>Beneficiary ${index + 1}</h4>
+                            <button type="button" class="remove-beneficiary" data-index="${index}">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" 
+                                       name="beneficiaryName[]" 
+                                       class="beneficiary-name-input" 
+                                       value="${beneficiary.name || ''}">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" 
+                                       name="beneficiaryPhone[]" 
+                                       class="beneficiary-phone-input" 
+                                       value="${beneficiary.phone || ''}">
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(beneficiaryElement);
+                });
+
+                // Add event listeners for the remove buttons
+                container.querySelectorAll('.remove-beneficiary').forEach(btn => {
+                    btn.onclick = (e) => {
+                        const idx = parseInt(e.currentTarget.dataset.index);
+                        this.currentAffiliate.beneficiaries.splice(idx, 1);
+                        this.renderBeneficiaries(this.currentAffiliate.beneficiaries);
+                    };
+                });
+            }
+            
+            async addBeneficiary() {
+                try {
+                    if (!this.currentAffiliate) {
+                        console.error("No affiliate selected");
+                        return;
+                    }
+
+                    if (!this.currentAffiliate.beneficiaries) {
+                        this.currentAffiliate.beneficiaries = [];
+                    }
+
+                    if (typeof this.currentAffiliate.beneficiaries === 'string') {
+                        try {
+                            this.currentAffiliate.beneficiaries = JSON.parse(this.currentAffiliate.beneficiaries);
+                        } catch (e) {
+                            this.currentAffiliate.beneficiaries = [];
+                        }
+                    }
+
+                    this.currentAffiliate.beneficiaries.push({ name: '', phone: '' });
+                    this.renderBeneficiaries(this.currentAffiliate.beneficiaries);
+                    
+                } catch (error) {
+                    console.error('Error adding beneficiary box:', error);
+                }
+            }
+            
+            async renderEventsPreview() {
+                if (!this.currentAffiliateId) return;
+                
+                try {
+                    const events = await this.db.getEvents(this.currentAffiliateId);
+                    const previewContainer = document.getElementById('eventsPreview');
+                    
+                    previewContainer.innerHTML = '';
+                    
+                    if (events.length === 0) {
+                        previewContainer.innerHTML = `
+                            <div style="text-align: center; padding: 30px; color: #666;">
+                                <i class="fas fa-calendar-times" style="font-size: 48px; margin-bottom: 15px;"></i>
+                                <p>No events completed yet</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Show only recent 5 events in preview
+                    const recentEvents = events.slice(0, 5);
+                    
+                    recentEvents.forEach(event => {
+                        const eventElement = document.createElement('div');
+                        eventElement.className = 'event-preview-item';
+                        
+                        const date = new Date(event.date);
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        });
+                        
+                        eventElement.innerHTML = `
+                            <div class="event-preview-title">
+                                <span>${event.title}</span>
+                                <span style="font-size: 12px; color: #666; font-weight: normal;">
+                                    ${formattedDate}
+                                </span>
+                            </div>
+                            <div class="event-preview-date">
+                                <i class="far fa-clock"></i> ${event.time}
+                            </div>
+                            <div class="event-preview-address">${event.address}</div>
+                            <div class="event-preview-status">
+                                <span><i class="fas fa-sign-in-alt"></i> ${event.time_arrived || '--:--'}</span>
+                                <span><i class="fas fa-sign-out-alt"></i> ${event.time_left || '--:--'}</span>
+                            </div>
+                            ${event.review ? `
+                                <div class="event-review-badge">
+                                    <i class="fas fa-star"></i> Has Review
+                                </div>
+                            ` : ''}
+                        `;
+                        
+                        eventElement.addEventListener('click', () => {
+                            this.showEvents();
+                            setTimeout(() => {
+                                const eventInList = document.querySelector(`[data-event-id="${event.id}"]`);
+                                if (eventInList) {
+                                    eventInList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    eventInList.style.background = '#f0f9f0';
+                                    eventInList.style.border = '2px solid #4CAF50';
+                                    setTimeout(() => {
+                                        eventInList.style.background = '';
+                                        eventInList.style.border = '';
+                                    }, 2000);
+                                }
+                            }, 300);
+                        });
+                        
+                        previewContainer.appendChild(eventElement);
+                    });
+                    
+                    // Show "view all" link if there are more events
+                    if (events.length > 5) {
+                        const viewAllLink = document.createElement('div');
+                        viewAllLink.style.textAlign = 'center';
+                        viewAllLink.style.marginTop = '15px';
+                        viewAllLink.innerHTML = `
+                            <button style="background: none; border: none; color: #1a1a1a; cursor: pointer; font-size: 14px; font-weight: 500;">
+                                <i class="fas fa-chevron-down"></i> Show ${events.length - 5} more events
+                            </button>
+                        `;
+                        
+                        viewAllLink.querySelector('button').addEventListener('click', () => {
+                            this.showEvents();
+                        });
+                        
+                        previewContainer.appendChild(viewAllLink);
+                    }
+                    
+                } catch (error) {
+                    console.error('Error rendering events preview:', error);
+                }
+            }
+            
+            clearSelection() {
+                this.currentAffiliateId = null;
+                document.querySelectorAll('.affiliate-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.getElementById('emptyState').style.display = 'flex';
+                document.getElementById('profileForm').style.display = 'none';
+                document.getElementById('eventsSection').style.display = 'none';
+            }
+            
+            async showEvents() {
+                if (!this.currentAffiliateId) return;
+                
+                try {
+                    const affiliate = await this.db.getAffiliate(this.currentAffiliateId);
+                    if (!affiliate) return;
+                    
+                    document.getElementById('profileForm').style.display = 'none';
+                    document.getElementById('eventsSection').style.display = 'block';
+                    document.getElementById('emptyState').style.display = 'none';
+                    
+                    document.getElementById('selectedAffiliateName').textContent = affiliate.name;
+                    await this.renderEvents();
+                    
+                } catch (error) {
+                    console.error('Error showing events:', error);
+                    this.showMessage('Failed to load events', 'error');
+                }
+            }
+            
+            async renderEvents() {
+                if (!this.currentAffiliateId) return;
+                
+                try {
+                    const events = await this.db.getEvents(this.currentAffiliateId);
+                    const eventsList = document.getElementById('eventsList');
+                    
+                    eventsList.innerHTML = '';
+                    
+                    if (events.length === 0) {
+                        eventsList.innerHTML = `
+                            <div style="text-align: center; padding: 60px 20px; color: #666;">
+                                <i class="fas fa-calendar" style="font-size: 48px; margin-bottom: 20px;"></i>
+                                <h3>No Events Yet</h3>
+                                <p>Click "Add Event" to create the first event for this affiliate.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    events.forEach(event => {
+                        const eventElement = document.createElement('div');
+                        eventElement.className = 'event-item';
+                        eventElement.dataset.eventId = event.id;
+                        
+                        const date = new Date(event.date);
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        
+                        eventElement.innerHTML = `
+                            <div class="event-title">
+                                <i class="fas fa-calendar-alt"></i> ${event.title}
+                            </div>
+                            <div class="event-datetime">
+                                <span><i class="far fa-calendar"></i> ${formattedDate}</span>
+                                <span><i class="far fa-clock"></i> ${event.time}</span>
+                            </div>
+                            <div class="event-address">${event.address}</div>
+                            
+                            <!-- Event Requirements Section -->
+                            <div class="event-requirements-section">
+                                <h4 class="requirements-title">
+                                    <i class="fas fa-tasks"></i> Event Requirements
+                                </h4>
+                                <div class="requirements-grid-admin">
+                                    <div class="requirement-item-admin">
+                                        <div class="requirement-info">
+                                            <i class="fas fa-camera"></i>
+                                            <span>Photo Check-in</span>
+                                        </div>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" ${event.photo_checkin ? 'checked' : ''} 
+                                                   onchange="appState.updateEventRequirement(${event.id}, 'photo_checkin', this.checked)">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="requirement-item-admin">
+                                        <div class="requirement-info">
+                                            <i class="fas fa-video"></i>
+                                            <span>Videos</span>
+                                        </div>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" ${event.videos ? 'checked' : ''} 
+                                                   onchange="appState.updateEventRequirement(${event.id}, 'videos', this.checked)">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="requirement-item-admin">
+                                        <div class="requirement-info">
+                                            <i class="fas fa-broadcast-tower"></i>
+                                            <span>Live Video</span>
+                                        </div>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" ${event.live_video ? 'checked' : ''} 
+                                                   onchange="appState.updateEventRequirement(${event.id}, 'live_video', this.checked)">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="requirement-item-admin">
+                                        <div class="requirement-info">
+                                            <i class="fas fa-file-alt"></i>
+                                            <span>Post-event Report</span>
+                                        </div>
+                                        <label class="requirement-toggle">
+                                            <input type="checkbox" ${event.post_event_report ? 'checked' : ''} 
+                                                   onchange="appState.updateEventRequirement(${event.id}, 'post_event_report', this.checked)">
+                                            <span class="requirement-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="event-status">
+                                <div class="status-item">
+                                    <div class="status-label">Time Arrived</div>
+                                    <div class="status-value">${event.time_arrived || '--:--'}</div>
+                                </div>
+                                <div class="status-item">
+                                    <div class="status-label">Time Left</div>
+                                    <div class="status-value">${event.time_left || '--:--'}</div>
+                                </div>
+                                <div class="status-item">
+                                    <div class="status-label">Status</div>
+                                    <div class="status-value">
+                                        ${event.time_arrived && event.time_left ? 'Completed' : 
+                                          event.time_arrived ? 'In Progress' : 'Scheduled'}
+                                    </div>
+                                </div>
+                            </div>
+                            ${event.review ? `
+                                <div class="event-review">
+                                    <div class="review-label">Client Review</div>
+                                    <div class="review-text">"${event.review}"</div>
+                                </div>
+                            ` : ''}
+                        `;
+                        
+                        eventsList.appendChild(eventElement);
+                    });
+                    
+                } catch (error) {
+                    console.error('Error rendering events:', error);
+                    this.showMessage('Failed to load events', 'error');
+                }
+            }
+            
+            async updateEventRequirement(eventId, requirement, value) {
+                try {
+                    this.showLoading(true);
+                    
+                    // Get the event
+                    const { data: event, error: fetchError } = await supabaseClient
+                        .from('events')
+                        .select('*')
+                        .eq('id', eventId)
+                        .single();
+                    
+                    if (fetchError) throw fetchError;
+                    
+                    // Update the specific requirement
+                    const updateData = {};
+                    updateData[requirement] = value;
+                    
+                    // Save to database
+                    const { error: updateError } = await supabaseClient
+                        .from('events')
+                        .update(updateData)
+                        .eq('id', eventId);
+                    
+                    if (updateError) throw updateError;
+                    
+                    this.showMessage('Event requirement updated successfully!', 'success');
+                    
+                    // Refresh events view
+                    await this.renderEvents();
+                    
+                } catch (error) {
+                    console.error('Error updating event requirement:', error);
+                    this.showMessage('Failed to update event requirement', 'error');
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+            
+            async saveProfile() {
+                if (!this.currentAffiliateId) return;
+                
+                try {
+                    this.showLoading(true);
+                    
+                    const affiliate = await this.db.getAffiliate(this.currentAffiliateId);
+                    if (!affiliate) return;
+                    
+                    // 1. Collect all form fields
+                    affiliate.name = document.getElementById('name').value;
+                    affiliate.phone = document.getElementById('phone').value;
+                    affiliate.address = document.getElementById('address').value;
+                    affiliate.email = document.getElementById('email').value;
+                    affiliate.education = document.getElementById('education').value;
+                    affiliate.user_id = document.getElementById('userId').value;
+                    affiliate.password = document.getElementById('password').value;
+                    affiliate.account_details = document.getElementById('accountDetails').value;
+                    affiliate.appearances = document.getElementById('appearances').value;
+                    affiliate.request_rate = parseInt(document.getElementById('requestRate').value) || 0;
+
+                    // 2. NEW: Collect Gratuity and Verification
+                    affiliate.naira_gratuity = document.getElementById('nairaGratuity').value;
+                    affiliate.dollar_gratuity = document.getElementById('dollarGratuity').value;
+                    affiliate.is_verified = document.getElementById('isVerified')?.checked || false;
+
+                    // 3. Collect beneficiaries
+                    const beneficiaryNames = document.querySelectorAll('input[name="beneficiaryName[]"]');
+                    const beneficiaryPhones = document.querySelectorAll('input[name="beneficiaryPhone[]"]');
+                    const beneficiaries = [];
+                    
+                    for (let i = 0; i < beneficiaryNames.length; i++) {
+                        const name = beneficiaryNames[i].value.trim();
+                        const phone = beneficiaryPhones[i].value.trim();
+                        
+                        if (name || phone) {
+                            beneficiaries.push({ name, phone });
+                        }
+                    }
+                    
+                    affiliate.beneficiaries = beneficiaries;
+                    
+                    // 4. Save to database
+                    await this.db.saveAffiliate(affiliate);
+                    
+                    // 5. Update UI
+                    await this.renderAffiliates();
+                    this.showMessage('Profile updated successfully!', 'success');
+                    
+                    // Refresh sidebar
+                    await this.selectAffiliate(affiliate.id);
+                    
+                } catch (error) {
+                    console.error('Error saving profile:', error);
+                    this.showMessage('Failed to save profile', 'error');
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+                        
+            async deleteProfile() {
+    if (!this.currentAffiliateId || !confirm('Are you sure you want to delete this affiliate? This will also delete all their events.')) {
+        return;
+    }
+    
+    try {
+        this.showLoading(true);
+        
+        // Store the ID before deletion
+        const affiliateIdToDelete = this.currentAffiliateId;
+        
+        // Delete from database
+        await this.db.deleteAffiliate(affiliateIdToDelete);
+        
+        // Clear current selection
+        this.currentAffiliateId = null;
+        this.currentAffiliate = null;
+        
+        // Clear the UI
+        this.clearSelection();
+        
+        // IMPORTANT: Force a fresh reload of affiliates from database
+        await this.renderAffiliates();
+        
+        this.showMessage('Affiliate deleted successfully!');
+        
+    } catch (error) {
+        console.error('Error deleting profile:', error);
+        this.showMessage('Failed to delete affiliate: ' + error.message, 'error');
+    } finally {
+        this.showLoading(false);
+    }
+}
+            
+            async createAffiliate() {
+    const name = document.getElementById('newName').value.trim();
+    const phone = document.getElementById('newPhone').value.trim();
+    const address = document.getElementById('newAddress').value.trim();
+    const userId = document.getElementById('newUserId').value.trim();
+    const password = document.getElementById('newPassword').value.trim();
+    
+    if (!name || !phone || !address || !userId || !password) {
+        this.showMessage('Please fill in all required fields.', 'error');
+        return;
+    }
+    
+    // Show loading after validation passes
+    this.showLoading(true);
+    
+    try {
+        const affiliate = {
+            name,
+            phone,
+            address,
+            email: '',
+            education: '',
+            userId,
+            password,
+            beneficiaries: [],
+            accountDetails: '',
+            appearances: '0 off 0',
+            request_rate: 0,
+            naira_gratuity: '₦0',
+            dollar_gratuity: '$0'
+        };
+        
+        const savedAffiliate = await this.db.saveAffiliate(affiliate);
+        
+        this.hideCreateModal();
+        await this.renderAffiliates();
+        await this.selectAffiliate(savedAffiliate.id);
+        this.showMessage('Affiliate created successfully!');
+        
+        // Clear form
+        document.getElementById('newName').value = '';
+        document.getElementById('newPhone').value = '';
+        document.getElementById('newAddress').value = '';
+        document.getElementById('newUserId').value = '';
+        document.getElementById('newPassword').value = '';
+        
+    } catch (error) {
+        console.error('Error creating affiliate:', error);
+        // The saveAffiliate method already shows an alert
+        // No need to show another message here
+    } finally {
+        this.showLoading(false);
+    }
+}            
+            async createEvent() {
+    if (!this.currentAffiliateId) return;
+    
+    const title = document.getElementById('eventTitle').value.trim();
+    const date = document.getElementById('eventDate').value;
+    const time = document.getElementById('eventTime').value;
+    const address = document.getElementById('eventAddress').value.trim();
+    const timeArrived = document.getElementById('timeArrived').value;
+    const timeLeft = document.getElementById('timeLeft').value;
+    const review = document.getElementById('eventReview').value.trim();
+    const photoCheckin = document.getElementById('eventPhotoCheckin').checked;
+    const videos = document.getElementById('eventVideos').checked;
+    const liveVideo = document.getElementById('eventLiveVideo').checked;
+    const postEventReport = document.getElementById('eventPostReport').checked;
+    
+    if (!title || !date || !time || !address) {
+        this.showMessage('Please fill in all required fields.', 'error');
+        return;
+    }
+    
+    try {
+        this.showLoading(true);
+        
+        const event = {
+            affiliateId: this.currentAffiliateId,
+            title,
+            date,
+            time,
+            address,
+            timeArrived: timeArrived || null,
+            timeLeft: timeLeft || null,
+            review: review || null,
+            photoCheckin,
+            videos,
+            liveVideo,
+            postEventReport
+        };
+        
+        console.log('Creating event for affiliate:', this.currentAffiliateId);
+        const savedEvent = await this.db.saveEvent(event);
+        console.log('Event saved:', savedEvent);
+        
+        // Update appearances count WITHOUT calling saveAffiliate
+        try {
+            const affiliate = await this.db.getAffiliate(this.currentAffiliateId);
+            if (affiliate) {
+                const events = await this.db.getEvents(this.currentAffiliateId);
+                const appearances = `${events.length} off ${events.length}`;
+                
+                // Update ONLY the appearances field using supabase directly
+                const { error: updateError } = await supabaseClient
+                    .from('affiliates')
+                    .update({ appearances: appearances })
+                    .eq('id', this.currentAffiliateId);
+                
+                if (updateError) {
+                    console.error('Error updating appearances:', updateError);
+                } else {
+                    console.log('Appearances updated to:', appearances);
+                }
+            }
+        } catch (updateErr) {
+            console.error('Error updating appearances count:', updateErr);
+            // Don't fail the whole event creation if appearances update fails
+        }
+        
+        this.hideEventModal();
+        
+        // Refresh the events preview
+        await this.renderEventsPreview();
+        
+        // Refresh affiliates list without forcing a re-render that might cause duplicates
+        try {
+            await this.renderAffiliates();
+        } catch (renderErr) {
+            console.error('Error refreshing affiliates list:', renderErr);
+        }
+        
+        this.showMessage('Event added successfully!');
+        
+        // Clear form
+        document.getElementById('eventTitle').value = '';
+        document.getElementById('eventDate').value = '';
+        document.getElementById('eventTime').value = '';
+        document.getElementById('eventAddress').value = '';
+        document.getElementById('timeArrived').value = '';
+        document.getElementById('timeLeft').value = '';
+        document.getElementById('eventReview').value = '';
+        document.getElementById('eventPhotoCheckin').checked = false;
+        document.getElementById('eventVideos').checked = false;
+        document.getElementById('eventLiveVideo').checked = false;
+        document.getElementById('eventPostReport').checked = false;
+        
+    } catch (error) {
+        console.error('Error creating event:', error);
+        this.showMessage('Failed to add event: ' + (error.message || 'Unknown error'), 'error');
+    } finally {
+        this.showLoading(false);
+    }
+}
+            
+            showCreateModal() {
+                document.getElementById('createModal').style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById('newName').focus();
+                }, 100);
+            }
+            
+            hideCreateModal() {
+                document.getElementById('createModal').style.display = 'none';
+            }
+            
+            showEventModal() {
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('eventDate').value = today;
+                document.getElementById('eventModal').style.display = 'flex';
+                
+                setTimeout(() => {
+                    document.getElementById('eventTitle').focus();
+                }, 100);
+            }
+            
+            hideEventModal() {
+                document.getElementById('eventModal').style.display = 'none';
+            }
+            
+            setupEventListeners() {
+                // Search input
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('input', (e) => {
+                        this.renderAffiliates(e.target.value);
+                    });
+                }
+
+                // Generate User ID button
+document.getElementById('generateUserIdBtn').addEventListener('click', () => {
+    // Get the first 3 letters of the name if available
+    const name = document.getElementById('newName').value.trim();
+    let prefix = 'user';
+    
+    if (name.length >= 3) {
+        prefix = name.substring(0, 3).toLowerCase();
+    }
+    
+    // Generate unique ID with timestamp to ensure uniqueness
+    const timestamp = Date.now().toString().slice(-6);
+    const randomNum = Math.floor(100 + Math.random() * 900);
+    const uniqueId = prefix + timestamp + randomNum;
+    
+    document.getElementById('newUserId').value = uniqueId;
+    
+    // Also generate a password
+    const randomPass = Math.random().toString(36).slice(-8) + Math.floor(10 + Math.random() * 90);
+    document.getElementById('newPassword').value = randomPass;
+    
+    // Show a quick message
+    this.showMessage('Generated unique User ID and Password!', 'success');
+});
+
+                // Back to Profile Button
+document.getElementById('backToProfileBtn').addEventListener('click', () => {
+    this.backToProfile();
+});
+                
+                // Logout
+                document.getElementById('logoutBtn').addEventListener('click', () => {
+                    localStorage.removeItem('admin_logged_in');
+                    window.location.href = 'admin.html';
+                });
+                
+                // User icon (shows events)
+                document.getElementById('userIcon').addEventListener('click', async () => {
+                    if (this.currentAffiliateId) {
+                        await this.showEvents();
+                    }
+                });
+                
+                // Create button
+                document.getElementById('createBtn').addEventListener('click', () => {
+                    this.showCreateModal();
+                });
+                
+                // Cancel create
+                document.getElementById('cancelCreateBtn').addEventListener('click', () => {
+                    this.hideCreateModal();
+                });
+                
+                // Confirm create
+                document.getElementById('confirmCreateBtn').addEventListener('click', async () => {
+                    await this.createAffiliate();
+                });
+                
+                // Save profile
+                document.getElementById('editProfileForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    await this.saveProfile();
+                });
+                
+                // Delete profile
+                document.getElementById('deleteBtn').addEventListener('click', async () => {
+                    await this.deleteProfile();
+                });
+                
+                // Add beneficiary
+                document.getElementById('addBeneficiaryBtn').addEventListener('click', async () => {
+                    await this.addBeneficiary();
+                });
+                
+                
+                // Add event from profile button
+                const addEventFromProfileBtn = document.getElementById('addEventFromProfileBtn');
+                if (addEventFromProfileBtn) {
+                    addEventFromProfileBtn.addEventListener('click', () => {
+                        if (this.currentAffiliateId) {
+                            this.showEventModal();
+                        }
+                    });
+                }
+                
+                // Add event button (from events section)
+                const addEventBtn = document.getElementById('addEventBtn');
+                if (addEventBtn) {
+                    addEventBtn.addEventListener('click', () => {
+                        if (this.currentAffiliateId) {
+                            this.showEventModal();
+                        }
+                    });
+                }
+                
+                // Cancel event
+                document.getElementById('cancelEventBtn').addEventListener('click', () => {
+                    this.hideEventModal();
+                });
+                
+                // Confirm event
+                document.getElementById('confirmEventBtn').addEventListener('click', async () => {
+                    await this.createEvent();
+                });
+                
+                // Close modals when clicking outside
+                document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                    overlay.addEventListener('click', (e) => {
+                        if (e.target === overlay) {
+                            overlay.style.display = 'none';
+                        }
+                    });
+                });
+                
+                // Allow Enter key in create modal
+                document.getElementById('createAffiliateForm').addEventListener('keypress', async (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        await this.createAffiliate();
+                    }
+                });
+                
+                // Allow Enter key in event modal
+                document.getElementById('createEventForm').addEventListener('keypress', async (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        await this.createEvent();
+                    }
+                });
+                
+                // iOS zoom fix
+                const inputs = document.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    if (input.type !== 'hidden') {
+                        input.style.fontSize = '16px';
+                    }
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    // Ctrl/Cmd + N to create new affiliate
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                        e.preventDefault();
+                        this.showCreateModal();
+                    }
+                    
+                    // Escape to close modals
+                    if (e.key === 'Escape') {
+                        this.hideCreateModal();
+                        this.hideEventModal();
+                    }
+                    
+                    // Ctrl/Cmd + F to focus search
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                        e.preventDefault();
+                        document.getElementById('searchInput').focus();
+                    }
+                });
+            }
+        }
+        
+        // Initialize the application
+        function initApp() {
+            window.appState = new AppState();
+            
+            // Auto-focus search on load
+            setTimeout(() => {
+                document.getElementById('searchInput').focus();
+            }, 100);
+        }
+        
+        // Call initApp when Supabase is ready
+        if (supabaseClient) {
+            initApp();
+        } else {
+            // Wait for Supabase to load
+            document.addEventListener('DOMContentLoaded', initApp);
+        }
+    </script>
+</body>
+</html>
