@@ -786,156 +786,218 @@
         }
 
         /* Logout button responsive adjustments */
-        @media (max-width: 768px) {
-            #logoutBtn {
-                padding: 14px 20px;
-                font-size: 17px;
-            }
-        }
+@media (max-width: 768px) {
+    #logoutBtn {
+        padding: 14px 20px;
+        font-size: 17px;
+    }
+    
+    /* NEW: Mobile layout fix - show either events list OR event details */
+    .dashboard-container {
+        flex-direction: column;
+        height: calc(100vh - 70px); /* ADDED THIS LINE */
+    }
+    
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: 50%; /* CHANGED from "height: auto" */
+        max-height: 50%; /* ADDED THIS LINE */
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        overflow-y: auto; /* ADDED THIS LINE */
+    }
+    
+    .main-content {
+        margin-left: 0;
+        height: 50%; /* ADDED THIS LINE */
+        max-height: 50%; /* ADDED THIS LINE */
+        padding: 25px;
+        overflow-y: auto; /* ADDED THIS LINE */
+        position: relative; /* ADDED THIS LINE */
+    }
+    
+    /* ADD THESE NEW RULES: */
+    /* Hide empty state initially */
+    .empty-state {
+        display: none;
+    }
+    
+    /* Show empty state when no event is selected (on mobile) */
+    .main-content:not(.event-selected) .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    
+    /* Hide event details when no event is selected */
+    .main-content:not(.event-selected) > *:not(.empty-state) {
+        display: none;
+    }
+    
+    /* Add back button for mobile when viewing event details */
+    .back-to-events {
+        display: none; /* Hidden by default */
+    }
+    
+    /* Show back button on mobile when event is selected */
+    .main-content.event-selected .back-to-events {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        color: #1a1a1a;
+    }
+    
+    .back-to-events i {
+        font-size: 14px;
+    }
+    
+    /* Adjust spacing for mobile */
+    .gratuity-section {
+        padding: 0 20px 20px 20px;
+    }
+    
+    .sidebar-header {
+        padding: 0 20px 20px 20px;
+    }
+    
+    .events-list {
+        padding: 0 15px;
+    }
+    /* END OF NEW RULES */
+    
+    /* YOUR EXISTING 768px MEDIA QUERY CODE SHOULD COME HERE */
+    .top-bar-content {
+        flex-wrap: wrap;
+        padding: 0 15px;
+        gap: 15px;
+    }
+    
+    .search-bar {
+        order: 3;
+        max-width: 100%;
+        margin: 15px 0 0 0;
+    }
+    
+    .address-text {
+        font-size: 28px;
+    }
+    
+    .profile-panel {
+        width: 100%;
+        right: -100%;
+        padding: 25px 20px;
+    }
+    
+    .profile-header {
+        flex-direction: row;
+        align-items: flex-start;
+        margin-bottom: 25px;
+    }
+    
+    .close-profile {
+        position: absolute;
+        top: 25px;
+        right: 20px;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    .amount {
+        font-size: 22px;
+    }
+    
+    .requirements-grid {
+        grid-template-columns: 1fr;
+    }
+} /* <-- THIS IS THE CORRECT CLOSING BRACE FOR THE 768px MEDIA QUERY */
 
-        @media (max-width: 480px) {
-            #logoutBtn {
-                padding: 16px 20px;
-            }
-        }
+@media (max-width: 480px) {
+    #logoutBtn {
+        padding: 16px 20px;
+    }
+    
+    /* ADD THESE LINES TO THE 480px BLOCK: */
+    .main-content {
+        padding: 20px;
+        height: 55%; /* ADD THIS */
+        max-height: 55%; /* ADD THIS */
+    }
+    
+    .sidebar {
+        height: 45%; /* ADD THIS */
+        max-height: 45%; /* ADD THIS */
+    }
+    /* END OF ADDED LINES */
+    
+    .event-info h1 {
+        font-size: 24px;
+    }
+    
+    .address-section {
+        padding: 25px;
+    }
+    
+    .address-text {
+        font-size: 20px; /* CHANGED from 24px to 20px */
+    }
+    
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .logo {
+        font-size: 18px;
+    }
+    
+    .profile-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .profile-panel {
+        padding: 20px 15px;
+    }
+    
+    .profile-title {
+        font-size: 20px;
+    }
+    
+    .amount-card {
+        padding: 15px;
+    }
+    
+    .amount {
+        font-size: 20px;
+    }
+    
+    /* ADD THESE LINES: */
+    .requirements-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .requirement-item {
+        padding: 12px;
+    }
+    /* END OF ADDED LINES */
+}  /* <-- THIS CLOSES THE 480px MEDIA QUERY */
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 280px;
-            }
-            
-            .main-content {
-                margin-left: 280px;
-                padding: 30px;
-            }
-            
-            .address-text {
-                font-size: 36px;
-            }
-            
-            .amount {
-                font-size: 24px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                position: static;
-                width: 100%;
-                height: auto;
-                max-height: 500px;
-                border-right: none;
-                border-bottom: 1px solid #e0e0e0;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: 25px;
-            }
-            
-            .top-bar-content {
-                flex-wrap: wrap;
-                padding: 0 15px;
-                gap: 15px;
-            }
-            
-            .search-bar {
-                order: 3;
-                max-width: 100%;
-                margin: 15px 0 0 0;
-            }
-            
-            .address-text {
-                font-size: 28px;
-            }
-            
-            .profile-panel {
-                width: 100%;
-                right: -100%;
-                padding: 25px 20px;
-            }
-            
-            .profile-header {
-                flex-direction: row;
-                align-items: flex-start;
-                margin-bottom: 25px;
-            }
-            
-            .close-profile {
-                position: absolute;
-                top: 25px;
-                right: 20px;
-            }
-            
-            .logo {
-                font-size: 20px;
-            }
-            
-            .amount {
-                font-size: 22px;
-            }
-            
-            .requirements-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-content {
-                padding: 20px;
-            }
-            
-            .event-info h1 {
-                font-size: 24px;
-            }
-            
-            .address-section {
-                padding: 25px;
-            }
-            
-            .address-text {
-                font-size: 24px;
-            }
-            
-            .status-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo {
-                font-size: 18px;
-            }
-            
-            .profile-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-            
-            .profile-panel {
-                padding: 20px 15px;
-            }
-            
-            .profile-title {
-                font-size: 20px;
-            }
-            
-            .amount-card {
-                padding: 15px;
-            }
-            
-            .amount {
-                font-size: 20px;
-            }
-        }
     </style>
 </head>
-<body>
-    <!-- Top Bar -->
+<body>    <!-- Top Bar -->
     <div class="top-bar">
         <div class="top-bar-content">
             <div class="logo-container">
@@ -1117,6 +1179,7 @@
     <!-- Profile Overlay -->
     <div class="profile-overlay" id="profileOverlay"></div>
 
+    
     <script>
         // Supabase Configuration
         const SUPABASE_URL = 'https://qoisqrzlfspzxtnkgyyr.supabase.co';
@@ -1785,6 +1848,94 @@ function updateProfilePanel(affiliate) {
         document.addEventListener('keypress', resetInactivityTimer);
         document.addEventListener('click', resetInactivityTimer);
         resetInactivityTimer();
+
+        // ============ ADD THIS NEW CODE HERE ============
+        // Mobile navigation for events
+        function setupMobileNavigation() {
+            const mainContent = document.getElementById('mainContent');
+            const isMobile = window.innerWidth <= 768;
+            
+            if (!isMobile) return;
+            
+            // Add back button to event details
+            const originalShowEventDetails = window.showEventDetails;
+            if (originalShowEventDetails) {
+                window.showEventDetails = function(event) {
+                    // Call original function
+                    originalShowEventDetails(event);
+                    
+                    // ADD THIS: Insert back button at the top of mainContent
+                    const backButton = `
+                        <div class="back-to-events" id="backToEvents">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Events
+                        </div>
+                    `;
+                    
+                    // Insert back button at the beginning
+                    const firstChild = mainContent.firstChild;
+                    if (firstChild) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = backButton;
+                        mainContent.insertBefore(tempDiv.firstChild, firstChild);
+                    } else {
+                        mainContent.innerHTML = backButton + mainContent.innerHTML;
+                    }
+                    
+                    mainContent.classList.add('event-selected');
+                    emptyState.style.display = 'none';
+                    
+                    // Add click handler for back button
+                    setTimeout(() => {
+                        const backBtn = document.getElementById('backToEvents');
+                        if (backBtn) {
+                            backBtn.addEventListener('click', () => {
+                                mainContent.classList.remove('event-selected');
+                                mainContent.scrollTop = 0;
+                                emptyState.style.display = 'flex';
+                                
+                                // Remove active class from all event items
+                                document.querySelectorAll('.event-item').forEach(item => {
+                                    item.classList.remove('active');
+                                });
+                            });
+                        }
+                    }, 100);
+                };
+            }
+            
+            // When clicking an event in sidebar
+            document.querySelectorAll('.event-item').forEach(item => {
+                const originalClick = item.onclick;
+                item.addEventListener('click', function(e) {
+                    // Call original click handler if it exists
+                    if (originalClick) originalClick.call(this, e);
+                    
+                    // Remove active class from all event items
+                    document.querySelectorAll('.event-item').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+            
+            // Initial state - show empty state
+            mainContent.classList.remove('event-selected');
+            if (emptyState) emptyState.style.display = 'flex';
+        }
+
+        // Call setupMobileNavigation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add this line
+            setupMobileNavigation();
+        });
+        
+        // Also set up on window resize
+        window.addEventListener('resize', setupMobileNavigation);
+        // ============ END OF NEW CODE ============
+
     </script>
 </body>
 </html>
