@@ -162,14 +162,14 @@
             transition: transform 0.3s ease;
         }
 
-        /* Replace or update the existing .back-to-list-btn styles */
-
+        /* SIMPLE POSITIONING - Right side adjacent to calendar icon */
 .back-to-list-btn {
-    position: sticky; /* Changed from fixed to sticky */
-    top: 10px; /* Stick 10px from top when scrolling */
+    position: absolute;
+    top: 0;
+    right: 0;
     z-index: 100;
     display: none;
-    padding: 12px 20px;
+    padding: 10px 16px;
     background: #1a1a1a;
     color: white;
     border: none;
@@ -178,10 +178,11 @@
     font-weight: 500;
     cursor: pointer;
     align-items: center;
-    gap: 10px;
-    margin: 0 20px 20px 20px; /* Added horizontal margin */
+    gap: 8px;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 0;
 }
 
 /* When in event view on mobile, make sure it stays visible */
@@ -189,16 +190,31 @@
     display: flex;
 }
 
-/* Optional: Add smooth hide/show on scroll */
+/* For mobile - position in event header */
+@media (max-width: 768px) {
+    .event-header {
+        position: relative; /* This makes the button position relative to header */
+        padding-right: 140px; /* Make space for the button */
+        min-height: 70px; /* Ensure header has enough height */
+    }
+    
+    .back-to-list-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+/* Optional scroll effects - keep if you want */
 .back-to-list-btn.hide {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateX(20px);
     pointer-events: none;
 }
 
 .back-to-list-btn.show {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
     pointer-events: all;
 }
 
@@ -1430,7 +1446,6 @@
         let currentAffiliate = null;
         let currentEvent = null;
         let isMobile = window.innerWidth <= 768;
-
         // Add this to your JavaScript, after the DOM is loaded
 let lastScrollTop = 0;
 const backButton = document.getElementById('backToListBtn');
