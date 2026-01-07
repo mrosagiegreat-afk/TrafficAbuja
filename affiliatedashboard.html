@@ -162,11 +162,11 @@
             transition: transform 0.3s ease;
         }
 
-        /* SIMPLE POSITIONING - Right side adjacent to calendar icon */
+/* SIMPLE POSITIONING - Right side adjacent to calendar icon */
 .back-to-list-btn {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 20px; /* CHANGED FROM 0 TO 20px to match calendar icon's margin-left */
     z-index: 100;
     display: none;
     padding: 10px 16px;
@@ -185,11 +185,6 @@
     margin: 0;
 }
 
-/* When in event view on mobile, make sure it stays visible */
-.main-content.event-view .back-to-list-btn {
-    display: flex;
-}
-
 /* For mobile - position in event header */
 @media (max-width: 768px) {
     .event-header {
@@ -201,7 +196,7 @@
     .back-to-list-btn {
         position: absolute;
         top: 0;
-        right: 0;
+        right: 20px; /* CHANGED FROM 0 TO 20px */
     }
 }
 
@@ -1198,9 +1193,9 @@
     <div class="dashboard-container">
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
-            <button class="back-to-list-btn" id="backToListBtn">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+           <button class="back-to-list-btn" id="backToListBtn" title="Back to Events List">
+    <i class="fas fa-arrow-left"></i>
+</button>
             
             <!-- Enhanced Gratuity Section -->
             <div class="gratuity-section">
