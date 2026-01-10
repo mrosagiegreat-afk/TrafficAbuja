@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <title>Request Dashboard | TrafficAbuja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* All your CSS styles remain exactly the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        html {
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            min-height: 100vh;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+        
+        .top-nav-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+        
+        .logo sup {
+            font-size: 10px;
+            vertical-align: super;
+            color: #666;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .back-btn {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+        
+        .create-request-btn {
+            width: 50px;
+            height: 50px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(26, 26, 26, 0.2);
+        }
+        
+        .create-request-btn:hover {
+            background: #333;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(26, 26, 26, 0.3);
+        }
+        
+        /* Main Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+            margin-top: 70px;
+        }
+        
+        /* Sidebar - Request History */
+        .sidebar {
+            width: 400px;
+            background: #f8f9fa;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px 0;
+            position: fixed;
+            left: 0;
+            top: 70px;
+            bottom: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .requests-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px;
+        }
+        
+        .requests-list {
+            min-height: 100%;
+        }
+        
+        .request-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .request-item:hover {
+            border-color: #1a1a1a;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .request-item.active {
+            border-color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .request-code {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .request-status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        
+        .status-draft { background: #ff9800; color: white; }
+        .status-broadcast { background: #2196F3; color: white; }
+        .status-accepted { background: #4CAF50; color: white; }
+        .status-completed { background: #9C27B0; color: white; }
+        .status-cancelled { background: #f44336; color: white; }
+        
+        .request-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+        
+        .request-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .tick-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .tick-btn:hover:not(:disabled) {
+            background: #388E3C;
+            transform: translateY(-1px);
+        }
+        
+        .tick-btn:disabled {
+            background: #c8e6c9;
+            color: #666;
+            cursor: not-allowed;
+        }
+        
+        .tick-btn.ticked {
+            background: #9C27B0;
+        }
+        
+        .view-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 400px;
+            padding: 40px;
+            background: #fff;
+            overflow-y: auto;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 150px);
+            color: #666;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .empty-state i {
+            font-size: 64px;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        
+        .empty-state p {
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+        
+        /* Request Form */
+        .request-form {
+            display: none;
+            max-width: 800px;
+        }
+        
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .detail-icon {
+            width: 60px;
+            height: 60px;
+            background: #1a1a1a;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .detail-info h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .detail-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .distance-warning-box {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 25px;
+    color: #888;
+    font-size: 14px;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    pointer-events: none; /* Makes it unclickable */
+    user-select: none;    /* Prevents text selection */
+}
+
+.distance-warning-box i {
+    color: #bbb;
+    font-size: 16px;
+}
+        /* Form Sections */
+
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+        
+        .form-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .time-frame-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .time-frame-input {
+    width: 25% !important;
+    min-width: 80px;
+}
+
+.time-frame-unit {
+    width: 75% !important;
+    min-width: 120px;
+}
+        
+        
+        /* Verification Methods */
+        .verification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .verification-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .verification-item:hover {
+            border-color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        .verification-item.active {
+            border-color: #4CAF50;
+            background: #f0f9f0;
+        }
+        
+        .verification-item span {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .verification-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .verification-item.active .verification-checkbox {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+        }
+        
+        
+        /* Preview Section */
+        .preview-section {
+            display: none;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .preview-section.active {
+            display: block;
+        }
+        
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .preview-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .preview-content {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .preview-row {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .preview-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .preview-label {
+            width: 200px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            flex-shrink: 0;
+        }
+        
+        .preview-value {
+            flex: 1;
+            font-size: 16px;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+        
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 40px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .preview-btn {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .preview-btn:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+        
+        .clear-btn {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .clear-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .broadcast-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .broadcast-btn:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+        }
+        
+        .broadcast-btn:disabled {
+            background: #c8e6c9;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .spinner-circle {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1a1a1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 3000;
+            animation: slideInRight 0.3s ease;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .success-notification {
+            background: #f0f9f0;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .error-notification {
+            background: #fff5f5;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 350px;
+            }
+            
+            .main-content {
+                margin-left: 350px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: 400px;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-nav-content {
+                padding: 0 15px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .create-request-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .detail-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .preview-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .preview-label {
+                width: 100%;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+        
+        /* Custom Confirm Modal - MOVED OUTSIDE MEDIA QUERIES */
+        .custom-confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-confirm-modal.active {
+            display: flex;
+        }
+
+        .custom-confirm-modal .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-header {
+            margin-bottom: 15px;
+        }
+
+        .modal-header i {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #1a1a1a;
+        }
+
+        .modal-header h3 {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cancel-btn {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .confirm-btn {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                height: 350px;
+            }
+            
+            .requests-list-container {
+                padding: 0 15px;
+            }
+            
+            .request-item {
+                padding: 15px;
+            }
+            
+            .request-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .request-actions {
+                flex-direction: column;
+            }
+            
+            .verification-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner-circle"></div>
+        <div class="loading-text">Processing...</div>
+    </div>
+    
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="top-nav-content">
+            <a href="admin-dashboard.html" class="logo">TrafficAbuja<sup>®</sup></a>
+            
+            <div class="nav-actions">
+                <button class="back-btn" id="backToDashboardBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </button>
+                <button class="create-request-btn" id="createRequestBtn" title="Create New Request">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Dashboard -->
+    <div class="dashboard-container">
+        <!-- Sidebar - Request History -->
+        <div class="sidebar">
+            <!-- In the HTML section -->
+<div class="sidebar-header">
+    <h3 class="sidebar-title">Active Requests</h3>
+    <p class="sidebar-subtitle">Requests pending completion. Ticked items disappear.</p>
+    <p class="sidebar-subtitle" style="margin-top: 5px; font-size: 12px; color: #4CAF50;">
+        <i class="fab fa-whatsapp"></i> Next WhatsApp Post: #<span id="nextPostCount">1</span>
+        <button onclick="resetWhatsAppCounter()" style="margin-left: 10px; font-size: 10px; padding: 2px 6px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 3px; cursor: pointer;">
+            Reset
+        </button>
+    </p>
+</div>
+            
+            <div class="requests-list-container">
+                <div class="requests-list" id="requestsList">
+                    <!-- Requests will be loaded here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>No Request Selected</h3>
+                <p>Select a request from the history or create a new one.</p>
+            </div>
+            
+            <!-- Create/Edit Request Form -->
+            <div class="request-form" id="requestForm">
+                <div class="detail-header">
+                    <div class="detail-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="detail-info">
+                        <h2 id="formTitle">Create New Request</h2>
+                        <div class="detail-meta">
+                            <span id="requestCodeDisplay">Code: Will be generated</span>
+                            <span id="formStatus">Status: Draft</span>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <form id="createRequestForm">
+                    <!-- Client Information -->
+                    <div class="form-section">
+                        <div class="distance-warning-box">
+    <i class="fas fa-map-marker-alt"></i>
+    Looks like this one’s either 10–15 minutes away… but needs to not be 35 minutes to an hour+ distant.
+</div>
+                        <h3>Client Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="clientType">
+                                    Client:
+                                </label>
+                               <select id="clientType" name="clientType" required>
+    <option value="" disabled selected hidden> </option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Group">Group</option>
+    <option value="Organization">Organization</option>
+</select>
+                            </div>
+                            
+                            <div class="form-group">
+    <label for="serviceClass">
+        Service Class:
+    </label>
+    <select id="serviceClass" name="serviceClass" required>
+    <option value="" disabled selected hidden> </option>
+    <option value="TrafficAbuja LIVE">TrafficAbuja LIVE</option>
+    <option value="TrafficAbuja AT-IT-FIRST">TrafficAbuja AT-IT-FIRST</option>
+    <option value="Upgrade an Orchestration">Upgrade an Orchestration</option>
+</select>
+</div>
+                            
+                            <div class="form-group full-width">
+                                <label for="serviceType">
+                                    Service Type:
+                                </label>
+                                <select id="serviceType" name="serviceType" required>
+    <option value="" disabled selected hidden> </option>
+    <option value="Be there & Report What's up">Be there & Report What's up</option>
+    <option value="Attend & Represent">Attend & Represent</option>
+    <option value="Accompany & Assist">Accompany & Assist</option>
+</select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Request Details -->
+                    <div class="form-section">
+                        <h3>Request Details</h3>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="description">
+                                    Description of Request:
+                                </label>
+                                <textarea id="description" name="description" required placeholder="Describe the request in detail..."></textarea>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="location">
+                                    Location:
+                                </label>
+                                <input type="text" id="location" name="location" required placeholder="Exact area / landmark">
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="mapLink">
+                                    Map Link:
+                                </label>
+                                <input type="url" id="mapLink" name="mapLink" placeholder="https://maps.google.com/...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+    <label for="manyCount">
+        This request is meant for how many of us to take?
+    </label>
+    <input type="number" id="manyCount" name="manyCount" min="1" placeholder="e.g. 5">
+</div>
+                    <!-- Time Information -->
+                    <div class="form-section">
+                        <h3> </h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="timeSensitive">
+                                    Time-Sensitive:
+                                </label>
+                                <select id="timeSensitive" name="timeSensitive">
+                                    <option value="false">No</option>
+                                    <option value="true">Yes</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="requestDate">
+                                    Date:
+                                </label>
+                                <input type="date" id="requestDate" name="requestDate" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="requestTime">
+                                    Time:
+                                </label>
+                                <input type="time" id="requestTime" name="requestTime" required>
+                            </div>
+                            
+                            
+<div class="form-group full-width">
+    <label>
+        Specified time frame:
+    </label>
+    <div class="time-frame-group">
+        <input type="number" id="timeFrameValue" name="timeFrameValue" class="time-frame-input" placeholder="Number">
+        <select id="timeFrameUnit" name="timeFrameUnit" class="time-frame-unit">
+            <option value="Minutes">Minutes</option>
+            <option value="Hours">Hours</option>
+            <option value="Days">Days</option>
+        </select>
+    </div>
+</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Verification Methods -->
+                    <div class="form-section">
+                        <h3>Verification Method</h3>
+                        <div class="verification-grid" id="verificationGrid">
+                            <div class="verification-item" data-type="photo_checkin">
+                                <span>Photo check-in</span>
+                                <div class="verification-checkbox">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="verification-item" data-type="videos">
+                                <span>Videos</span>
+                                <div class="verification-checkbox">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="verification-item" data-type="live_video">
+                                <span>Live video</span>
+                                <div class="verification-checkbox">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="verification-item" data-type="post_event_report">
+                                <span>Post-event report</span>
+                                <div class="verification-checkbox">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="form-section">
+                        <h3>Point of Contact</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contactName">
+                                    Name:
+                                </label>
+                                <input type="text" id="contactName" name="contactName" placeholder="Unlocked once accepted">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactPhone">
+                                    Phone:
+                                </label>
+                                <input type="tel" id="contactPhone" name="contactPhone" placeholder="Unlocked once accepted">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                
+                <!-- Preview Section -->
+                <div class="preview-section" id="previewSection">
+                    <div class="preview-header">
+                        <div class="preview-title">Request Preview</div>
+                        <div id="previewStatus" class="request-status status-draft">DRAFT</div>
+                    </div>
+                    
+                    <div class="preview-content" id="previewContent">
+                        <!-- Preview will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="action-btn preview-btn" id="previewBtn">
+                        <i class="fas fa-eye"></i>
+                        Preview
+                    </button>
+                    
+                    <button type="button" class="action-btn clear-btn" id="clearBtn">
+                        <i class="fas fa-eraser"></i>
+                        Clear
+                    </button>
+                    
+                    <button type="button" class="action-btn broadcast-btn" id="broadcastBtn" disabled>
+                        <i class="fas fa-bullhorn"></i>
+                        Broadcast
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://qoisqrzlfspzxtnkgyyr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvaXNxcnpsZnNwenh0bmtneXlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY4MDA0MzMsImV4cCI6MjA4MjM3NjQzM30.jp97VkUx6IFARFzFw3YXJJfBZmdnnCPHM95Q1WAqHnc';
+        
+        // Telegram Bot Configuration
+        const TELEGRAM_BOT_TOKEN = '7570694771:AAFAoEF5z1r-4Z3prVHnlG8k11LUcOy38M0';
+        const TELEGRAM_CHAT_ID = '8565420381';
+        
+        // Application state
+        let supabaseClient = null;
+        let currentRequestId = null;
+
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('DOM loaded, initializing...');
+            
+            // Check admin authentication
+            const isLoggedIn = localStorage.getItem('admin_logged_in') === 'true';
+            if (!isLoggedIn) {
+                console.log('Not logged in, redirecting...');
+                window.location.href = 'admin.html';
+                return;
+            }
+            
+            try {
+                // Initialize Supabase
+                if (typeof window.supabase !== 'undefined') {
+                    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    console.log('Supabase initialized');
+                } else {
+                    console.error('Supabase not loaded');
+                    showNotification('Error: Database connection failed', 'error');
+                    return;
+                }
+                // ---> ADD THIS: Initialize WhatsApp post counter <---
+        if (!localStorage.getItem('whatsapp_post_counter')) {
+            localStorage.setItem('whatsapp_post_counter', '0');
+        }
+        console.log('WhatsApp post counter initialized:', localStorage.getItem('whatsapp_post_counter'));
+        
+        // Load requests
+        await loadRequests();
+        
+        // ---> ADD THIS: Update the post counter display <---
+        updatePostCounterDisplay();
+                // Load requests
+                await loadRequests();
+                
+                // Set default date to today
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('requestDate').value = today;
+                
+                // Set default time to next hour
+                const nextHour = new Date();
+                nextHour.setHours(nextHour.getHours() + 1);
+                const timeString = nextHour.getHours().toString().padStart(2, '0') + ':00';
+                document.getElementById('requestTime').value = timeString;
+                
+                // Setup event listeners
+                setupEventListeners();
+                
+                console.log('Application initialized successfully');
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showNotification('Failed to initialize application', 'error');
+            }
+        });
+        
+        // Show loading spinner
+        function showLoading(show = true) {
+            const spinner = document.getElementById('loadingSpinner');
+            if (spinner) {
+                spinner.style.display = show ? 'flex' : 'none';
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'success') {
+            console.log(`${type.toUpperCase()}: ${message}`);
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type === 'success' ? 'success-notification' : 'error-notification'}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+    // Load requests from database
+async function loadRequests() {
+    try {
+        showLoading(true);
+        console.log('Loading requests...');
+        
+        const { data: requests, error } = await supabaseClient
+            .from('requests')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(50);
+        
+        if (error) {
+            console.error('Supabase error:', error);
+            throw error;
+        }
+        
+        // Filter out completed requests (where admin_ticked = true)
+        const activeRequests = (requests || []).filter(request => !request.admin_ticked);
+        
+        console.log(`Loaded ${requests?.length || 0} requests, showing ${activeRequests.length} active`);
+        renderRequests(activeRequests);
+        
+    } catch (error) {
+        console.error('Error loading requests:', error);
+        showNotification('Failed to load requests', 'error');
+        
+        // Show empty state
+        const requestsList = document.getElementById('requestsList');
+        if (requestsList) {
+            requestsList.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; color: #666;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px;"></i>
+                    <p>Unable to load requests</p>
+                    <button onclick="loadRequests()" style="margin-top: 20px; padding: 10px 20px; background: #1a1a1a; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        Retry
+                    </button>
+                </div>
+            `;
+        }
+    } finally {
+        showLoading(false);
+    }
+}
+        
+        // Render requests in sidebar
+        function renderRequests(requests) {
+            const requestsList = document.getElementById('requestsList');
+            if (!requestsList) {
+                console.error('Requests list element not found');
+                return;
+            }
+            
+            if (!requests || requests.length === 0) {
+                requestsList.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #666;">
+                        <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <p>No requests yet</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Click the + button to create your first request</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            requestsList.innerHTML = '';
+            
+            requests.forEach(request => {
+                const requestElement = document.createElement('div');
+                requestElement.className = 'request-item';
+                if (request.id === currentRequestId) {
+                    requestElement.classList.add('active');
+                }
+                requestElement.dataset.id = request.id;
+                
+                // Format date
+                const requestDate = new Date(request.request_date);
+                const formattedDate = requestDate.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Truncate description
+                const shortDesc = request.description.length > 60 
+                    ? request.description.substring(0, 60) + '...' 
+                    : request.description;
+                
+                // Status class and text
+                const statusText = request.status.charAt(0).toUpperCase() + request.status.slice(1);
+                const statusClass = `status-${request.status.toLowerCase()}`;
+                
+                requestElement.innerHTML = `
+                    <div class="request-header">
+                        <div class="request-code">${request.request_code || 'N/A'}</div>
+                        <div class="request-status ${statusClass}">${statusText.toUpperCase()}</div>
+                    </div>
+                    
+                    <div class="request-title">${shortDesc}</div>
+                    
+                    <div class="request-meta">
+                        <span><i class="fas fa-calendar"></i> ${formattedDate}</span>
+                        <span><i class="fas fa-clock"></i> ${request.request_time?.substring(0, 5) || '--:--'}</span>
+                    </div>
+                    
+                    <div class="request-meta">
+                        <span><i class="fas fa-user"></i> ${request.client_type || 'N/A'}</span>
+                        <span><i class="fas fa-map-marker-alt"></i> ${request.location?.substring(0, 20) || 'No location'}${request.location?.length > 20 ? '...' : ''}</span>
+                    </div>
+                    
+                    <div class="request-actions">
+                        <button class="tick-btn ${request.admin_ticked ? 'ticked' : ''}" 
+                                ${request.admin_ticked ? 'disabled' : ''}>
+                            <i class="fas fa-${request.admin_ticked ? 'check-double' : 'check'}"></i>
+                            ${request.admin_ticked ? 'Completed' : 'Mark Complete'}
+                        </button>
+                        <button class="view-btn">
+                            <i class="fas fa-eye"></i>
+                            View
+                        </button>
+                    </div>
+                `;
+                
+                // Add click events
+                const tickBtn = requestElement.querySelector('.tick-btn');
+                const viewBtn = requestElement.querySelector('.view-btn');
+                
+                if (tickBtn && !request.admin_ticked) {
+                    tickBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleTick(request.id);
+                    });
+                }
+                
+                if (viewBtn) {
+                    viewBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        viewRequest(request.id);
+                    });
+                }
+                
+                // Add click event to the whole item
+                requestElement.addEventListener('click', function(e) {
+                    if (!e.target.closest('button')) {
+                        viewRequest(request.id);
+                    }
+                });
+                
+                requestsList.appendChild(requestElement);
+            });
+            
+            console.log(`Rendered ${requests.length} requests`);
+        }
+        
+        async function toggleTick(requestId) {
+    showCustomConfirm(
+        'Mark as Complete',
+        'Are you sure you want to mark this request as completed?',
+        async () => {
+            // User clicked Yes - proceed with marking as complete
+            try {
+                showLoading(true);
+                console.log(`Marking request ${requestId} as completed`);
+                
+                // ... REST OF YOUR EXISTING toggleTick CODE GOES HERE ...
+                // (Everything that was originally inside the try block)
+                
+                const { error } = await supabaseClient
+                    .from('requests')
+                    .update({
+                        admin_ticked: true,
+                        ticked_at: new Date().toISOString(),
+                        status: 'completed',
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', requestId);
+                
+                if (error) throw error;
+                
+                showNotification('Request marked as completed');
+                
+                await loadRequests();
+                
+                if (currentRequestId === requestId) {
+                    backToList();
+                }
+                
+            } catch (error) {
+                console.error('Error toggling tick:', error);
+                showNotification('Failed to mark request as completed', 'error');
+            } finally {
+                showLoading(false);
+            }
+        },
+        () => {
+            // User clicked Cancel
+            console.log('Toggle cancelled');
+        }
+    );
+}
+        
+        // View request details
+        async function viewRequest(requestId) {
+            try {
+                showLoading(true);
+                console.log(`Viewing request ${requestId}`);
+                
+                // Fetch request details
+                const { data: request, error } = await supabaseClient
+                    .from('requests')
+                    .select('*')
+                    .eq('id', requestId)
+                    .single();
+                
+                if (error) throw error;
+                
+                // Show form with request details
+                showRequestForm(request);
+                
+                // Mark as active in sidebar
+                document.querySelectorAll('.request-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                const activeItem = document.querySelector(`.request-item[data-id="${requestId}"]`);
+                if (activeItem) {
+                    activeItem.classList.add('active');
+                }
+                
+                currentRequestId = requestId;
+                
+            } catch (error) {
+                console.error('Error viewing request:', error);
+                showNotification('Failed to load request details', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+// Show request form with data
+function showRequestForm(request = null) {
+    const emptyState = document.getElementById('emptyState');
+    const requestForm = document.getElementById('requestForm');
+    
+    if (emptyState) emptyState.style.display = 'none';
+    if (requestForm) requestForm.style.display = 'block';
+    
+    if (request) {
+        // Edit existing request
+        document.getElementById('formTitle').textContent = 'View Request';
+        document.getElementById('requestCodeDisplay').textContent = `Code: ${request.request_code}`;
+        document.getElementById('formStatus').textContent = `Status: ${request.status}`;
+        
+        // Fill form fields (readonly mode)
+        document.getElementById('clientType').value = request.client_type || '';
+        document.getElementById('serviceClass').value = request.service_class || '';
+        document.getElementById('serviceType').value = request.service_type || '';
+        document.getElementById('description').value = request.description || '';
+        document.getElementById('location').value = request.location || '';
+        document.getElementById('mapLink').value = request.map_link || '';
+        document.getElementById('manyCount').value = request.many_count || ''; // Add this line
+        document.getElementById('timeSensitive').value = request.time_sensitive ? 'true' : 'false';
+        document.getElementById('requestDate').value = request.request_date || '';
+        document.getElementById('requestTime').value = request.request_time || '';
+        document.getElementById('timeFrameValue').value = request.time_frame_value || '';
+        document.getElementById('timeFrameUnit').value = request.time_frame_unit || '';
+        document.getElementById('contactName').value = request.contact_name || '';
+        document.getElementById('contactPhone').value = request.contact_phone || '';
+        
+        // Set verification methods
+        document.querySelectorAll('.verification-item').forEach(item => {
+            const type = item.dataset.type;
+            if (request[type]) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+        
+        // Show preview with actual data
+        generatePreview(request);
+        
+        // Disable form for viewing
+        document.querySelectorAll('#createRequestForm input, #createRequestForm select, #createRequestForm textarea').forEach(el => {
+            el.disabled = true;
+        });
+        document.querySelectorAll('.verification-item').forEach(item => {
+            item.style.pointerEvents = 'none';
+        });
+        
+        // Update buttons
+        document.getElementById('previewBtn').style.display = 'none';
+        document.getElementById('clearBtn').style.display = 'none';
+        document.getElementById('broadcastBtn').style.display = request.status === 'draft' ? 'flex' : 'none';
+        document.getElementById('broadcastBtn').disabled = false;
+        
+        if (request.status === 'draft') {
+            document.getElementById('broadcastBtn').innerHTML = '<i class="fab fa-whatsapp"></i> Broadcast';
+            // Remove and reattach event listener properly
+            const broadcastBtn = document.getElementById('broadcastBtn');
+            const newBtn = broadcastBtn.cloneNode(true);
+            broadcastBtn.parentNode.replaceChild(newBtn, broadcastBtn);
+            newBtn.addEventListener('click', () => broadcastRequest(request.id));
+        }
+        
+    } else {
+        // Create new request
+        document.getElementById('formTitle').textContent = 'Create New Request';
+        document.getElementById('requestCodeDisplay').textContent = 'Code: Will be generated';
+        document.getElementById('formStatus').textContent = 'Status: Draft';
+        
+        // Reset form
+        document.getElementById('createRequestForm').reset();
+        document.querySelectorAll('.verification-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Enable form
+        document.querySelectorAll('#createRequestForm input, #createRequestForm select, #createRequestForm textarea').forEach(el => {
+            el.disabled = false;
+        });
+        document.querySelectorAll('.verification-item').forEach(item => {
+            item.style.pointerEvents = 'auto';
+        });
+        
+        // Hide preview
+        document.getElementById('previewSection').classList.remove('active');
+        document.getElementById('broadcastBtn').disabled = true;
+        
+        // Show buttons
+        document.getElementById('previewBtn').style.display = 'flex';
+        document.getElementById('clearBtn').style.display = 'flex';
+        document.getElementById('broadcastBtn').style.display = 'flex';
+        document.getElementById('broadcastBtn').innerHTML = '<i class="fab fa-whatsapp"></i> Broadcast';
+        
+        // FIXED: Properly attach event listener for new request
+        const broadcastBtn = document.getElementById('broadcastBtn');
+        const newBtn = broadcastBtn.cloneNode(true);
+        broadcastBtn.parentNode.replaceChild(newBtn, broadcastBtn);
+        newBtn.addEventListener('click', () => broadcastRequest());
+        
+        // Set default date and time
+        const today = new Date().toISOString().split('T')[0];
+        const nextHour = new Date();
+        nextHour.setHours(nextHour.getHours() + 1);
+        const timeString = nextHour.getHours().toString().padStart(2, '0') + ':00';
+        
+        document.getElementById('requestDate').value = today;
+        document.getElementById('requestTime').value = timeString;
+    }
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Generate preview
+function generatePreview(request = null) {
+    let formData;
+    
+    if (request) {
+        // Use existing request data
+        formData = {
+            clientType: request.client_type,
+            serviceClass: request.service_class,
+            serviceType: request.service_type,
+            description: request.description,
+            location: request.location,
+            manyCount: request.many_count, // Add this line
+            mapLink: request.map_link,
+            timeSensitive: request.time_sensitive,
+            requestDate: request.request_date,
+            requestTime: request.request_time,
+            timeFrameValue: request.time_frame_value,
+            timeFrameUnit: request.time_frame_unit,
+            contactName: request.contact_name,
+            contactPhone: request.contact_phone,
+            photo_checkin: request.photo_checkin,
+            videos: request.videos,
+            live_video: request.live_video,
+            post_event_report: request.post_event_report
+        };
+    } else {
+        // Get form values
+        formData = {
+            clientType: document.getElementById('clientType').value,
+            serviceClass: document.getElementById('serviceClass').value,
+            serviceType: document.getElementById('serviceType').value,
+            description: document.getElementById('description').value,
+            location: document.getElementById('location').value,
+            manyCount: document.getElementById('manyCount').value,
+            mapLink: document.getElementById('mapLink').value,
+            timeSensitive: document.getElementById('timeSensitive').value === 'true',
+            requestDate: document.getElementById('requestDate').value,
+            requestTime: document.getElementById('requestTime').value,
+            timeFrameValue: document.getElementById('timeFrameValue').value,
+            timeFrameUnit: document.getElementById('timeFrameUnit').value,
+            contactName: document.getElementById('contactName').value,
+            contactPhone: document.getElementById('contactPhone').value,
+            photo_checkin: document.querySelector('.verification-item[data-type="photo_checkin"]').classList.contains('active'),
+            videos: document.querySelector('.verification-item[data-type="videos"]').classList.contains('active'),
+            live_video: document.querySelector('.verification-item[data-type="live_video"]').classList.contains('active'),
+            post_event_report: document.querySelector('.verification-item[data-type="post_event_report"]').classList.contains('active')
+        };
+    }
+    
+    // Validate required fields
+    if (!request && (!formData.clientType || !formData.serviceClass || !formData.serviceType || 
+        !formData.description || !formData.location || !formData.requestDate || !formData.requestTime)) {
+        showNotification('Please fill in all required fields', 'error');
+        return;
+    }
+    
+    // Format date
+    const requestDate = new Date(formData.requestDate);
+    const formattedDate = requestDate.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    // Build verification methods list
+    const verificationMethods = [];
+    if (formData.photo_checkin) verificationMethods.push('Photo check-in');
+    if (formData.videos) verificationMethods.push('Videos');
+    if (formData.live_video) verificationMethods.push('Live video');
+    if (formData.post_event_report) verificationMethods.push('Post-event report');
+    
+    // Build preview HTML
+    let previewHTML = '';
+    
+    previewHTML += `
+        <div class="preview-row">
+            <div class="preview-label">Client Type:</div>
+            <div class="preview-value">${formData.clientType}</div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Service Class:</div>
+            <div class="preview-value">${formData.serviceClass}</div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Service Type:</div>
+            <div class="preview-value">${formData.serviceType}</div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Description:</div>
+            <div class="preview-value">${formData.description}</div>
+        </div>
+        
+        <div class="preview-row">
+            <div class="preview-label">Location:</div>
+            <div class="preview-value">${formData.location}</div>
+        </div>
+    `;
+
+    if (formData.manyCount) {
+        previewHTML += `
+            <div class="preview-row">
+                <div class="preview-label">This request is meant for how many of us to take?</div>
+                <div class="preview-value">${formData.manyCount} Persons</div>
+            </div>
+        `;
+    }
+    
+    if (formData.mapLink) {
+        previewHTML += `
+            <div class="preview-row">
+                <div class="preview-label">Map Link:</div>
+                <div class="preview-value">
+                    <a href="${formData.mapLink}" target="_blank" style="color: #2196F3; text-decoration: none;">
+                        <i class="fas fa-external-link-alt"></i> Open in Maps
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+    
+    previewHTML += `
+        <div class="preview-row">
+            <div class="preview-label">Date & Time:</div>
+            <div class="preview-value">
+                ${formattedDate} at ${formData.requestTime}
+                ${formData.timeSensitive ? '<span style="color: #f44336; margin-left: 10px;"><i class="fas fa-exclamation-circle"></i> Time-sensitive</span>' : ''}
+            </div>
+        </div>
+    `;
+    
+    if (formData.timeFrameValue) {
+        previewHTML += `
+            <div class="preview-row">
+                <div class="preview-label">Time Frame:</div>
+                <div class="preview-value">
+                    ${formData.timeFrameValue} ${formData.timeFrameUnit}
+                </div>
+            </div>
+        `;
+    }
+    
+    if (verificationMethods.length > 0) {
+        previewHTML += `
+            <div class="preview-row">
+                <div class="preview-label">Verification Methods:</div>
+                <div class="preview-value">
+                    ${verificationMethods.join(', ')}
+                </div>
+            </div>
+        `;
+    }
+    
+    if (formData.contactName || formData.contactPhone) {
+        previewHTML += `
+            <div class="preview-row">
+                <div class="preview-label">Contact Information:</div>
+                <div class="preview-value">
+                    ${formData.contactName ? `<div><strong>Name:</strong> ${formData.contactName}</div>` : ''}
+                    ${formData.contactPhone ? `<div><strong>Phone:</strong> ${formData.contactPhone}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Update preview
+    document.getElementById('previewContent').innerHTML = previewHTML;
+    document.getElementById('previewSection').classList.add('active');
+    
+    if (!request) {
+        document.getElementById('broadcastBtn').disabled = false;
+        showNotification('Preview generated. Review before broadcasting.');
+    }
+    
+    // Scroll to preview
+    document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function clearForm() {
+    showCustomConfirm(
+        'Clear Form',
+        'Are you sure you want to clear the form? All entered data will be lost.',
+        () => {
+            // User clicked Yes - proceed with clearing
+            document.getElementById('createRequestForm').reset();
+            document.querySelectorAll('.verification-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById('previewSection').classList.remove('active');
+            document.getElementById('broadcastBtn').disabled = true;
+            
+            // Reset date and time
+            const today = new Date().toISOString().split('T')[0];
+            const nextHour = new Date();
+            nextHour.setHours(nextHour.getHours() + 1);
+            const timeString = nextHour.getHours().toString().padStart(2, '0') + ':00';
+            
+            document.getElementById('requestDate').value = today;
+            document.getElementById('requestTime').value = timeString;
+            
+            showNotification('Form cleared');
+        },
+        () => {
+            // User clicked Cancel
+            console.log('Clear form cancelled');
+        }
+    );
+}
+
+// Broadcast request - UPDATED with better error handling
+async function broadcastRequest(requestId = null) {
+    // Test popup first
+    if (!testPopup()) {
+        showNotification('Cannot proceed - popups blocked. Please allow popups and try again.', 'error');
+        return;
+    }
+    
+    // Use custom confirm modal
+    showCustomConfirm(
+        'Broadcast Request',
+        'Are you ready to broadcast this request to all affiliates?',
+        async () => {
+            try {
+                showLoading(true);
+                console.log(`Broadcasting request: ${requestId || 'new'}`);
+                
+                let requestData;
+                let savedRequest;
+                
+                if (requestId) {
+                    // Broadcast existing request
+                    const { data: request, error: fetchError } = await supabaseClient
+                        .from('requests')
+                        .select('*')
+                        .eq('id', requestId)
+                        .single();
+                    
+                    if (fetchError) throw fetchError;
+                    requestData = request;
+                    savedRequest = request;
+                } else {
+                    // Create and broadcast new request
+                    // Get form values
+                    requestData = {
+                        client_type: document.getElementById('clientType').value,
+                        service_class: document.getElementById('serviceClass').value,
+                        service_type: document.getElementById('serviceType').value,
+                        description: document.getElementById('description').value,
+                        location: document.getElementById('location').value,
+                        many_count: parseInt(document.getElementById('manyCount').value) || 1, // FIXED: Added this
+                        map_link: document.getElementById('mapLink').value || null,
+                        time_sensitive: document.getElementById('timeSensitive').value === 'true',
+                        request_date: document.getElementById('requestDate').value,
+                        request_time: document.getElementById('requestTime').value,
+                        time_frame_value: document.getElementById('timeFrameValue').value || null,
+                        time_frame_unit: document.getElementById('timeFrameUnit').value || null,
+                        contact_name: document.getElementById('contactName').value || null,
+                        contact_phone: document.getElementById('contactPhone').value || null,
+                        photo_checkin: document.querySelector('.verification-item[data-type="photo_checkin"]').classList.contains('active'),
+                        videos: document.querySelector('.verification-item[data-type="videos"]').classList.contains('active'),
+                        live_video: document.querySelector('.verification-item[data-type="live_video"]').classList.contains('active'),
+                        post_event_report: document.querySelector('.verification-item[data-type="post_event_report"]').classList.contains('active'),
+                        status: 'broadcast',
+                        broadcast_at: new Date().toISOString()
+                    };
+                    
+                    // Validate required fields
+                    if (!requestData.client_type || !requestData.service_class || !requestData.service_type || 
+                        !requestData.description || !requestData.location || !requestData.request_date || !requestData.request_time) {
+                        showNotification('Please fill in all required fields', 'error');
+                        showLoading(false);
+                        return;
+                    }
+                    
+                    // Save to database
+                    const { data: saved, error: saveError } = await supabaseClient
+                        .from('requests')
+                        .insert(requestData)
+                        .select()
+                        .single();
+                    
+                    if (saveError) throw saveError;
+                    
+                    savedRequest = saved;
+                    requestId = saved.id;
+                }
+                
+                // Handle WhatsApp sharing
+                try {
+                    await handleWhatsAppShare(savedRequest);
+                } catch (whatsappError) {
+                    console.warn('WhatsApp preparation failed:', whatsappError);
+                    showNotification('WhatsApp preparation failed, but request was broadcasted', 'error');
+                }
+                
+                // Update request status in database (if broadcasting existing)
+                if (requestId && requestData.id) {
+                    const { error: updateError } = await supabaseClient
+                        .from('requests')
+                        .update({
+                            status: 'broadcast',
+                            broadcast_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', requestId);
+                    
+                    if (updateError) throw updateError;
+                }
+                
+                // Show success message
+                showNotification('Request broadcasted successfully! Affiliates can now see and accept it in their chat bot.');
+                
+                // Update the post counter display
+                updatePostCounterDisplay();
+                
+                // Reload requests
+                await loadRequests();
+                
+                // Show the request in detail view
+                await viewRequest(requestId || savedRequest.id);
+                
+            } catch (error) {
+                console.error('Error broadcasting request:', error);
+                showNotification('Failed to broadcast request: ' + (error.message || 'Unknown error'), 'error');
+            } finally {
+                showLoading(false);
+            }
+        },
+        () => {
+            // User clicked Cancel
+            console.log('Broadcast cancelled');
+        }
+    );
+}
+
+// Show custom confirmation modal
+function showCustomConfirm(title, message, onConfirm, onCancel) {
+    const modal = document.getElementById('customConfirmModal');
+    const titleEl = document.getElementById('confirmModalTitle');
+    const messageEl = document.getElementById('confirmModalMessage');
+    const confirmBtn = document.getElementById('confirmModalConfirm');
+    const cancelBtn = document.getElementById('confirmModalCancel');
+
+    if (!modal) {
+        // Fallback if modal HTML is missing
+        if (confirm(message)) {
+            if (onConfirm) onConfirm();
+        } else {
+            if (onCancel) onCancel();
+        }
+        return;
+    }
+
+    // Set content
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+
+    // Show modal
+    modal.classList.add('active');
+
+    // handlers to ensure we don't stack event listeners if opened multiple times
+    // We use a clone method or removeEventListener pattern
+    
+    // 1. Remove old listeners by cloning buttons
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+    // 2. Add new listeners
+    newConfirmBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        if (onConfirm) onConfirm();
+    });
+
+    newCancelBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        if (onCancel) onCancel();
+    });
+}
+        
+// Broadcast request
+async function broadcastRequest(requestId = null) {
+    // ---> ADD THIS POPUP CHECK AT THE START <---
+    if (!testPopup()) {
+        showNotification('Cannot proceed - popups blocked. Please allow popups and try again.', 'error');
+        return;
+    }
+    
+    // Use custom confirm modal instead of window.confirm()
+    showCustomConfirm(
+        'Broadcast Request',
+        'Are you ready to broadcast this request to all affiliates?',
+        async () => {
+            // User clicked Confirm
+            try {
+                showLoading(true);
+                console.log(`Broadcasting request: ${requestId || 'new'}`);
+                
+                let requestData;
+                let savedRequest;
+                
+                if (requestId) {
+                    // Broadcast existing request
+                    const { data: request, error: fetchError } = await supabaseClient
+                        .from('requests')
+                        .select('*')
+                        .eq('id', requestId)
+                        .single();
+                    
+                    if (fetchError) throw fetchError;
+                    requestData = request;
+                    savedRequest = request;
+                } else {
+                    // Create and broadcast new request
+                    // Get form values
+                    requestData = {
+                        client_type: document.getElementById('clientType').value,
+                        service_class: document.getElementById('serviceClass').value,
+                        service_type: document.getElementById('serviceType').value,
+                        description: document.getElementById('description').value,
+                        location: document.getElementById('location').value,
+                        many_count: parseInt(document.getElementById('manyCount').value) || 1,
+                        map_link: document.getElementById('mapLink').value || null,
+                        time_sensitive: document.getElementById('timeSensitive').value === 'true',
+                        request_date: document.getElementById('requestDate').value,
+                        request_time: document.getElementById('requestTime').value,
+                        time_frame_value: document.getElementById('timeFrameValue').value || null,
+                        time_frame_unit: document.getElementById('timeFrameUnit').value || null,
+                        contact_name: document.getElementById('contactName').value || null,
+                        contact_phone: document.getElementById('contactPhone').value || null,
+                        photo_checkin: document.querySelector('.verification-item[data-type="photo_checkin"]').classList.contains('active'),
+                        videos: document.querySelector('.verification-item[data-type="videos"]').classList.contains('active'),
+                        live_video: document.querySelector('.verification-item[data-type="live_video"]').classList.contains('active'),
+                        post_event_report: document.querySelector('.verification-item[data-type="post_event_report"]').classList.contains('active'),
+                        status: 'broadcast',
+                        broadcast_at: new Date().toISOString()
+                    };
+                    
+                    // Validate required fields
+                    if (!requestData.client_type || !requestData.service_class || !requestData.service_type || 
+                        !requestData.description || !requestData.location || !requestData.request_date || !requestData.request_time) {
+                        showNotification('Please fill in all required fields', 'error');
+                        showLoading(false);
+                        return;
+                    }
+                    
+                    // Save to database
+                    const { data: saved, error: saveError } = await supabaseClient
+                        .from('requests')
+                        .insert(requestData)
+                        .select()
+                        .single();
+                    
+                    if (saveError) throw saveError;
+                    
+                    savedRequest = saved;
+                    requestId = saved.id;
+                }
+                
+                // ---> IMPORTANT: DO NOT SEND TELEGRAM NOTIFICATION ON BROADCAST <---
+                console.log('📢 Request broadcasted to affiliates via chat bot system');
+                
+                // ---> HANDLE WHATSAPP SHARING (This is what you want) <---
+                try {
+                    await handleWhatsAppShare(savedRequest);
+                } catch (whatsappError) {
+                    console.warn('WhatsApp preparation failed:', whatsappError);
+                    showNotification('WhatsApp preparation failed, but request was broadcasted', 'error');
+                }
+                
+                // Update request status in database (if broadcasting existing)
+                if (requestId && !requestData.id) {
+                    const { error: updateError } = await supabaseClient
+                        .from('requests')
+                        .update({
+                            status: 'broadcast',
+                            broadcast_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', requestId);
+                    
+                    if (updateError) throw updateError;
+                }
+                
+                // Show success message
+                showNotification('Request broadcasted successfully! Affiliates can now see and accept it in their chat bot.');
+                
+                // Update the post counter display
+                updatePostCounterDisplay();
+                
+                // Reload requests
+                await loadRequests();
+                
+                // Show the request in detail view
+                await viewRequest(requestId || savedRequest.id);
+                
+            } catch (error) {
+                console.error('Error broadcasting request:', error);
+                showNotification('Failed to broadcast request: ' + (error.message || 'Unknown error'), 'error');
+            } finally {
+                showLoading(false);
+            }
+        },
+        () => {
+            // User clicked Cancel
+            console.log('Broadcast cancelled');
+        }
+    );
+}
+        
+        // Send Telegram notification - ONLY FOR DEBUGGING, NOT FOR BROADCAST
+async function sendTelegramNotification(request) {
+    try {
+        // Log instead of sending to Telegram
+        console.log('📢 Request broadcasted (Telegram notification disabled):', {
+            request_code: request.request_code,
+            many_count: request.many_count || 1,
+            location: request.location,
+            description: request.description.substring(0, 50) + '...'
+        });
+        
+        // Return mock result instead of actually sending
+        return {
+            ok: true,
+            result: {
+                message_id: 0,
+                date: Date.now(),
+                text: 'Telegram notification disabled - affiliates notified via chat bot'
+            }
+        };
+        
+    } catch (error) {
+        console.error('Error in Telegram notification function:', error);
+        throw error;
+    }
+}
+// ---> ADD THE POPUP TEST FUNCTION HERE <---
+
+// Test if window.open will work
+function testPopup() {
+    const testWindow = window.open('', '_blank');
+    if (!testWindow || testWindow.closed) {
+        showNotification(
+            '⚠️ Pop-ups might be blocked!\n\n' +
+            'Please allow pop-ups for this site:\n' +
+            '1. Click the lock/padlock icon in address bar\n' +
+            '2. Change "Pop-ups" to "Allow"\n' +
+            '3. Try again', 
+            'error'
+        );
+        return false;
+    }
+    testWindow.close();
+    return true;
+}
+
+// Function to handle safe WhatsApp posting
+async function handleWhatsAppShare(request) {
+    try {
+        // 1. Get and increment the post counter from localStorage
+        let postCounter = parseInt(localStorage.getItem('whatsapp_post_counter')) || 0;
+        postCounter++;
+        localStorage.setItem('whatsapp_post_counter', postCounter);
+        
+        // 2. Format the date
+        const requestDate = new Date(request.request_date);
+        const formattedDate = requestDate.toLocaleDateString('en-US', {
+            weekday: 'short', 
+            month: 'short', 
+            day: 'numeric'
+        });
+        
+        // 3. Truncate description to a snippet
+        const shortDesc = request.description.length > 100 
+            ? request.description.substring(0, 100) + '...' 
+            : request.description;
+        
+        // 4. Build the Message (Formatted with WhatsApp Bold/Italics)
+        const message = `${postCounter}. Looks like this one's either 10-15 minutes away... but needs to not be 35 minutes - an hour+ distant\n\n` +
+                       `${shortDesc}\n\n` +
+                       `*****\n\n` +
+                       `⏰ ${formattedDate} @ ${request.request_time.substring(0, 5)} | 👤 ${request.client_type}\n` +
+                       `📝 ${request.service_type}\n\n` +
+                       `👇 Click Accept on Dashboard\n\n` +
+                       `To be noted: Anything outside this request is between grownups. It’s not our thing and likely not yours to persuade clients to invest, be persuaded, or engage in side conversations that go beyond this request.`;
+        
+        // 5. Copy to Clipboard
+        await navigator.clipboard.writeText(message);
+        
+        // 6. DIRECT COMMUNITY LINK - THIS OPENS CHAT DIRECTLY!
+        const directCommunityLink = 'https://chat.whatsapp.com/IyKxFxlpcKz9BB182qv27o';
+        
+        showNotification(
+            `🚀 POST #${postCounter} READY!\n\n` +
+            `✓ Message copied to clipboard\n` +
+            `✓ Opening Community directly...\n\n` +
+            `QUICK:\n` +
+            `1. Community opens automatically\n` +
+            `2. Paste (Ctrl+V)\n` +
+            `3. Send ✅\n\n` +
+            `⏱️ 3-second workflow!`, 
+            'success'
+        );
+        
+        // 7. OPEN DIRECT COMMUNITY LINK - NO "JOIN" PAGE!
+        window.open(directCommunityLink, '_blank');
+        
+    } catch (err) {
+        console.error('Clipboard failed:', err);
+        showNotification(
+            '⚠️ Manual Copy Required\n\n' +
+            'Copy this text:\n' +
+            '-------------------\n' +
+            message.substring(0, 150) + '...\n' +
+            '-------------------\n\n' +
+            'Then open:\n' +
+            'https://chat.whatsapp.com/IyKxFxlpcKz9BB182qv27o\n' +
+            'Paste & Send', 
+            'error'
+        );
+        
+        // Still try to open the direct link
+        window.open('https://chat.whatsapp.com/IyKxFxlpcKz9BB182qv27o', '_blank');
+    }
+}        
+        // Create new request
+        function createNewRequest() {
+            console.log('Creating new request...');
+            currentRequestId = null;
+            showRequestForm();
+        }
+        
+        // Back to list
+        function backToList() {
+            console.log('Going back to list...');
+            document.getElementById('emptyState').style.display = 'flex';
+            document.getElementById('requestForm').style.display = 'none';
+            currentRequestId = null;
+            
+            // Clear active state
+            document.querySelectorAll('.request-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+
+            // Back to dashboard button
+            const backBtn = document.getElementById('backToDashboardBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    window.location.href = 'admin-dashboard.html';
+                });
+            }
+            
+            // Create request button
+            const createBtn = document.getElementById('createRequestBtn');
+            if (createBtn) {
+                createBtn.addEventListener('click', createNewRequest);
+            }
+            
+            // Preview button
+            const previewBtn = document.getElementById('previewBtn');
+            if (previewBtn) {
+                previewBtn.addEventListener('click', () => {
+                    console.log('Preview button clicked');
+                    generatePreview();
+                });
+            }
+            
+            // Clear button
+            const clearBtn = document.getElementById('clearBtn');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', clearForm);
+            }
+            
+            // Broadcast button
+            const broadcastBtn = document.getElementById('broadcastBtn');
+            if (broadcastBtn) {
+                // Event listener will be added dynamically in showRequestForm
+            }
+            
+            // Verification method toggle
+            document.querySelectorAll('.verification-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Form submission prevention
+            const form = document.getElementById('createRequestForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                });
+            }
+            
+            // Auto-enable preview when required fields are filled
+            const requiredFields = ['clientType', 'serviceClass', 'serviceType', 'description', 'location', 'requestDate', 'requestTime'];
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.addEventListener('input', function() {
+                        const allFilled = requiredFields.every(id => {
+                            const field = document.getElementById(id);
+                            return field && field.value.trim() !== '';
+                        });
+                        
+                        if (allFilled && previewBtn) {
+                            previewBtn.style.opacity = '1';
+                        }
+                    });
+                }
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + N for new request
+                if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                    e.preventDefault();
+                    createNewRequest();
+                }
+                
+                // Ctrl/Cmd + P for preview
+                if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                    e.preventDefault();
+                    generatePreview();
+                }
+                
+                // Escape to go back
+                if (e.key === 'Escape') {
+                    if (document.getElementById('requestForm').style.display === 'block') {
+                        backToList();
+                    }
+                }
+            });
+            
+            console.log('Event listeners setup complete');
+        }
+        
+                // Make functions globally available
+        window.loadRequests = loadRequests;
+        window.toggleTick = toggleTick;
+        window.viewRequest = viewRequest;
+
+        // Update the post counter display
+        function updatePostCounterDisplay() {
+            const counter = parseInt(localStorage.getItem('whatsapp_post_counter')) || 0;
+            const nextCount = counter + 1;
+            const counterElement = document.getElementById('nextPostCount');
+            if (counterElement) {
+                counterElement.textContent = nextCount;
+            }
+        }
+
+        // Function to reset WhatsApp post counter (optional)
+        function resetWhatsAppCounter() {
+            if (confirm('Reset WhatsApp post counter to 0?')) {
+                localStorage.setItem('whatsapp_post_counter', '0');
+                showNotification('WhatsApp post counter reset to 0');
+                updatePostCounterDisplay();
+                console.log('Counter reset');
+            }
+        }
+
+        // Make functions globally available (clean version - remove the duplicate)
+        window.resetWhatsAppCounter = resetWhatsAppCounter;
+    </script>
+    <!-- Custom Confirm Modal -->
+<div class="custom-confirm-modal" id="customConfirmModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <i class="fas fa-bullhorn"></i>
+            <h3 id="confirmModalTitle">Confirm Action</h3>
+        </div>
+        <div class="modal-body">
+            <p id="confirmModalMessage">Are you sure you want to proceed?</p>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn cancel-btn" id="confirmModalCancel">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="modal-btn confirm-btn" id="confirmModalConfirm">
+                <i class="fas fa-check"></i> Confirm
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

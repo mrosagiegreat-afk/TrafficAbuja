@@ -1,0 +1,4362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Dashboard | TrafficAbuja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base - FIXED for mobile */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        html {
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ========== INVISIBLE SCROLLBARS ========== */
+/* Hide all scrollbars globally */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    display: none;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: none;
+}
+
+/* For Internet Explorer/Edge */
+* {
+    -ms-overflow-style: none;
+}
+
+        /* Top Bar */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+
+        .top-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+            padding: 8px 0;
+            display: inline-block;
+        }
+
+        .logo sup {
+            font-size: 9px;
+            vertical-align: super;
+            color: #888;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 45px 10px 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 14px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            background: #fff;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #1a1a1a;
+            cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .profile-btn:hover {
+            background: #f8f9fa;
+            color: #000;
+        }
+
+        /* Main Layout */
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background: #f8f9fa;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 30px 0;
+            position: fixed;
+            left: 0;
+            top: 70px;
+            bottom: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+          /* ADD THIS LINE: */
+    -ms-overflow-style: none; /* For IE/Edge */
+}
+
+/* SIMPLE POSITIONING - Right side adjacent to calendar icon */
+.back-to-list-btn {
+    position: absolute;
+    top: 0;
+    right: 20px; /* CHANGED FROM 0 TO 20px to match calendar icon's margin-left */
+    z-index: 100;
+    display: none;
+    padding: 10px 16px;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+/* For mobile - position in event header */
+@media (max-width: 768px) {
+    .event-header {
+        position: relative; /* This makes the button position relative to header */
+        padding-right: 140px; /* Make space for the button */
+        min-height: 70px; /* Ensure header has enough height */
+    }
+    
+    .back-to-list-btn {
+        position: absolute;
+        top: 0;
+        right: 20px; /* CHANGED FROM 0 TO 20px */
+    }
+}
+
+/* Optional scroll effects - keep if you want */
+.back-to-list-btn.hide {
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+}
+
+.back-to-list-btn.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+        /* Enhanced Gratuity Section */
+        .gratuity-section {
+            padding: 0 30px 25px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 25px;
+        }
+
+        .gratuity-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .gratuity-title i {
+            color: #4CAF50;
+            font-size: 16px;
+        }
+
+        /* Fixed Total Gratuity */
+        .gratuity-total {
+            background: #ffffff;
+            border: 3px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .total-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .total-amount {
+            font-size: 42px;
+            font-weight: 900;
+            color: #1a1a1a;
+            line-height: 1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .total-amount {
+    font-size: clamp(16px, 5.5vw, 32px); /* Reduced from 20px/6.5vw/38px */
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1.2; /* Increased line-height for better readability at smaller size */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    letter-spacing: 0px; /* Reset to normal spacing */
+    padding: 0 8px; /* Increased padding for breathing room */
+    box-sizing: border-box;
+}
+
+/* Add this for landscape-specific clamping */
+@media (orientation: landscape) and (max-width: 992px) {
+    .total-amount {
+        font-size: clamp(16px, 3vw, 24px) !important;
+    }
+}
+
+.gratuity-total {
+    background: #ffffff;
+    border: 3px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 18px 12px; /* Reduced padding */
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    min-height: 95px; /* Significantly reduced from 110px */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* THEN ADD THIS RESPONSIVE SECTION AFTER */
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .total-amount {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 768px) {
+    .total-amount {
+        font-size: 32px;
+    }
+    
+    .gratuity-total {
+        padding: 20px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .total-amount {
+        font-size: 28px;
+    }
+    
+    .gratuity-total {
+        padding: 15px 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .total-amount {
+        font-size: 24px;
+    }
+}
+
+        /* Dual Currency Display - VERTICAL STACK */
+.gratuity-currencies {
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.currency-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 100%; /* Full width */
+}
+
+.currency-card.naira {
+    border-color: #4CAF50;
+    background: #f0f9f0;
+}
+
+.currency-card.dollar {
+    border-color: #2196F3;
+    background: #f0f8ff;
+}
+
+.currency-symbol {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.currency-amount {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+    line-height: 1;
+    word-break: break-all; /* Handle long numbers */
+}
+
+.currency-amount.naira {
+    color: #4CAF50;
+}
+
+.currency-amount.dollar {
+    color: #2196F3;
+}
+
+/* For mobile - you can keep the vertical layout */
+@media (max-width: 768px) {
+    .currency-amount {
+        font-size: 22px;
+    }
+    
+    .currency-card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .currency-amount {
+        font-size: 20px;
+    }
+}
+        /* Balance Display */
+        .gratuity-balance {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .balance-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .balance-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Notify Us Button */
+        .notify-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .notify-btn:hover:not(:disabled) {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        .notify-btn:disabled {
+            background: #e0e0e0;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        .sidebar-header {
+            padding: 0 30px 25px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .member-since {
+            font-size: 13px;
+            color: #888;
+            font-style: italic;
+        }
+
+        .events-list {
+            padding: 0 20px;
+        }
+
+        .event-item {
+            padding: 20px;
+            border-bottom: 1px solid #e8e8e8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .event-item:hover {
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .event-item.active {
+            background: #fff;
+            border-left: 4px solid #1a1a1a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .event-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .event-time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 320px;
+            padding: 40px;
+            background: #fff;
+            overflow-y: auto;
+            transition: margin-left 0.3s ease;
+          /* ADD THIS LINE: */
+    -ms-overflow-style: none; /* For IE/Edge */
+}
+
+        /* Event Detail */
+        .event-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .event-icon {
+            width: 50px;
+            height: 50px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+
+        .event-icon i {
+            font-size: 22px;
+            color: #1a1a1a;
+        }
+
+        .event-info h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .event-date {
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* View Event Button */
+        .view-event-btn {
+            padding: 10px 20px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .view-event-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* Event Requirements Section */
+        .requirements-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .requirements-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .requirements-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: #1a1a1a;
+            border-radius: 2px;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .requirement-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .requirement-icon i {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .requirement-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .requirement-info p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .requirement-status {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .status-check {
+            width: 24px;
+            height: 24px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .status-pending {
+            width: 24px;
+            height: 24px;
+            background: #ff9800;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Address Section */
+        .address-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px 0;
+            border: 1px solid #e8e8e8;
+        }
+
+        .address-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .address-text {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        /* Status Section */
+        .status-section {
+            margin: 50px 0;
+        }
+
+        .status-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .status-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: #1a1a1a;
+            border-radius: 2px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .status-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .status-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .status-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        /* Profile Panel */
+        .profile-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-panel.active {
+            right: 0;
+        }
+
+        .profile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .profile-overlay.active {
+            display: block;
+        }
+
+        .profile-header {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .profile-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .profile-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .close-profile {
+            background: #f8f9fa;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .close-profile:hover {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .profile-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .member-since-profile {
+            font-size: 13px;
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Profile Item Improvements */
+        .profile-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .profile-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .profile-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-label::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .profile-value {
+            font-size: 16px;
+            color: #1a1a1a;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Loading State */
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: #666;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1a1a1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #888;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        /* Error State */
+        .error-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #dc2626;
+        }
+
+        .error-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        /* Success Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Logout button responsive adjustments */
+        @media (max-width: 768px) {
+            #logoutBtn {
+                padding: 14px 20px;
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #logoutBtn {
+                padding: 16px 20px;
+            }
+        }
+
+        /* Mobile Responsive - FIXED FOR FULL PAGE VIEW */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: 100;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+                width: 100%;
+            }
+            
+            .main-content.event-view {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 70px);
+                z-index: 101;
+                background: white;
+                overflow-y: auto;
+            }
+            
+            .back-to-list-btn {
+                display: flex;
+            }
+            
+            .top-bar-content {
+                flex-wrap: wrap;
+                padding: 0 15px;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                order: 3;
+                max-width: 100%;
+                margin: 15px 0 0 0;
+            }
+            
+            .address-text {
+                font-size: 28px;
+            }
+            
+            .profile-panel {
+                width: 100%;
+                right: -100%;
+                padding: 25px 20px;
+            }
+            
+            .profile-header {
+                flex-direction: row;
+                align-items: flex-start;
+                margin-bottom: 25px;
+            }
+            
+            .close-profile {
+                position: absolute;
+                top: 25px;
+                right: 20px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .total-amount {
+                font-size: 32px;
+            }
+            
+            .currency-amount {
+                font-size: 22px;
+            }
+            
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gratuity-currencies {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .event-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .event-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .event-info h1 {
+                font-size: 24px;
+            }
+            
+            .address-section {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 15px;
+            }
+            
+            .event-info h1 {
+                font-size: 22px;
+            }
+            
+            .address-section {
+                padding: 15px;
+            }
+            
+            .address-text {
+                font-size: 24px;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 18px;
+            }
+            
+            .profile-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .profile-panel {
+                padding: 20px 15px;
+            }
+            
+            .profile-title {
+                font-size: 20px;
+            }
+            
+            .total-amount {
+                font-size: 28px;
+            }
+            
+            .currency-amount {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="logo-container">
+                <a href="index.html" class="logo">TrafficAbuja<sup>®</sup></a>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search events..." id="searchInput">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <button class="profile-btn" id="profileBtn" aria-label="Open profile">
+                <i class="fas fa-user-circle"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+           <button class="back-to-list-btn" id="backToListBtn" title="Back to Events List">
+    <i class="fas fa-arrow-left"></i>
+</button>
+            
+            <!-- Enhanced Gratuity Section -->
+            <div class="gratuity-section">
+                <div class="gratuity-title">
+                    <span>WELCOME</span>
+                    <i class="fas fa-coins"></i>
+                </div>
+                
+                <!-- Fixed Total Gratuity -->
+                <div class="gratuity-total">
+                    <div class="total-label">Total Gratuity</div>
+                    <div class="total-amount" id="totalGratuity">₦999,999.00</div>
+                </div>
+                
+                <!-- Dual Currency Display -->
+                <div class="gratuity-currencies">
+                    <div class="currency-card naira">
+                        <div class="currency-symbol">
+                            <i class="fas fa-naira-sign"></i>
+                            <span>NAIRA</span>
+                        </div>
+                        <div class="currency-amount naira" id="nairaAmount">₦0.00</div>
+                    </div>
+                    
+                    <div class="currency-card dollar">
+                        <div class="currency-symbol">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>DOLLAR</span>
+                        </div>
+                        <div class="currency-amount dollar" id="dollarAmount">$0.00</div>
+                    </div>
+                </div>
+                
+                <!-- Balance Display -->
+                <div class="gratuity-balance">
+                    <div class="balance-label">Balance</div>
+                    <div class="balance-amount" id="balanceAmount">₦999,999.00</div>
+                </div>
+                
+                <!-- Notify Us Button -->
+                <button class="notify-btn" id="notifyBtn" disabled>
+                    <i class="fas fa-bell"></i>
+                    <span>Notify Us (15 appearances needed)</span>
+                </button>
+            </div>
+
+            <!-- Add this to the sidebar, after the gratuity section -->
+<div class="requests-sidebar-section" style="padding: 20px; border-top: 1px solid #e0e0e0;">
+    <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px; color: #1a1a1a;">
+        <i class="fas fa-bullhorn"></i> Available Requests
+    </h3>
+    
+    <div id="availableRequests" style="max-height: 300px; overflow-y: auto; -ms-overflow-style: none;">
+        <!-- Requests will be loaded here -->
+    </div>
+    
+    <!-- ADD THIS REFRESH BUTTON -->
+    <div style="padding: 10px 0; border-top: 1px solid #e0e0e0; margin-top: 10px;">
+        <button onclick="refreshRequests()" style="
+            width: 100%;
+            padding: 10px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        ">
+            <i class="fas fa-sync-alt"></i> Refresh Requests
+        </button>
+    </div>
+    
+    <div id="requestChat" style="display: none; margin-top: 20px; padding: 15px; background: white; border-radius: 8px; border: 1px solid #e0e0e0;">
+        <!-- Request chat will be loaded here -->
+    </div>
+</div>
+            
+            <div class="sidebar-header">
+    <h3 class="sidebar-title">HOW TO USE</h3>
+    <p class="sidebar-subtitle">• Click an event for details<br>• Access information via the profile icon<br>• To log out, access the option in profile view.</p>
+    <div class="member-since" id="memberSince">Member since: Loading...</div>
+    <!-- Verified Badge (commented out)
+    <div id="verifiedBadge" style="display: none; margin-top: 15px; padding: 10px; background: #f0f9f0; border: 1px solid #c8e6c9; border-radius: 8px;">
+        <span style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: #2e7d32;">
+            <i class="fas fa-check-circle"></i>
+            <span>Verified Account</span>
+        </span>
+        <p style="font-size: 12px; color: #558b2f; margin-top: 5px; margin-left: 24px;">
+            This account has been verified by TrafficAbuja
+        </p>
+    </div>
+    -->
+</div>
+            
+            <div class="events-list" id="eventsList">
+                <!-- Events will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Event details will be loaded here -->
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>No Event Selected</h3>
+                <p>Select an event from the sidebar to view its details, including location, timing, and client feedback.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Panel -->
+    <div class="profile-panel" id="profilePanel">
+        <div class="profile-header">
+            <div class="profile-title-row">
+                <div>
+                    <h2 class="profile-title" id="userGreeting">HI, 👋</h2>
+                    <!-- Minimalist Meta-style badge for profile panel -->
+                    <div id="profileVerifiedBadge" style="display: none; margin: 10px 0;">
+                        <span style="display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #1877F2 0%, #1D4ED8 100%); color: white; padding: 6px 12px 6px 8px; border-radius: 20px; font-size: 13px; font-weight: 600; box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);">
+                            <span style="background: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-check" style="color: #1877F2; font-size: 10px; font-weight: bold;"></i>
+                            </span>
+                            <span>Verified</span>
+                        </span>
+                    </div>
+                    <p class="profile-subtitle">Contact TrafficAbuja to update your information.</p>
+                    <div class="member-since-profile" id="profileMemberSince">Member since: Loading...</div>
+                </div>
+                <button class="close-profile" id="closeProfile">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="profile-item">
+                <div class="profile-label">Name</div>
+                <div class="profile-value" id="profileName">Loading...</div>
+            </div>
+            
+            <div class="profile-item">
+                <div class="profile-label">Phone Number</div>
+                <div class="profile-value" id="profilePhone">Loading...</div>
+            </div>
+            
+            <div class="profile-item">
+                <div class="profile-label">Address</div>
+                <div class="profile-value" id="profileAddress">Loading...</div>
+            </div>
+            
+            <div class="profile-item">
+                <div class="profile-label">Education</div>
+                <div class="profile-value" id="profileEducation">Loading...</div>
+            </div>
+            
+            <div class="profile-item">
+                <div class="profile-label">Beneficiary</div>
+                <div class="profile-value" id="profileBeneficiary">
+                    Loading...
+                </div>
+            </div>
+            
+            <div class="profile-item">
+                <div class="profile-label">Account Details</div>
+                <div class="profile-value" id="profileAccount">
+                    Loading...
+                </div>
+            </div>
+            
+            <div class="profile-item">
+                <div class="profile-label">Appearances</div>
+                <div class="profile-value" id="profileAppearances">
+                    Loading...
+                </div>
+            </div>
+            
+            <!-- Logout Button Section -->
+            <div class="profile-item">
+                <div class="profile-label">Account</div>
+                <div class="profile-value">
+                    <button id="logoutBtn" style="
+                        width: 100%;
+                        padding: 12px 20px;
+                        background: #1a1a1a;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        margin-top: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                    ">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                    <p style="font-size: 14px; color: #666; margin-top: 15px; text-align: center;">
+                        You'll be redirected to the main page
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Overlay -->
+    <div class="profile-overlay" id="profileOverlay"></div>
+    <!-- =================== ADD CHAT BOT HERE =================== -->
+    <!-- Chat Bot Interface -->
+    <div class="chat-bot-container" id="chatBotContainer">
+       <div class="chat-bot-header">
+    <div class="chat-bot-title">
+        <i class="fas fa-paper-plane" style="color: #1a1a1a; font-size: 18px;"></i>
+        <span>Request Bot</span>
+        <span class="unread-badge" id="unreadBadge" style="display: none;">0</span>
+    </div>
+    <div class="chat-bot-actions">
+        <button class="chat-bot-action-btn" id="clearChatBtn" title="Clear Chat">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+        <button class="chat-bot-close" id="closeChatBot" title="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
+        
+        <div class="chat-bot-messages" id="chatBotMessages">
+            <!-- Messages will appear here -->
+            <div class="bot-message">
+                <div class="message-content">
+                    <div class="message-text">Hi! I'm your request assistant. I'll notify you when new requests are available.</div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-bot-input">
+            <input type="text" id="chatInput" placeholder="Type your message..." disabled>
+            <button id="sendChatBtn" disabled>
+                <i class="fas fa-paper-plane" style="color: #1a1a1a;"></i>
+            </button>
+        </div>
+        
+        <div class="chat-bot-footer">
+            <small>Messages auto-clear after 24 hours</small>
+        </div>
+    </div>
+    
+    <!-- Chat Bot Toggle Button -->
+    <button class="chat-bot-toggle" id="chatBotToggle">
+        <i class="fas fa-paper-plane" style="color: #1a1a1a;"></i>
+        <span class="unread-indicator" id="unreadIndicator" style="display: none;"></span>
+    </button>
+    
+    <style>
+        /* Chat Bot Styles - ADD THIS CSS */
+        .chat-bot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .chat-bot-container.active {
+            display: flex;
+        }
+        
+        .chat-bot-header {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-bot-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.chat-bot-action-btn {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.chat-bot-action-btn:hover {
+    background: #e0e0e0;
+    color: #1a1a1a;
+}
+        
+        .chat-bot-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .unread-badge {
+            background: #dc2626;
+            color: white;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        .chat-bot-close {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 18px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-bot-close:hover {
+            background: #e0e0e0;
+            color: #1a1a1a;
+        }
+        
+        .chat-bot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* ADD THIS LINE: */
+    -ms-overflow-style: none; /* For IE/Edge */
+}
+        
+        .bot-message {
+            display: flex;
+            justify-content: flex-start;
+        }
+        
+        .user-message {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* Find .message-content in your <style> tag and ensure it looks like this */
+.message-content {
+    max-width: 90%; /* Increased from 80% to give more room */
+    padding: 12px 16px;
+    border-radius: 12px; /* Slightly less round for professional look */
+    position: relative;
+    word-wrap: break-word; /* Ensure long words don't break the box */
+}
+
+/* Add this specifically for the request messages */
+.bot-message .message-text {
+    width: 100%;
+    display: block;
+    white-space: normal; /* This prevents the "Description:   Need" jumping issue */
+}
+        
+        .bot-message .message-content {
+            background: #f0f0f0;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .user-message .message-content {
+            background: #1a1a1a;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 11px;
+            color: #888;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .user-message .message-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .accept-request-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .accept-request-btn:hover {
+            background: #388E3C;
+            transform: translateY(-1px);
+        }
+        
+        .accept-request-btn:disabled {
+            background: #c8e6c9;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .chat-bot-input {
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            background: #f8f9fa;
+        }
+        
+        .chat-bot-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 24px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .chat-bot-input input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+        }
+        
+        .chat-bot-input button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: #1a1a1a;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-bot-input button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        
+        .chat-bot-input button:disabled {
+            background: #e0e0e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .chat-bot-footer {
+            padding: 8px 20px;
+            text-align: center;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .chat-bot-footer small {
+            color: #888;
+            font-size: 11px;
+        }
+        
+        .chat-bot-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #1a1a1a;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 1999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-bot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chat-bot-toggle i {
+            font-size: 24px;
+        }
+        
+        .unread-indicator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background: #dc2626;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        /* Request Card in Chat */
+        .request-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+                /* Request Card in Chat */
+        .request-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+                /* Improved Map Link */
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 6px 12px;
+            background: #e3f2fd;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 13px;
+        }
+        
+        .map-link:hover {
+            background: #bbdefb;
+            color: #0d47a1;
+            transform: translateY(-1px);
+        }
+        
+        .map-link-icon {
+            font-size: 14px;
+        }
+
+.map-link:hover {
+    color: #0d47a1;
+    text-decoration: underline;
+}
+
+.map-link-icon {
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+}
+        /* Updated Request Card Styles */
+        .request-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .request-field {
+            display: flex;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+        
+        .request-label {
+            font-weight: 600;
+            color: #666;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+        
+       .request-value {
+    color: #1a1a1a;
+    display: block; /* Change from flex: 1 to block */
+    width: 100%;    /* Added to ensure it takes the full width available */
+    word-break: break-word;
+    white-space: normal; /* Added to allow normal text wrapping */
+}
+        
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .request-code {
+            font-weight: 700;
+            color: #2196F3;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        
+        .client-type-badge {
+            background: #e3f2fd;
+            color: #1565C0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .service-badge {
+            background: #f3e5f5;
+            color: #7b1fa2;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        .masked-text {
+            color: #dc2626;
+            letter-spacing: 2px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chat-bot-container {
+                width: calc(100% - 40px);
+                height: 70vh;
+                bottom: 80px;
+            }
+            
+            .chat-bot-toggle {
+                bottom: 90px;
+                right: 20px;
+            }
+        }
+    </style>
+    <!-- =================== END CHAT BOT HTML/CSS =================== -->
+
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://qoisqrzlfspzxtnkgyyr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvaXNxcnpsZnNwenh0bmtneXlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY4MDA0MzMsImV4cCI6MjA4MjM3NjQzM30.jp97VkUx6IFARFzFw3YXJJfBZmdnnCPHM95Q1WAqHnc';
+
+        // Telegram Bot Configuration
+const TELEGRAM_BOT_TOKEN = '8550670648:AAFY4SNAi-lXD756cz7SOowhbaeIIpLeYWY'; // Gratuity bot - for "Notify Us" only
+const APPROVAL_BOT_TOKEN = '7570694771:AAFAoEF5z1r-4Z3prVHnlG8k11LUcOy38M0'; // Approval bot - for request approvals
+const TELEGRAM_CHAT_ID = '8565420381'; // Same chat ID for both
+
+        // Gratuity Configuration
+        const FIXED_TOTAL_GRATUITY = 999999.00; // ₦999,999.00 fixed total
+        const DEFAULT_EXCHANGE_RATE = 1500; // ₦1,500 = $1 (default)
+
+        // Initialize Supabase client
+        let supabaseClient;
+
+        if (typeof window.supabase !== 'undefined') {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } else {
+            const script = document.querySelector('script[src*="supabase-js"]');
+            script.addEventListener('load', () => {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                if (typeof initApp === 'function') initApp();
+            });
+        }
+
+// Check authentication
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('affiliate_logged_in') !== 'true') {
+        window.location.href = 'affiliatelogin.html';
+        return;
+    }
+    
+    loadAffiliateData().then(() => {
+        // Load available requests for sidebar
+        loadAvailableRequests();
+        
+        // Initialize chat bot AFTER affiliate data is loaded
+        setTimeout(() => {
+            if (!window.chatBotInitialized) {
+                window.chatBotInitialized = true;
+                initializeChatBot();
+                // Test to see if it's working
+                setTimeout(testRequestSystemImmediately, 2000);
+            }
+        }, 1000);
+    });
+});
+
+// iOS Zoom Fix
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => {
+    input.style.fontSize = '16px';
+});
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const emptyState = document.getElementById('emptyState');
+        const profileBtn = document.getElementById('profileBtn');
+        const profilePanel = document.getElementById('profilePanel');
+        const profileOverlay = document.getElementById('profileOverlay');
+        const closeProfile = document.getElementById('closeProfile');
+        const notifyBtn = document.getElementById('notifyBtn');
+        const totalGratuity = document.getElementById('totalGratuity');
+        const nairaAmount = document.getElementById('nairaAmount');
+        const dollarAmount = document.getElementById('dollarAmount');
+        const balanceAmount = document.getElementById('balanceAmount');
+        const memberSince = document.getElementById('memberSince');
+        const profileMemberSince = document.getElementById('profileMemberSince');
+        const userGreeting = document.getElementById('userGreeting');
+        const backToListBtn = document.getElementById('backToListBtn');
+
+        // Current state
+        let currentAffiliate = null;
+        let currentEvent = null;
+        let isMobile = window.innerWidth <= 768;
+        // Add this to your JavaScript, after the DOM is loaded
+let lastScrollTop = 0;
+const backButton = document.getElementById('backToListBtn');
+
+// Only apply on mobile when in event view
+if (isMobile) {
+    window.addEventListener('scroll', function() {
+        const st = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Only if we're in event view
+        if (mainContent.classList.contains('event-view') && backButton) {
+            if (st > lastScrollTop && st > 100) {
+                // Scrolling down, hide button
+                backButton.classList.add('hide');
+                backButton.classList.remove('show');
+            } else {
+                // Scrolling up or at top, show button
+                backButton.classList.remove('hide');
+                backButton.classList.add('show');
+            }
+        }
+        lastScrollTop = st <= 0 ? 0 : st;
+    }, false);
+}
+
+// Also ensure button is visible when not scrolling
+setTimeout(() => {
+    if (backButton && mainContent.classList.contains('event-view')) {
+        backButton.classList.add('show');
+    }
+}, 100);
+
+        // Load affiliate data from Supabase
+        async function loadAffiliateData() {
+            try {
+                // 1. Get the Login ID from localStorage
+                const userLoginId = localStorage.getItem('affiliate_user_id');
+                
+                if (!userLoginId) {
+                    window.location.href = 'affiliatelogin.html';
+                    return;
+                }
+
+                // 2. Fetch profile
+                const { data: affiliate, error: profileError } = await supabaseClient
+                    .from('affiliates')
+                    .select('*')
+                    .eq('user_id', userLoginId)
+                    .single();
+                
+                if (profileError) throw profileError;
+
+                // 3. Store current affiliate
+                currentAffiliate = affiliate;
+
+                // 4. Fetch events for this affiliate
+                const { data: events, error: eventsError } = await supabaseClient
+                    .from('events')
+                    .select('*')
+                    .eq('affiliate_id', affiliate.id)
+                    .order('date', { ascending: false });
+
+                if (eventsError) throw eventsError;
+
+                // 5. Update the UI
+                updateGratuitySection(affiliate);
+                updateProfilePanel(affiliate);
+                loadEvents(events || []);
+
+                // ADD THIS LINE:
+loadAvailableRequests(); // Load requests for sideba
+                
+                // 6. Update member since
+                if (affiliate.created_at) {
+                    const createdDate = new Date(affiliate.created_at);
+                    const formattedDate = createdDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                    memberSince.textContent = `Member since: ${formattedDate}`;
+                    profileMemberSince.textContent = `Member since: ${formattedDate}`;
+                }
+                
+                // 7. Select first event if available
+                if (events && events.length > 0) {
+                    showEventDetails(events[0]);
+                    const firstEventElement = document.querySelector('.event-item');
+                    if (firstEventElement) firstEventElement.classList.add('active');
+                }
+                
+            } catch (error) {
+                console.error('Detailed Error Context:', error);
+                showErrorState();
+            }
+        }
+
+        // Add to existing JavaScript, after loadAffiliateData function
+
+// Load available requests
+async function loadAvailableRequests() {
+    try {
+        const { data: requests, error } = await supabaseClient
+            .from('requests')
+            .select('*')
+            .eq('status', 'broadcast')
+            .order('broadcast_at', { ascending: false })
+            .limit(10);
+        
+        if (error) throw error;
+        
+        renderAvailableRequests(requests || []);
+        
+    } catch (error) {
+        console.error('Error loading requests:', error);
+    }
+}
+
+// Render available requests
+function renderAvailableRequests(requests) {
+    const container = document.getElementById('availableRequests');
+    
+    if (!requests || requests.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 20px; color: #666;">
+                <i class="fas fa-inbox" style="font-size: 24px; margin-bottom: 10px;"></i>
+                <p>No available requests</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = '';
+    
+    requests.forEach(request => {
+        const requestElement = document.createElement('div');
+        requestElement.className = 'request-item-mini';
+        requestElement.style.cssText = `
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        `;
+        
+        requestElement.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <div style="font-size: 12px; font-weight: 600; color: #2196F3; background: #e3f2fd; padding: 3px 8px; border-radius: 4px;">
+                    ${request.request_code}
+                </div>
+                <div style="font-size: 11px; color: #666;">
+                    ${new Date(request.request_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                </div>
+            </div>
+            
+            <div style="font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px;">
+                ${request.location.substring(0, 30)}${request.location.length > 30 ? '...' : ''}
+            </div>
+            
+            <div style="font-size: 13px; color: #666; margin-bottom: 12px; line-height: 1.4;">
+                ${request.description.substring(0, 60)}${request.description.length > 60 ? '...' : ''}
+            </div>
+            
+           <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-size: 12px; color: #888;">
+        <i class="fas fa-clock"></i> ${request.request_time.substring(0, 5)}
+    </div>
+    <div style="font-size: 11px; color: #888;">
+        <i class="fas fa-comment-alt"></i> Use Chat Bot
+    </div>
+</div>
+        `;
+        
+        container.appendChild(requestElement);
+    });
+    
+    // Add event listeners to accept buttons
+    container.querySelectorAll('.accept-request-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const requestId = this.dataset.id;
+            acceptRequest(requestId);
+        });
+    });
+}
+
+// Accept request
+async function acceptRequest(requestId) {
+    try {
+        // 1. Get request details
+        const { data: request, error: requestError } = await supabaseClient
+            .from('requests')
+            .select('*')
+            .eq('id', requestId)
+            .single();
+        
+        if (requestError) throw requestError;
+        
+        // 2. Check if already accepted
+        if (request.status !== 'broadcast') {
+            showNotification('This request has already been accepted by another affiliate', 'error');
+            return;
+        }
+
+        // Add this new function after the acceptRequest() function:
+async function acceptRequestFromSidebar(requestId) {
+    console.log('Accepting request from sidebar:', requestId);
+    await acceptRequest(requestId);
+}
+        
+        // 3. Show acceptance modal/chat
+        showRequestAcceptanceModal(request);
+        
+    } catch (error) {
+        console.error('Error accepting request:', error);
+        showNotification('Failed to accept request', 'error');
+    }
+}
+
+// Show request acceptance modal
+function showRequestAcceptanceModal(request) {
+    const chatContainer = document.getElementById('requestChat');
+    
+    chatContainer.style.display = 'block';
+    chatContainer.innerHTML = `
+        <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h4 style="font-size: 16px; font-weight: 600; color: #1a1a1a;">
+                    <i class="fas fa-comments"></i> Request: ${request.request_code}
+                </h4>
+                <button id="closeChatBtn" style="background: none; border: none; color: #666; cursor: pointer; font-size: 16px;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div style="background: #f0f9f0; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #c8e6c9;">
+                <p style="color: #2e7d32; font-weight: 500; margin-bottom: 10px;">
+                    <i class="fas fa-info-circle"></i> Thanks for tapping in.
+                </p>
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">
+                    While we line things up on our end, drop two things here:
+                </p>
+                <ol style="color: #666; font-size: 14px; padding-left: 20px; margin-bottom: 10px;">
+                    <li>Your TrafficAbuja User ID</li>
+                    <li><a href="${request.map_link || '#'}" target="_blank" style="color: #2196F3;">Open the Google Maps link</a>, 
+                        turn on live location, hit Start to the location in our link and share the link in that same chat box.</li>
+                </ol>
+            </div>
+            
+            <div id="chatMessages" style="height: 200px; overflow-y: auto; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0;">
+                <!-- Messages will appear here -->
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="userIdInput" placeholder="Your User ID" style="flex: 1; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px;">
+                <input type="text" id="locationLinkInput" placeholder="Live location link" style="flex: 2; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px;">
+                <button id="sendResponseBtn" style="background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            
+            <p style="font-size: 11px; color: #888; margin-top: 10px;">
+                Your response will be sent to admin for approval
+            </p>
+        </div>
+    `;
+    
+    // Add event listeners
+    chatContainer.querySelector('#closeChatBtn').addEventListener('click', () => {
+        chatContainer.style.display = 'none';
+    });
+    
+    chatContainer.querySelector('#sendResponseBtn').addEventListener('click', () => {
+        sendRequestResponse(request.id);
+    });
+    
+    // Scroll to chat
+    chatContainer.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Send request response
+async function sendRequestResponse(requestId) {
+    try {
+        const userId = document.getElementById('userIdInput').value.trim();
+        const locationLink = document.getElementById('locationLinkInput').value.trim();
+        
+        if (!userId || !locationLink) {
+            showNotification('Please provide both User ID and location link', 'error');
+            return;
+        }
+        
+        // 1. Save response to database
+        const responseData = {
+            request_id: requestId,
+            affiliate_id: currentAffiliate.id,
+            affiliate_user_id: userId,
+            live_location_link: locationLink,
+            status: 'pending'
+        };
+        
+        const { data: response, error: saveError } = await supabaseClient
+            .from('request_responses')
+            .insert(responseData)
+            .select()
+            .single();
+        
+        if (saveError) throw saveError;
+        
+        // 2. Update request status
+        const { error: updateError } = await supabaseClient
+            .from('requests')
+            .update({
+                status: 'accepted',
+                accepted_by: currentAffiliate.id,
+                affiliate_user_id: userId,
+                affiliate_live_location: locationLink,
+                accepted_at: new Date().toISOString()
+            })
+            .eq('id', requestId);
+        
+        if (updateError) throw updateError;
+        
+        // 3. Send Telegram notification
+        await sendTelegramResponseNotification(response, currentAffiliate);
+        
+        // 4. Show success message
+        showNotification('Response sent! Admin will review and contact you soon.');
+        
+        // 5. Clear inputs and hide chat
+        document.getElementById('userIdInput').value = '';
+        document.getElementById('locationLinkInput').value = '';
+        document.getElementById('requestChat').style.display = 'none';
+        
+        // 6. Reload requests
+        await loadAvailableRequests();
+        
+    } catch (error) {
+        console.error('Error sending response:', error);
+        showNotification('Failed to send response', 'error');
+    }
+}
+
+// Send Telegram notification for response
+async function sendTelegramResponseNotification(response, affiliate) {
+    try {
+        const message = `✅ *NEW REQUEST ACCEPTANCE* ✅\n\n` +
+                       `*Affiliate:* ${affiliate.name}\n` +
+                       `*User ID:* \`${response.affiliate_user_id}\`\n` +
+                       `*Live Location:* ${response.live_location_link}\n` +
+                       `*Phone:* ${affiliate.phone}\n\n` +
+                       `📍 *Review and take action:*\n` +
+                       `🟢 [Accept](${window.location.origin}/admin/accept-response/${response.id})\n` +
+                       `🔴 [Reject](${window.location.origin}/admin/reject-response/${response.id})\n\n` +
+                       `_Response ID: ${response.id}_`;
+        
+                const url = `https://api.telegram.org/bot${APPROVAL_BOT_TOKEN}/sendMessage`;
+        
+        const telegramResponse = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message,
+                parse_mode: 'Markdown',
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: '✅ Accept', callback_data: `accept_${response.id}` },
+                            { text: '❌ Reject', callback_data: `reject_${response.id}` }
+                        ]
+                    ]
+                }
+            })
+        });
+        
+        if (!telegramResponse.ok) {
+            throw new Error('Telegram API error');
+        }
+        
+        const result = await telegramResponse.json();
+        
+        // Save Telegram message ID to response
+        await supabaseClient
+            .from('request_responses')
+            .update({ telegram_message_id: result.result.message_id })
+            .eq('id', response.id);
+        
+    } catch (error) {
+        console.error('Error sending Telegram notification:', error);
+    }
+}
+
+// Call loadAvailableRequests after loading affiliate data
+// Add this line after loadAffiliateData() call in DOMContentLoaded event
+// loadAvailableRequests();
+
+function updateGratuitySection(affiliate) {
+    try {
+        // 1. Always show fixed total
+        totalGratuity.textContent = '₦999,999.00';
+        
+        // 2. Get paid amounts from database - READ FROM TEXT COLUMNS
+        // First, parse the text values like "₦1,500.00" or "$100.00"
+        const parseCurrencyText = (text) => {
+            if (!text) return 0;
+            // Remove currency symbols and commas
+            const clean = text.replace(/[₦$,]/g, '').trim();
+            return parseFloat(clean) || 0;
+        };
+        
+        const nairaPaid = parseCurrencyText(affiliate.naira_gratuity) || 0;
+        const dollarPaid = parseCurrencyText(affiliate.dollar_gratuity) || 0;
+        
+        // 3. Get exchange rate - READ FROM fx_rate INSTEAD OF exchange_rate
+        const exchangeRate = parseInt(affiliate.fx_rate) || DEFAULT_EXCHANGE_RATE;
+        
+        // 4. Calculate display amounts (what affiliate sees)
+        // This is what admin has transferred to them
+        const nairaDisplay = nairaPaid > 0 ? `₦${nairaPaid.toLocaleString('en-US', {minimumFractionDigits: 2})}` : '₦0.00';
+        const dollarDisplay = dollarPaid > 0 ? `$${dollarPaid.toLocaleString('en-US', {minimumFractionDigits: 2})}` : '$0.00';
+        
+        // 5. Calculate balance
+        // Convert dollar to naira using exchange rate, then subtract from fixed total
+        const dollarInNaira = dollarPaid * exchangeRate;
+        const totalPaidInNaira = nairaPaid + dollarInNaira;
+        const balance = FIXED_TOTAL_GRATUITY - totalPaidInNaira;
+        
+        // 6. Update UI
+        nairaAmount.textContent = nairaDisplay;
+        dollarAmount.textContent = dollarDisplay;
+        balanceAmount.textContent = `₦${balance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+        
+        // 7. Update Notify Us button logic
+        updateNotifyButton(affiliate);
+        
+    } catch (error) {
+        console.error('Error updating gratuity section:', error);
+        // Set defaults if error
+        totalGratuity.textContent = '₦999,999.00';
+        nairaAmount.textContent = '₦0.00';
+        dollarAmount.textContent = '$0.00';
+        balanceAmount.textContent = '₦999,999.00';
+    }
+}
+        // Update Notify Us Button
+        function updateNotifyButton(affiliate) {
+            // Calculate Appearances
+            const appearancesStr = affiliate.appearances || '0 off 0';
+            const [completed] = appearancesStr.split(' off ').map(Number);
+            
+            // Logic: Is it exactly a milestone (15, 30, 45...)?
+            const isMilestone = completed > 0 && completed % 15 === 0;
+            
+            // Logic: Have we already sent a notification for THIS count?
+            const lastNotified = parseInt(localStorage.getItem('last_notification_milestone') || '0');
+            const alreadySent = completed <= lastNotified;
+
+            if (isMilestone && !alreadySent) {
+                // ENABLE: Exactly a milestone and hasn't been sent yet
+                notifyBtn.disabled = false;
+                notifyBtn.style.opacity = "1";
+                notifyBtn.innerHTML = '<i class="fas fa-bell"></i><span>Notify Us for Tip-out!</span>';
+                notifyBtn.onclick = () => sendNotification(affiliate, completed);
+            } else if (isMilestone && alreadySent) {
+                // DISABLE: Milestone reached but already clicked
+                notifyBtn.disabled = true;
+                notifyBtn.style.opacity = "0.5";
+                notifyBtn.innerHTML = '<i class="fas fa-check-circle"></i><span>Notification Sent!</span>';
+            } else {
+                // DISABLE: Not a multiple of 15 (e.g., 14, 16, 29, 31)
+                const nextGoal = Math.ceil((completed + 1) / 15) * 15;
+                const remaining = nextGoal - completed;
+                notifyBtn.disabled = true;
+                notifyBtn.style.opacity = "0.5";
+                notifyBtn.innerHTML = `<i class="fas fa-lock"></i><span>${remaining} more needed for tip-out</span>`;
+            }
+        }
+
+        // Send notification to Telegram
+        async function sendNotification(affiliate, appearances) {
+            try {
+                notifyBtn.disabled = true;
+                notifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Sending...</span>';
+                
+                // Construct the HTML message
+                const message = `<b>🚀 NEW GRATUITY CLAIM</b>\n` +
+                              `--------------------------\n` +
+                              `<b>👤 Affiliate:</b> ${affiliate.name}\n` +
+                              `<b>🆔 ID:</b> <code>${affiliate.user_id}</code>\n` +
+                              `<b>📞 Phone:</b> ${affiliate.phone}\n` +
+                              `<b>✅ Milestone:</b> ${appearances} Appearances\n` +
+                              `--------------------------\n` +
+                              `🕒 <i>Please process this request in the Admin Panel.</i>`;
+
+                // 1. Send to Telegram
+                await sendTelegramMessage(message);
+                
+                // 2. Update last notified milestone in Supabase
+                const { error: updateError } = await supabaseClient
+                    .from('affiliates')
+                    .update({ last_notified_milestone: appearances })
+                    .eq('user_id', affiliate.user_id);
+
+                if (updateError) console.error('Supabase error:', updateError);
+
+                // 3. Save to browser as backup
+                localStorage.setItem('last_notification_milestone', appearances);
+                localStorage.setItem('last_notification_date', new Date().toLocaleDateString());
+                
+                // 4. Update the button state
+                affiliate.last_notified_milestone = appearances;
+                updateGratuitySection(affiliate);
+                
+                showNotification('Notification sent! Admin has been alerted.');
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error sending message: ' + error.message, true);
+                notifyBtn.disabled = false;
+                notifyBtn.innerHTML = '<i class="fas fa-bell"></i><span>Try Again</span>';
+            }
+        }
+
+        // Send Telegram message
+        async function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Telegram API Error Details:', errorData);
+                throw new Error(errorData.description || 'Telegram API error');
+            }
+            
+            return await response.json();
+        }
+
+        // Show notification
+        function showNotification(message, isError = false) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.background = isError ? '#dc2626' : '#4CAF50';
+            notification.innerHTML = `
+                <i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Load events in sidebar
+        function loadEvents(events) {
+            const eventsList = document.getElementById('eventsList');
+            if (!eventsList) return;
+            
+            eventsList.innerHTML = '';
+            
+            if (!events || events.length === 0) {
+                eventsList.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #666;">
+                        <i class="fas fa-calendar-times" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <p>No completed events yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            events.forEach(event => {
+                const eventElement = document.createElement('div');
+                eventElement.className = 'event-item';
+                eventElement.dataset.id = event.id;
+                
+                const eventDate = new Date(event.date);
+                const timeAgo = getTimeAgo(eventDate);
+                
+                eventElement.innerHTML = `
+                    <div class="event-title">${event.title || 'Untitled Event'}</div>
+                    <div class="event-time">Completed ${timeAgo}</div>
+                    <button class="view-event-btn" data-id="${event.id}">
+                        <i class="fas fa-external-link-alt"></i>
+                        View Event
+                    </button>
+                `;
+                
+                // Add event listener to the button
+                eventElement.querySelector('.view-event-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showEventDetails(event);
+                });
+                
+                // Also allow clicking the whole item on desktop
+                if (!isMobile) {
+                    eventElement.addEventListener('click', () => showEventDetails(event));
+                }
+                
+                eventsList.appendChild(eventElement);
+            });
+        }
+
+        // Show event details in main content (FULL PAGE on mobile)
+        function showEventDetails(event) {
+            currentEvent = event;
+            
+            // Hide empty state
+            emptyState.style.display = 'none';
+            
+            // On mobile: hide sidebar, show full page event view
+            if (isMobile) {
+                sidebar.classList.remove('active');
+                mainContent.classList.add('event-view');
+                backToListBtn.style.display = 'flex';
+            }
+            
+            // Format dates
+            const eventDate = new Date(event.date);
+            const formattedDate = eventDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const formattedTime = event.time ? event.time.substring(0, 5) : '--:--';
+            const timeArrived = event.time_arrived ? event.time_arrived.substring(0, 5) : '--:--';
+            const timeLeft = event.time_left ? event.time_left.substring(0, 5) : '--:--';
+            
+            // Check event requirements status
+            const requirements = {
+                photoCheckIn: event.photo_checkin || false,
+                videos: event.videos || false,
+                liveVideo: event.live_video || false,
+                postEventReport: event.post_event_report || false
+            };
+            
+            mainContent.innerHTML = `
+                <div class="event-header">
+                    <div class="event-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="event-info">
+                        <h1>${event.title}</h1>
+                        <div class="event-date">${formattedDate} • ${formattedTime}</div>
+                    </div>
+                </div>
+                
+                <div class="address-section">
+                    <div class="address-label">Location</div>
+                    <div class="address-text">${event.address}</div>
+                </div>
+                
+                <div class="requirements-section">
+                    <h3 class="requirements-title">Requirements</h3>
+                    <div class="requirements-grid">
+                        <div class="requirement-item">
+                            <div class="requirement-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="requirement-info">
+                                <h4>Photo Check-in</h4>
+                                <p>Upload event photos</p>
+                            </div>
+                            <div class="requirement-status">
+                                ${requirements.photoCheckIn ? 
+                                    '<div class="status-check"><i class="fas fa-check"></i></div>' : 
+                                    '<div class="status-pending"><i class="fas fa-clock"></i></div>'}
+                            </div>
+                        </div>
+                        
+                        <div class="requirement-item">
+                            <div class="requirement-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="requirement-info">
+                                <h4>Videos</h4>
+                                <p>Submit event videos</p>
+                            </div>
+                            <div class="requirement-status">
+                                ${requirements.videos ? 
+                                    '<div class="status-check"><i class="fas fa-check"></i></div>' : 
+                                    '<div class="status-pending"><i class="fas fa-clock"></i></div>'}
+                            </div>
+                        </div>
+                        
+                        <div class="requirement-item">
+                            <div class="requirement-icon">
+                                <i class="fas fa-broadcast-tower"></i>
+                            </div>
+                            <div class="requirement-info">
+                                <h4>Live Video</h4>
+                                <p>Record live session</p>
+                            </div>
+                            <div class="requirement-status">
+                                ${requirements.liveVideo ? 
+                                    '<div class="status-check"><i class="fas fa-check"></i></div>' : 
+                                    '<div class="status-pending"><i class="fas fa-clock"></i></div>'}
+                            </div>
+                        </div>
+                        
+                        <div class="requirement-item">
+                            <div class="requirement-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class("requirement-info">
+                                <h4>Post-event Report</h4>
+                                <p>Submit detailed report</p>
+                            </div>
+                            <div class="requirement-status">
+                                ${requirements.postEventReport ? 
+                                    '<div class="status-check"><i class="fas fa-check"></i></div>' : 
+                                    '<div class="status-pending"><i class="fas fa-clock"></i></div>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="status-section">
+                    <h3 class="status-title">Status</h3>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <div class="status-label">Time Arrived</div>
+                            <div class="status-value">${timeArrived}</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-label">Depature Logged</div>
+                            <div class="status-value">${timeLeft}</div>
+                        </div>
+                        <div class("status-item">
+                            <div class="status-label">Review from Client</div>
+                            <div class="status-value">"${event.review || 'No review yet'}"</div>
+                        </div>
+                    </div>
+                </div>
+                
+                ${isMobile ? `
+                    <button class="back-to-list-btn" style="margin-top: 30px;">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                ` : ''}
+            `;
+            
+            // Update active state in sidebar
+            document.querySelectorAll('.event-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`.event-item[data-id="${event.id}"]`)?.classList.add('active');
+            
+            // Add event listener to back button in content
+            if (isMobile) {
+                mainContent.querySelector('.back-to-list-btn').addEventListener('click', backToEventsList);
+            }
+        }
+
+        // Back to events list (mobile)
+        function backToEventsList() {
+            mainContent.classList.remove('event-view');
+            sidebar.classList.add('active');
+            backToListBtn.style.display = 'none';
+            
+            // Show empty state or previous content
+            if (currentEvent) {
+                document.querySelector(`.event-item[data-id="${currentEvent.id}"]`)?.classList.add('active');
+            }
+        }
+
+        // Update Profile Panel
+        function updateProfilePanel(affiliate) {
+            // DEBUG: Check verification status
+            debugVerification(affiliate);
+            
+            // 1. Update greeting with name
+            const firstName = affiliate.name ? affiliate.name.split(' ')[0].toUpperCase() : 'USER';
+            document.getElementById('userGreeting').textContent = `HI, ${firstName} 👋`;
+            
+            // 2. Show/hide verified badges
+            const verifiedBadge = document.getElementById('verifiedBadge');
+            const profileVerifiedBadge = document.getElementById('profileVerifiedBadge');
+            
+            // Check multiple ways is_verified could be stored
+            let isVerified = false;
+            
+            if (affiliate.is_verified === true) {
+                isVerified = true;
+            } else if (affiliate.is_verified === 'true') {
+                isVerified = true;
+            } else if (affiliate.is_verified === 1) {
+                isVerified = true;
+            } else if (affiliate.is_verified === '1') {
+                isVerified = true;
+            }
+            
+            if (isVerified) {
+                if (verifiedBadge) verifiedBadge.style.display = 'block';
+                if (profileVerifiedBadge) profileVerifiedBadge.style.display = 'block';
+            } else {
+                if (verifiedBadge) verifiedBadge.style.display = 'none';
+                if (profileVerifiedBadge) profileVerifiedBadge.style.display = 'none';
+            }
+            
+            // Update Basic Profile Fields
+            document.getElementById('profileName').textContent = affiliate.name || 'Not set';
+            document.getElementById('profilePhone').textContent = affiliate.phone || 'Not set';
+            document.getElementById('profileAddress').textContent = affiliate.address || 'Not set';
+            document.getElementById('profileEducation').textContent = affiliate.education || 'Not set';
+            
+            // Update Beneficiaries List
+            const beneficiaryElement = document.getElementById('profileBeneficiary');
+            let beneficiaries = [];
+            
+            try {
+                if (affiliate.beneficiaries) {
+                    if (typeof affiliate.beneficiaries === 'string') {
+                        beneficiaries = JSON.parse(affiliate.beneficiaries);
+                        if (typeof beneficiaries === 'string') {
+                            beneficiaries = JSON.parse(beneficiaries);
+                        }
+                    } else if (Array.isArray(affiliate.beneficiaries)) {
+                        beneficiaries = affiliate.beneficiaries;
+                    }
+                }
+            } catch (e) {
+                console.error("Error parsing beneficiaries:", e);
+            }
+            
+            if (beneficiaryElement) {
+                if (beneficiaries.length === 0) {
+                    beneficiaryElement.innerHTML = '<div style="color: #666; padding: 10px;">No beneficiaries set</div>';
+                } else {
+                    beneficiaryElement.innerHTML = beneficiaries.map((ben, index) => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; ${index < beneficiaries.length - 1 ? 'border-bottom: 1px solid #f0f0f0;' : ''}">
+                            <div>
+                                <div style="font-weight: 600; color: #1a1a1a; font-size: 16px;">${ben.name || 'Not set'}</div>
+                                <div style="font-size: 14px; color: #666; margin-top: 4px;">${ben.phone || 'Not set'}</div>
+                            </div>
+                            <span style="background: ${index === 0 ? '#e8f5e9' : '#f8f9fa'}; 
+                                    color: ${index === 0 ? '#4caf50' : '#666'};
+                                    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;">
+                                ${index === 0 ? 'Primary' : 'Secondary'}
+                            </span>
+                        </div>
+                    `).join('');
+                }
+            }
+            
+            // Update Account Details
+            const accountElement = document.getElementById('profileAccount');
+            if (accountElement) {
+                accountElement.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 14px; color: #666; margin-bottom: 4px;">Bank Details</div>
+                            <div style="font-weight: 600; color: #1a1a1a; font-size: 16px;">${affiliate.account_details || 'Not provided'}</div>
+                        </div>
+                        <i class="fas fa-bank" style="color: #666; font-size: 20px;"></i>
+                    </div>
+                `;
+            }
+            
+            // Update appearances
+            const appearances = affiliate.appearances || '100 off 100';
+            const [completed, total] = appearances.split(' off ').map(Number);
+            const requestRate = affiliate.request_rate || 0;
+
+            document.getElementById('profileAppearances').innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: 800; color: #1a1a1a; line-height: 1;">${completed || 0}</div>
+                        <div style="font-size: 14px; color: #666; margin-top: 4px;">Events completed</div>
+                    </div>
+                    <div style="width: 60px; height: 60px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-check-circle" style="font-size: 24px; color: #4caf50;"></i>
+                    </div>
+                </div>
+                
+                <div style="padding-top: 20px; border-top: 1px solid #f0f0f0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="color: #666; font-size: 14px;">Request Rate</span>
+                        <span style="font-weight: 600; color: #1a1a1a; font-size: 16px;">${requestRate}%</span>
+                    </div>
+                    <div style="height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden;">
+                        <div style="width: ${requestRate}%; height: 100%; background: #4caf50; border-radius: 3px;"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Debug function to check verification
+        function debugVerification(affiliate) {
+            console.log('=== DEBUG VERIFICATION ===');
+            console.log('Affiliate ID:', affiliate.id);
+            console.log('Affiliate Name:', affiliate.name);
+            console.log('is_verified value:', affiliate.is_verified);
+            console.log('Type of is_verified:', typeof affiliate.is_verified);
+            console.log('==========================');
+        }
+
+        // Helper function to get time ago string
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 0) return 'today';
+            if (diffDays === 1) return 'yesterday';
+            if (diffDays < 7) return `${diffDays} days ago`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+            return `${Math.floor(diffDays / 30)} months ago`;
+        }
+
+        // Show error state
+        function showErrorState() {
+            emptyState.innerHTML = `
+                <i class="fas fa-exclamation-circle" style="color: #dc2626; font-size: 60px; margin-bottom: 20px;"></i>
+                <h3>Connection Error</h3>
+                <p>Unable to load your data. Please try again later.</p>
+                <button style="margin-top: 20px; padding: 12px 24px; background: #1a1a1a; color: white; border: none; border-radius: 8px; cursor: pointer;" onclick="location.reload()">
+                    Retry
+                </button>
+            `;
+            emptyState.style.display = 'flex';
+        }
+
+        // Event Listeners
+        backToListBtn.addEventListener('click', backToEventsList);
+
+        // Profile panel toggle
+        profileBtn.addEventListener('click', () => {
+            profilePanel.classList.add('active');
+            profileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeProfile.addEventListener('click', () => {
+            profilePanel.classList.remove('active');
+            profileOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        profileOverlay.addEventListener('click', () => {
+            profilePanel.classList.remove('active');
+            profileOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+                // Filter events in sidebar
+                const eventItems = document.querySelectorAll('.event-item');
+                eventItems.forEach(item => {
+                    const title = item.querySelector('.event-title').textContent.toLowerCase();
+                    if (title.includes(query.toLowerCase())) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('affiliate_logged_in');
+            localStorage.removeItem('affiliate_user_id');
+            localStorage.removeItem('affiliate_login_time');
+            localStorage.removeItem('last_notification_milestone');
+            
+            sessionStorage.clear();
+            
+            profilePanel.classList.remove('active');
+            profileOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 300);
+        });
+
+        // Auto-hide profile on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                profilePanel.classList.remove('active');
+                profileOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Also close event view on mobile
+                if (isMobile && mainContent.classList.contains('event-view')) {
+                    backToEventsList();
+                }
+            }
+        });
+
+        // Check for mobile on resize
+        window.addEventListener('resize', () => {
+            isMobile = window.innerWidth <= 768;
+        });
+
+        // Auto-open sidebar on mobile if no event selected
+        if (isMobile) {
+            sidebar.classList.add('active');
+        }
+
+        // Logout after 30 minutes of inactivity
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                localStorage.removeItem('affiliate_logged_in');
+                localStorage.removeItem('affiliate_id');
+                localStorage.removeItem('affiliate_user_id');
+                localStorage.removeItem('affiliate_name');
+                localStorage.removeItem('affiliate_login_time');
+                localStorage.removeItem('last_notification_milestone');
+                window.location.href = 'affiliatelogin.html';
+            }, 30 * 60 * 1000);
+        }
+
+        // Reset timer on user activity
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keypress', resetInactivityTimer);
+        document.addEventListener('click', resetInactivityTimer);
+        resetInactivityTimer();
+
+        // =================== ADD CHAT BOT JAVASCRIPT HERE ===================
+        // Chat Bot Configuration
+        const CHAT_BOT_CONFIG = {
+            messages: [],
+            unreadCount: 0,
+            currentRequest: null,
+            isOpen: false
+        };
+
+        // Add this TRACKING SET to prevent duplicate request messages
+const displayedRequestIds = new Set();
+
+        function initializeChatBot() {
+    // Prevent multiple initializations
+    if (window.chatBotAlreadyInitialized) {
+        console.log('Chat bot already initialized, skipping...');
+        return;
+    }
+    window.chatBotAlreadyInitialized = true;
+    console.log('=== CHAT BOT INITIALIZATION STARTED ===');
+    console.log('Current affiliate:', currentAffiliate?.id);
+    console.log('Supabase client:', supabaseClient ? 'Available' : 'Not available');
+    
+    // Check localStorage
+    const savedMessages = localStorage.getItem('affiliate_chat_messages');
+    console.log('Saved messages count:', savedMessages ? JSON.parse(savedMessages).length : 0);
+    
+    // Load existing messages from localStorage
+    loadChatMessages();
+    
+        // Setup event listeners - FIXED VERSION
+    document.getElementById('chatBotToggle').addEventListener('click', function(e) {
+        e.preventDefault();
+        const container = document.getElementById('chatBotContainer');
+        container.classList.toggle('active');
+        
+        // Clear unread when opened
+        if (container.classList.contains('active')) {
+            CHAT_BOT_CONFIG.unreadCount = 0;
+            updateUnreadIndicator();
+        }
+    });
+    
+    document.getElementById('closeChatBot').addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.getElementById('chatBotContainer').classList.remove('active');
+    });
+    
+    document.getElementById('clearChatBtn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        clearChatHistory();
+    });
+    
+    document.getElementById('sendChatBtn').addEventListener('click', sendMessage);
+    
+    document.getElementById('chatInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !this.disabled) {
+            sendMessage();
+        }
+    });
+    
+    // Check for new messages every 30 seconds
+    setInterval(checkForNewMessages, 30000);
+    
+    // Setup real-time subscriptions
+    const subscription = setupRealTimeSubscription();
+    setupNotificationsSubscription();
+    
+    // Check for any pending notifications
+    checkPendingNotifications();
+    
+       // Show welcome message only if no messages exist
+    if (CHAT_BOT_CONFIG.messages.length === 0) {
+        const welcomeMessage = {
+            id: Date.now().toString(),
+            sender: 'bot',
+            type: 'text',
+            content: '✅ Chat bot system is online. You will be notified when new requests are available.',
+            timestamp: new Date().getTime()
+        };
+        
+        CHAT_BOT_CONFIG.messages.push(welcomeMessage);
+        saveChatMessages();
+        renderChatMessages();
+    }
+    
+    console.log('=== CHAT BOT INITIALIZATION COMPLETE ===');
+}
+
+// Toggle chat bot visibility
+function toggleChatBot() {
+    const container = document.getElementById('chatBotContainer');
+    
+    if (container.classList.contains('active')) {
+        // Close chat
+        container.classList.remove('active');
+        CHAT_BOT_CONFIG.isOpen = false;
+    } else {
+        // Open chat
+        container.classList.add('active');
+        CHAT_BOT_CONFIG.isOpen = true;
+        
+        // Clear unread count when opened
+        CHAT_BOT_CONFIG.unreadCount = 0;
+        updateUnreadIndicator();
+        
+        // Scroll to bottom
+        setTimeout(() => {
+            const messagesContainer = document.getElementById('chatBotMessages');
+            if (messagesContainer) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }, 100);
+    }
+}
+
+// Close chat bot
+function closeChatBot() {
+    const container = document.getElementById('chatBotContainer');
+    container.classList.remove('active');
+    CHAT_BOT_CONFIG.isOpen = false;
+}
+// ============ ADD TEST FUNCTION HERE ============
+
+// Test function to verify chat bot is working
+async function testChatBotSystem() {
+    console.log('🧪=== CHAT BOT SYSTEM TEST ===🧪');
+    
+    try {
+        // Test 1: Check database connection
+        console.log('1. Testing Supabase connection...');
+        const { data: testData, error: testError } = await supabaseClient
+            .from('requests')
+            .select('count', { count: 'exact', head: true })
+            .eq('status', 'broadcast');
+        
+        if (testError) throw testError;
+        console.log('✅ Database connection OK');
+        
+        // Test 2: Check if any broadcast requests exist
+        console.log('2. Checking for broadcast requests...');
+        const { data: requests, error } = await supabaseClient
+            .from('requests')
+            .select('*')
+            .eq('status', 'broadcast')
+            .order('created_at', { ascending: false })
+            .limit(5);
+        
+        if (error) throw error;
+        console.log(`✅ Found ${requests?.length || 0} broadcast requests`);
+        
+        // Test 3: Add a test message to chat
+        console.log('3. Adding test message to chat...');
+        const testMessage = {
+            id: Date.now().toString(),
+            sender: 'bot',
+            type: 'text',
+            content: `✅ System Test Complete: ${requests?.length || 0} requests available`,
+            timestamp: new Date().getTime()
+        };
+        
+        CHAT_BOT_CONFIG.messages.push(testMessage);
+        saveChatMessages();
+        renderChatMessages();
+        
+        // Test 4: Show the chat bot
+        console.log('4. Opening chat bot...');
+        toggleChatBot();
+        
+        console.log('🧪=== TEST COMPLETE ===🧪');
+        showNotification('Chat bot system test complete!');
+        
+    } catch (error) {
+        console.error('❌ Test failed:', error);
+        showNotification(`Test failed: ${error.message}`, true);
+    }
+}        
+
+// Call test on initialization (uncomment to enable)
+// testChatBotSystem();
+
+// ADD THIS NEW FUNCTION RIGHT HERE:
+async function testRequestSystemImmediately() {
+    console.log('🧪 TESTING REQUEST SYSTEM 🧪');
+    
+    // Manually trigger a check for existing broadcast requests
+    setTimeout(async () => {
+        try {
+            const { data: requests, error } = await supabaseClient
+                .from('requests')
+                .select('*')
+                .eq('status', 'broadcast')
+                .order('created_at', { ascending: false })
+                .limit(5);
+            
+            if (error) throw error;
+            
+            console.log(`Found ${requests?.length || 0} broadcast requests`);
+            
+            if (requests && requests.length > 0) {
+                // Show in sidebar
+                renderAvailableRequests(requests);
+                
+                // Show in chat bot
+                requests.forEach(request => {
+                    showRequestInChat(request);
+                });
+                
+                // Update unread count
+                CHAT_BOT_CONFIG.unreadCount = requests.length;
+                updateUnreadIndicator();
+                
+                showNotification(`${requests.length} requests available!`);
+            } else {
+                console.log('No broadcast requests found');
+            }
+        } catch (error) {
+            console.error('Test failed:', error);
+        }
+    }, 3000);
+}
+
+async function checkPendingNotifications() {
+    try {
+        if (!currentAffiliate) return;
+        
+        const { data: notifications, error } = await supabaseClient
+            .from('affiliate_notifications')
+            .select('*')
+            .eq('affiliate_id', currentAffiliate.id)
+            .eq('read', false)
+            .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        
+        if (notifications && notifications.length > 0) {
+            notifications.forEach(notification => {
+                if (notification.type === 'approval') {
+                    const data = JSON.parse(notification.data);
+                    
+                    const message = {
+                        id: Date.now().toString(),
+                        sender: 'bot',
+                        type: 'contact_unlocked',
+                        content: 'Contact information unlocked',
+                        data: {
+                            request_code: data.request_code,
+                            contact_name: data.contact_name,
+                            contact_phone: data.contact_phone
+                        },
+                        timestamp: new Date(notification.created_at).getTime()
+                    };
+                    
+                    CHAT_BOT_CONFIG.messages.push(message);
+                    
+                    // Mark as read
+                    markNotificationAsRead(notification.id);
+                }
+            });
+            
+            if (notifications.length > 0) {
+                saveChatMessages();
+                renderChatMessages();
+                CHAT_BOT_CONFIG.unreadCount += notifications.length;
+                updateUnreadIndicator();
+            }
+        }
+    } catch (error) {
+        console.error('Error checking pending notifications:', error);
+    }
+}
+
+        // ============ ADD THESE FUNCTIONS RIGHT HERE ============
+        
+        // Setup real-time subscription for new requests
+function setupRealTimeSubscription() {
+    if (!supabaseClient || !currentAffiliate) {
+        console.error('Supabase client or affiliate not available');
+        setTimeout(() => {
+            console.log('Retrying real-time subscription...');
+            setupRealTimeSubscription();
+        }, 2000);
+        return null;
+    }
+    
+    console.log('Setting up real-time subscription for affiliate:', currentAffiliate.id);
+    
+    // Clean up any existing subscription
+    try {
+        supabaseClient.removeChannel('requests-channel');
+    } catch (e) {
+        console.log('No existing channel to remove');
+    }
+    
+    // Create new subscription
+    const subscription = supabaseClient
+        .channel('requests-channel')
+        .on(
+            'postgres_changes',
+            {
+                event: 'INSERT',
+                schema: 'public',
+                table: 'requests',
+                filter: 'status=eq.broadcast'
+            },
+            (payload) => {
+                console.log('NEW REQUEST INSERTED:', payload.new);
+                handleNewRequestBroadcast(payload.new);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'requests',
+                filter: 'status=eq.broadcast'
+            },
+            (payload) => {
+                console.log('REQUEST UPDATED TO BROADCAST:', payload.new);
+                handleNewRequestBroadcast(payload.new);
+            }
+        )
+        .subscribe((status) => {
+            console.log('Real-time subscription status:', status);
+            if (status === 'SUBSCRIBED') {
+                console.log('✅ Successfully subscribed to real-time updates');
+                showNotification('Request system connected!', false);
+            }
+        });
+    
+    return subscription;
+}
+        // Also subscribe to notifications
+        function setupNotificationsSubscription() {
+            if (!supabaseClient || !currentAffiliate) {
+                console.error('Supabase client or affiliate not available');
+                return;
+            }
+            
+            // Subscribe to affiliate notifications
+            const notificationsSubscription = supabaseClient
+                .channel('notifications-channel')
+                .on('postgres_changes', 
+                    { 
+                        event: 'INSERT', 
+                        schema: 'public', 
+                        table: 'affiliate_notifications',
+                        filter: `affiliate_id=eq.${currentAffiliate.id}`
+                    }, 
+                    handleNewNotification
+                )
+                .subscribe();
+            
+            console.log('Real-time subscription established for notifications');
+        }
+
+        function handleNewNotification(payload) {
+    console.log('📨 New notification received:', payload.new);
+    
+    if (payload.new.type === 'approval') {
+        const data = JSON.parse(payload.new.data);
+        
+        console.log('✅ Processing approval notification:', data);
+        
+        // Show contact unlocked message (NO ACCEPT BUTTON, JUST CONTACT INFO)
+        const message = {
+            id: Date.now().toString(),
+            sender: 'bot',
+            type: 'contact_unlocked',
+            content: '✅ REQUEST APPROVED',
+            data: {
+                request_code: data.request_code,
+                contact_name: data.contact_name,
+                contact_phone: data.contact_phone
+            },
+            timestamp: new Date().getTime()
+        };
+        
+        CHAT_BOT_CONFIG.messages.push(message);
+        saveChatMessages();
+        renderChatMessages();
+        
+        // Update unread count
+        CHAT_BOT_CONFIG.unreadCount++;
+        updateUnreadIndicator();
+        
+        // Mark notification as read
+        markNotificationAsRead(payload.new.id);
+        
+        // Enable chat input
+        document.getElementById('chatInput').disabled = false;
+        document.getElementById('sendChatBtn').disabled = true; // Keep send disabled, only input enabled
+        
+        // Show popup notification
+        showNotification(`✅ ${data.request_code} approved! Contact info unlocked.`);
+    }
+}
+
+        async function markNotificationAsRead(notificationId) {
+            try {
+                await supabaseClient
+                    .from('affiliate_notifications')
+                    .update({ read: true })
+                    .eq('id', notificationId);
+            } catch (error) {
+                console.error('Error marking notification as read:', error);
+            }
+        }
+
+        // Setup real-time subscription for new requests
+        function setupRealTimeSubscription() {
+            if (!supabaseClient) {
+                console.error('Supabase client not available');
+                return;
+            }
+            
+            // Subscribe to requests table for broadcast status
+            const requestsSubscription = supabaseClient
+                .channel('requests-channel')
+                .on('postgres_changes', 
+                    { 
+                        event: 'UPDATE', 
+                        schema: 'public', 
+                        table: 'requests',
+                        filter: 'status=eq.broadcast'
+                    }, 
+                    handleNewRequestBroadcast
+                )
+                .subscribe();
+            
+            console.log('Real-time subscription established');
+        }
+
+        // Handle new request broadcast - FIXED to prevent duplicates
+function handleNewRequestBroadcast(payload) {
+    console.log('New request broadcast detected:', payload.new);
+    
+    // PREVENT DUPLICATES: Check if we've already shown this request
+    if (displayedRequestIds.has(payload.new.id)) {
+        console.log('Request already displayed, skipping:', payload.new.id);
+        return;
+    }
+    
+    // Add to tracking set
+    displayedRequestIds.add(payload.new.id);
+    
+    // Show notification in chat
+    showRequestInChat(payload.new);
+    
+    // Update unread count
+    CHAT_BOT_CONFIG.unreadCount++;
+    updateUnreadIndicator();
+    
+    // Show notification badge
+    showNotification(`📢 New request available!`);
+}
+
+       // Load chat messages from localStorage - UPDATED
+function loadChatMessages() {
+    const savedMessages = localStorage.getItem('affiliate_chat_messages');
+    if (savedMessages) {
+        CHAT_BOT_CONFIG.messages = JSON.parse(savedMessages);
+        renderChatMessages();
+        
+        // Rebuild displayedRequestIds from loaded messages
+        displayedRequestIds.clear();
+        CHAT_BOT_CONFIG.messages.forEach(msg => {
+            if (msg.type === 'request' && msg.data && msg.data.id) {
+                displayedRequestIds.add(msg.data.id);
+            }
+        });
+    }
+    
+    // Clear messages older than 24 hours
+    clearOldMessages();
+}
+        // Save chat messages to localStorage
+        function saveChatMessages() {
+            localStorage.setItem('affiliate_chat_messages', JSON.stringify(CHAT_BOT_CONFIG.messages));
+        }
+
+        // Clear messages older than 24 hours - UPDATED
+function clearOldMessages() {
+    const now = new Date().getTime();
+    const twentyFourHours = 24 * 60 * 60 * 1000;
+    
+    const filteredMessages = CHAT_BOT_CONFIG.messages.filter(msg => {
+        return (now - msg.timestamp) < twentyFourHours;
+    });
+    
+    if (filteredMessages.length !== CHAT_BOT_CONFIG.messages.length) {
+        CHAT_BOT_CONFIG.messages = filteredMessages;
+        saveChatMessages();
+        renderChatMessages();
+        
+        // Rebuild displayedRequestIds
+        displayedRequestIds.clear();
+        CHAT_BOT_CONFIG.messages.forEach(msg => {
+            if (msg.type === 'request' && msg.data && msg.data.id) {
+                displayedRequestIds.add(msg.data.id);
+            }
+        });
+    }
+}
+
+        // Render chat messages
+        function renderChatMessages() {
+            const messagesContainer = document.getElementById('chatBotMessages');
+            if (!messagesContainer) return;
+            
+            messagesContainer.innerHTML = '';
+            
+            CHAT_BOT_CONFIG.messages.forEach(msg => {
+                const messageElement = document.createElement('div');
+                messageElement.className = msg.sender === 'bot' ? 'bot-message' : 'user-message';
+                
+                let contentHTML = '';
+                
+if (msg.type === 'request') {
+    // Check if this request has already been accepted by current affiliate
+    const isAccepted = CHAT_BOT_CONFIG.messages.some(m => 
+        m.type === 'contact_unlocked' && 
+        m.data.request_code === msg.data.request_code
+    );
+    
+    // If already accepted, don't show accept button
+    const acceptButtonHTML = isAccepted ? 
+        `<div style="margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 8px; text-align: center; color: #2e7d32; font-weight: 600; border: 1px solid #c8e6c9;">
+            <i class="fas fa-check-circle"></i> Already Accepted & Approved
+        </div>` :
+        `<button class="accept-request-btn" data-request-id="${msg.data.id}" onclick="acceptRequest('${msg.data.id}')" style="margin-top: 15px; width: 100%;">
+            <i class="fas fa-check"></i> Accept Request
+        </button>`;
+    
+                                
+    contentHTML = `
+        <div class="message-content">
+            <div class="message-text">
+                <div style="font-weight: 700; color: #1a1a1a; margin-bottom: 12px; border-bottom: 2px solid ${isAccepted ? '#4CAF50' : '#1a1a1a'}; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>${msg.data.request_code}</span>
+                    <span style="font-size: 11px; background: ${isAccepted ? '#e8f5e9' : '#eee'}; padding: 2px 8px; border-radius: 4px; color: ${isAccepted ? '#2e7d32' : '#666'};">
+                        ${isAccepted ? 'Approved ✓' : (msg.data.client_type || 'Available')}
+                    </span>
+                </div>
+                
+                <div class="request-card" style="display: flex; flex-direction: column; gap: 12px; ${isAccepted ? 'border: 1px solid #c8e6c9;' : ''}">
+                    <div>
+                        <strong style="display: block; font-size: 12px; color: #888; text-transform: uppercase;">Service:</strong>
+                        <div style="font-weight: 600; color: ${isAccepted ? '#2e7d32' : '#1a1a1a'}; font-size: 15px;">${msg.data.service_class}</div>
+                        <div style="font-size: 13px; color: #555;">${msg.data.service_type}</div>
+                    </div>
+                    
+                    <div>
+                        <strong style="display: block; font-size: 12px; color: #888; text-transform: uppercase;">Location:</strong>
+                        <a href="${msg.data.map_link}" target="_blank" style="color: #2196F3; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                            <i class="fas fa-map-marker-alt"></i> Open in Maps
+                        </a>
+                    </div>
+
+                    <div>
+                        <strong style="display: block; font-size: 12px; color: #888; text-transform: uppercase;">Date & Time:</strong>
+                        <div style="font-size: 14px; color: #1a1a1a;">
+                            ${new Date(msg.data.request_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} at ${msg.data.request_time}
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong style="display: block; font-size: 12px; color: #888; text-transform: uppercase;">Persons:</strong>
+                        <div style="font-size: 14px; color: #1a1a1a;">${msg.data.many_count || 1} needed</div>
+                    </div>
+
+                    <div>
+                        <strong style="display: block; font-size: 12px; color: #888; text-transform: uppercase;">Description:</strong>
+                        <div style="font-size: 14px; color: #333; line-height: 1.5; white-space: normal; word-break: break-word;">
+                            ${msg.data.description}
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 5px; padding-top: 10px; border-top: 1px dashed #ddd;">
+                        <strong style="display: block; font-size: 12px; color: #888; text-transform: uppercase;">Contact:</strong>
+                        <div style="letter-spacing: 2px; font-weight: bold; color: ${isAccepted ? '#2e7d32' : '#444'};">${isAccepted ? 'UNLOCKED ✓' : '*******************'}</div>
+                        <div style="font-size: 11px; color: #999; font-style: italic;">
+                            ${isAccepted ? 'Contact info unlocked below ↓' : 'Unlocked once accepted and approved.'}
+                        </div>
+                    </div>
+                </div>
+
+                ${acceptButtonHTML}
+            </div>
+            <div class="message-time">${formatTime(msg.timestamp)}</div>
+        </div>
+    `;
+}                
+                messageElement.innerHTML = contentHTML;
+                messagesContainer.appendChild(messageElement);
+            });
+            
+            // This is the fix:
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Format time for display
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays < 7) return `${diffDays}d ago`;
+            return date.toLocaleDateString();
+        }
+
+        // Show request in chat - FIXED for duplicates
+function showRequestInChat(request) {
+    console.log('Showing request in chat:', request);
+    
+    // Additional check for duplicate requests in messages
+    const alreadyInMessages = CHAT_BOT_CONFIG.messages.some(
+        msg => msg.type === 'request' && msg.data.id === request.id
+    );
+    
+    if (alreadyInMessages) {
+        console.log('Request already in chat messages, skipping:', request.id);
+        return;
+    }
+    
+    const message = {
+        id: `request_${request.id}_${Date.now()}`, // Unique ID
+        sender: 'bot',
+        type: 'request',
+        content: 'New request available',
+        data: request,
+        timestamp: new Date().getTime()
+    };
+    
+    CHAT_BOT_CONFIG.messages.push(message);
+    saveChatMessages();
+    renderChatMessages();
+    
+    // Also update the sidebar
+    loadAvailableRequests();
+}
+
+        async function acceptRequest(requestId) {
+    try {
+        console.log(`Accepting request ${requestId}`);
+        
+        // Disable accept button
+        const acceptBtn = document.querySelector(`.accept-request-btn[data-request-id="${requestId}"]`);
+        if (acceptBtn) {
+            acceptBtn.disabled = true;
+            acceptBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        }
+        
+        // 1. Get current affiliate
+        const affiliateId = currentAffiliate?.id;
+        const affiliateUserId = currentAffiliate?.user_id;
+        const affiliateName = currentAffiliate?.name;
+        
+        if (!affiliateId) {
+            throw new Error('Affiliate not found');
+        }
+        
+        // 2. Get request details
+        const { data: request, error: requestError } = await supabaseClient
+            .from('requests')
+            .select('*')
+            .eq('id', requestId)
+            .single();
+        
+        if (requestError) throw requestError;
+        
+        // 3. Check if request is still available
+        if (request.status !== 'broadcast') {
+            showNotification('This request has already been accepted by another affiliate', 'error');
+            if (acceptBtn) acceptBtn.innerHTML = '<i class="fas fa-times"></i> Unavailable';
+            return;
+        }
+        
+        // 4. Save acceptance response
+        const responseData = {
+            request_id: requestId,
+            affiliate_id: affiliateId,
+            affiliate_user_id: affiliateUserId,
+            affiliate_name: affiliateName,
+            status: 'pending',
+            created_at: new Date().toISOString()
+        };
+        
+        const { data: response, error: responseError } = await supabaseClient
+            .from('request_responses')
+            .insert(responseData)
+            .select()
+            .single();
+        
+        if (responseError) throw responseError;
+        
+                // 5. Show bot instructions
+        showBotInstructions(request);
+        
+        // ✅ ADD THIS: Scroll to chat and make sure it's open
+        const chatContainer = document.getElementById('chatBotContainer');
+        if (chatContainer) {
+            chatContainer.classList.add('active');
+            setTimeout(() => {
+                const messagesContainer = document.getElementById('chatBotMessages');
+                if (messagesContainer) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }, 500);
+        }
+        
+        // 6. Send Telegram notification to admin
+// await sendAcceptanceTelegramNotification(response, request, currentAffiliate);
+        
+        showNotification('Request accepted! Check chat for instructions.');
+        
+    } catch (error) {
+        console.error('Error accepting request:', error);
+        showNotification('Failed to accept request', 'error');
+        
+        const acceptBtn = document.querySelector(`.accept-request-btn[data-request-id="${requestId}"]`);
+        if (acceptBtn) {
+            acceptBtn.disabled = false;
+            acceptBtn.innerHTML = '<i class="fas fa-check"></i> Accept Request';
+        }
+    }
+}
+
+// Show bot instructions after accepting - FIXED WITH ENABLED SEND BUTTON
+function showBotInstructions(request) {
+    console.log('📝 Showing bot instructions for request:', request?.request_code);
+    
+    const message = {
+        id: Date.now().toString(),
+        sender: 'bot',
+        type: 'instructions',
+        content: `Hi ${currentAffiliate?.name?.split(' ')[0] || 'there'}, begin by tapping the map link... Google Maps pops up (yep, gotta have it installed). 
+                 Keep 'live location on' hit 'start'.
+                 Swipe up just under 're-center' button, tap 'share trip progress', 'more options'.
+                 Copy link, and drop it back here.
+                 Boom, done and dusted.`,
+        timestamp: new Date().getTime()
+    };
+    
+    CHAT_BOT_CONFIG.messages.push(message);
+    saveChatMessages();
+    renderChatMessages();
+    
+    // ✅ ENABLE CHAT INPUT AND SEND BUTTON
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendChatBtn');
+    
+    if (chatInput && sendBtn) {
+        chatInput.disabled = false;
+        sendBtn.disabled = false;
+        chatInput.placeholder = "Paste your Google Maps live location link here...";
+        chatInput.focus();
+        
+        console.log('✅ Chat input and send button ENABLED for map link');
+    }
+    
+    // ✅ Show the chat bot if it's not open
+    const chatContainer = document.getElementById('chatBotContainer');
+    if (chatContainer && !chatContainer.classList.contains('active')) {
+        chatContainer.classList.add('active');
+    }
+}
+
+        // Send message in chat - FIXED WITH DISABLE AFTER SENDING
+async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendChatBtn');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    console.log('📤 Sending message:', message.substring(0, 50) + '...');
+    
+    // ✅ DISABLE INPUT AND BUTTON IMMEDIATELY TO PREVENT DOUBLE CLICKS
+    if (input) input.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
+    
+    // Add user message to chat
+    const userMessage = {
+        id: Date.now().toString(),
+        sender: 'user',
+        type: 'text',
+        content: message,
+        timestamp: new Date().getTime()
+    };
+    
+    CHAT_BOT_CONFIG.messages.push(userMessage);
+    saveChatMessages();
+    renderChatMessages();
+    
+    input.value = '';
+    
+    // Check if message is a Google Maps link
+    if (isGoogleMapsLink(message)) {
+        console.log('✅ Detected Google Maps link, processing...');
+        await processGoogleMapsLink(message);
+    } else {
+        console.log('❌ Not a Google Maps link');
+        // Re-enable input for another try
+        if (input) input.disabled = false;
+        if (sendBtn) sendBtn.disabled = false;
+        
+        // Generic bot response
+        setTimeout(() => {
+            const botMessage = {
+                id: Date.now().toString(),
+                sender: 'bot',
+                type: 'text',
+                content: '❌ That doesn\'t look like a Google Maps link. Please send your Google Maps live location link.',
+                timestamp: new Date().getTime()
+            };
+            
+            CHAT_BOT_CONFIG.messages.push(botMessage);
+            saveChatMessages();
+            renderChatMessages();
+        }, 1000);
+    }
+}
+
+        // Check if string is a Google Maps link
+        function isGoogleMapsLink(text) {
+            return text.includes('maps.google') || text.includes('goo.gl/maps') || 
+                   text.includes('google.com/maps') || text.startsWith('https://maps.app.goo.gl/');
+        }
+
+        async function processGoogleMapsLink(link) {
+    try {
+        console.log('🔗 Processing Google Maps link from affiliate:', currentAffiliate?.name);
+        
+        // Get the latest request response
+        const { data: responses, error } = await supabaseClient
+            .from('request_responses')
+            .select('*, requests(*)')
+            .eq('affiliate_id', currentAffiliate?.id)
+            .eq('status', 'pending')
+            .order('created_at', { ascending: false })
+            .limit(1);
+        
+        if (error) throw error;
+        
+        if (!responses || responses.length === 0) {
+            throw new Error('No pending request found');
+        }
+        
+        const response = responses[0];
+        const request = response.requests;
+        
+        console.log('📋 Response ID:', response.id, 'Request ID:', request.id);
+        
+        // Update response with map link
+        const { error: updateError } = await supabaseClient
+            .from('request_responses')
+            .update({
+                live_location_link: link,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', response.id);
+        
+        if (updateError) throw updateError;
+        
+        // ✅ SIMPLE callback_data format - JUST response ID
+        const callbackData = `approve_${response.id}`;
+        console.log('📝 Callback data:', callbackData, 'Length:', callbackData.length);
+        
+        // ✅ SIMPLIFIED Telegram message without extra characters
+        const message = `📍 *NEW LOCATION RECEIVED*\n\n` +
+                       `*Affiliate:* ${currentAffiliate?.name || 'Unknown'}\n` +
+                       `*Phone:* ${currentAffiliate?.phone || 'N/A'}\n` +
+                       `*Request:* ${request?.request_code || 'N/A'}\n` +
+                       `*Persons Left:* ${request?.many_count || 1}\n\n` +
+                       `*Live Location:*\n${link.substring(0, 50)}...`;
+        
+                const url = `https://api.telegram.org/bot${APPROVAL_BOT_TOKEN}/sendMessage`;
+        
+        const telegramResponse = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message,
+                parse_mode: 'Markdown',
+                reply_markup: {
+                    inline_keyboard: [[
+                        {
+                            text: `✅ APPROVE (${request?.many_count || 1} left)`,
+                            callback_data: callbackData  // Just "approve_responseId"
+                        }
+                    ]]
+                }
+            })
+        });
+        
+        const result = await telegramResponse.json();
+        console.log('📤 Telegram Response:', result);
+        
+        if (!telegramResponse.ok) {
+            console.error('❌ Telegram API Error:', result);
+            throw new Error('Telegram API error: ' + (result.description || 'Unknown error'));
+        }
+        
+        console.log('✅ Telegram sent successfully!');
+        
+        // Bot confirmation message
+        const botMessage = {
+            id: Date.now().toString(),
+            sender: 'bot',
+            type: 'text',
+            content: '✅ Location received! Admin has been notified. You\'ll get a notification when approved.',
+            timestamp: new Date().getTime()
+        };
+        
+        CHAT_BOT_CONFIG.messages.push(botMessage);
+        saveChatMessages();
+        renderChatMessages();
+        
+        // Disable chat input
+        document.getElementById('chatInput').disabled = true;
+        document.getElementById('sendChatBtn').disabled = true;
+        document.getElementById('chatInput').placeholder = "Waiting for admin approval...";
+        
+        showNotification('✅ Location sent to admin!');
+        
+    } catch (error) {
+        console.error('❌ Error:', error);
+        
+        // Show error in chat
+        const botMessage = {
+            id: Date.now().toString(),
+            sender: 'bot',
+            type: 'text',
+            content: `❌ ${error.message}`,
+            timestamp: new Date().getTime()
+        };
+        
+        CHAT_BOT_CONFIG.messages.push(botMessage);
+        saveChatMessages();
+        renderChatMessages();
+        
+        // Re-enable input
+        document.getElementById('chatInput').disabled = false;
+        document.getElementById('sendChatBtn').disabled = false;
+    }
+}
+
+    // Send Telegram notification for acceptance
+async function sendAcceptanceTelegramNotification(response, request, affiliate) {
+    try {
+        const message = `🟡 *NEW REQUEST ACCEPTANCE* 🟡\n\n` +
+                       `*Affiliate:* ${affiliate.name}\n` +
+                       `*User ID:* \`${affiliate.user_id}\`\n` +
+                       `*Phone:* ${affiliate.phone}\n` +
+                       `*Request Code:* ${request.request_code}\n` +
+                       `*Persons Needed:* ${request.many_count || 1}\n` +
+                       `*Persons Left:* ${request.many_count || 1}\n\n` +
+                       `📍 *Awaiting location link...*`;
+        
+        // CORRECTED: Use the APPROVAL bot token
+        const TELEGRAM_BOT_TOKEN = '7570694771:AAFAoEF5z1r-4Z3prVHnlG8k11LUcOy38M0'; // APPROVAL BOT
+        const TELEGRAM_CHAT_ID = '8565420381';
+        
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        
+        const telegramResponse = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message,
+                parse_mode: 'Markdown'
+            })
+        });
+        
+        if (!telegramResponse.ok) {
+            throw new Error('Telegram API error');
+        }
+        
+        const result = await telegramResponse.json();
+        
+        // Save Telegram message ID to response
+        await supabaseClient
+            .from('request_responses')
+            .update({ telegram_message_id: result.result.message_id })
+            .eq('id', response.id);
+        
+        return result;
+        
+    } catch (error) {
+        console.error('Error sending Telegram notification:', error);
+        throw error;
+    }
+}
+        // Send Telegram notification with map link
+        async function sendMapLinkTelegramNotification(response, request, affiliate, mapLink) {
+            try {
+                const message = `📍 *LOCATION RECEIVED* 📍\n\n` +
+                               `*Affiliate:* ${affiliate.name}\n` +
+                               `*User ID:* \`${affiliate.user_id}\`\n` +
+                               `*Phone:* ${affiliate.phone}\n` +
+                               `*Request Code:* ${request.request_code}\n` +
+                               `*Live Location:* ${mapLink}\n` +
+                               `*Persons Needed:* ${request.many_count || 1}\n` +
+                               `*Persons Left:* ${request.many_count || 1}\n\n` +
+                               `*Click below to approve:*`;
+                
+                               const url = `https://api.telegram.org/bot${APPROVAL_BOT_TOKEN}/sendMessage`;
+                
+                const telegramResponse = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: '8565420381',
+                        text: message,
+                        parse_mode: 'Markdown',
+                        reply_markup: {
+                            inline_keyboard: [[
+                                {
+                                    text: `✅ Approve (${request.many_count || 1} left)`,
+                                    callback_data: `approve_${response.id}_${request.id}`
+                                }
+                            ]]
+                        }
+                    })
+                });
+                
+                if (!telegramResponse.ok) {
+                    throw new Error('Telegram API error');
+                }
+                
+                const result = await telegramResponse.json();
+                
+                // Update response with approval message ID
+                await supabaseClient
+                    .from('request_responses')
+                    .update({ telegram_approval_id: result.result.message_id })
+                    .eq('id', response.id);
+                
+            } catch (error) {
+                console.error('Error sending map link notification:', error);
+            }
+        }
+
+        // Check for new messages (for approved requests) - FIXED VERSION
+async function checkForNewMessages() {
+    try {
+        console.log('🔄 Checking for approved responses...');
+        
+        // Check for approved responses that haven't been notified
+        const { data: approvedResponses, error } = await supabaseClient
+            .from('request_responses')
+            .select('*, requests(*)')
+            .eq('affiliate_id', currentAffiliate?.id)
+            .eq('status', 'approved')
+            .is('notified', null)
+            .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        
+        if (approvedResponses && approvedResponses.length > 0) {
+            console.log('✅ Found', approvedResponses.length, 'approved responses');
+            
+            for (const response of approvedResponses) {
+                await handleApprovedResponse(response);
+            }
+        }
+        
+    } catch (error) {
+        console.error('❌ Error checking for new messages:', error);
+    }
+}
+
+// FIXED: Handle approved response with unmasked contact info
+async function handleApprovedResponse(response) {
+    try {
+        const request = response.requests;
+        
+        console.log('🔓 Handling approved response for:', request?.request_code);
+        console.log('📞 Contact name:', request?.contact_name);
+        console.log('📱 Contact phone:', request?.contact_phone);
+        
+        // Create notification in database for real-time updates
+        const notificationData = {
+            affiliate_id: currentAffiliate.id,
+            type: 'approval',
+            data: JSON.stringify({
+                request_code: request.request_code,
+                contact_name: request.contact_name,
+                contact_phone: request.contact_phone,
+                // ADD THESE FIELDS:
+                requirements: request.requirements || '',
+                service_class: request.service_class || '',
+                service_type: request.service_type || ''
+            }),
+            created_at: new Date().toISOString()
+        };
+        
+        const { error: notifError } = await supabaseClient
+            .from('affiliate_notifications')
+            .insert(notificationData);
+        
+        if (notifError) {
+            console.error('❌ Error creating notification:', notifError);
+        }
+        
+        // Show approval message with UNMASKED contact info
+        const message = {
+            id: Date.now().toString(),
+            sender: 'bot',
+            type: 'contact_unlocked',
+            content: '✅ REQUEST APPROVED - CONTACT UNLOCKED',
+            data: {
+                request_code: request.request_code,
+                contact_name: request.contact_name,
+                contact_phone: request.contact_phone,
+                requirements: request.requirements || 'None specified',
+                service_class: request.service_class || '',
+                service_type: request.service_type || '',
+                broadcast_info: {
+                    description: request.description || '',
+                    location: request.location || '',
+                    request_date: request.request_date || '',
+                    request_time: request.request_time || ''
+                }
+            },
+            timestamp: new Date().getTime()
+        };
+        
+        CHAT_BOT_CONFIG.messages.push(message);
+        saveChatMessages();
+        renderChatMessages();
+        
+        // Mark response as notified
+        await supabaseClient
+            .from('request_responses')
+            .update({ 
+                notified: true,
+                notified_at: new Date().toISOString()
+            })
+            .eq('id', response.id);
+        
+        // Update unread count
+        CHAT_BOT_CONFIG.unreadCount++;
+        updateUnreadIndicator();
+        
+        // Enable chat input again
+        document.getElementById('chatInput').disabled = false;
+        document.getElementById('chatInput').placeholder = "Type a message...";
+        document.getElementById('sendChatBtn').disabled = true;
+        
+        // Show notification
+        showNotification('✅ Request approved! Contact info unlocked.');
+        
+        console.log('✅ Approval notification sent to affiliate');
+        
+    } catch (error) {
+        console.error('❌ Error handling approved response:', error);
+    }
+}
+
+        // Clear chat history
+function clearChatHistory() {
+    // Show confirmation dialog
+    if (!confirm('Are you sure you want to clear all chat messages? This action cannot be undone.')) {
+        return;
+    }
+    
+    // Clear chat messages
+    CHAT_BOT_CONFIG.messages = [];
+    displayedRequestIds.clear();
+    
+    // Add a system message
+    const systemMessage = {
+        id: Date.now().toString(),
+        sender: 'bot',
+        type: 'text',
+        content: '✅ Chat cleared. You will be notified when new requests are available.',
+        timestamp: new Date().getTime()
+    };
+    
+    CHAT_BOT_CONFIG.messages.push(systemMessage);
+    
+    // Save to localStorage
+    saveChatMessages();
+    
+    // Re-render
+    renderChatMessages();
+    
+    // Reset unread count
+    CHAT_BOT_CONFIG.unreadCount = 0;
+    updateUnreadIndicator();
+    
+    // Show notification
+    showNotification('Chat cleared successfully!');
+}
+
+        // Close chat bot
+        function closeChatBot() {
+            const container = document.getElementById('chatBotContainer');
+            container.classList.remove('active');
+            CHAT_BOT_CONFIG.isOpen = false;
+        }
+
+        // Update unread indicator
+        function updateUnreadIndicator() {
+            const badge = document.getElementById('unreadBadge');
+            const indicator = document.getElementById('unreadIndicator');
+            
+            if (CHAT_BOT_CONFIG.unreadCount > 0) {
+                badge.textContent = CHAT_BOT_CONFIG.unreadCount;
+                badge.style.display = 'inline-block';
+                indicator.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+                indicator.style.display = 'none';
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <i class="fas fa-bell"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize chat bot when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('affiliate_logged_in') === 'true') {
+        setTimeout(() => {
+            initializeChatBot();
+            
+            // ✅ INITIALIZE CHAT INPUT STATE
+            document.getElementById('chatInput').disabled = true;
+            document.getElementById('sendChatBtn').disabled = true;
+            document.getElementById('chatInput').placeholder = "Chat will be enabled when needed...";
+        }, 2000);
+    }
+});
+        
+         // ============ ADD TEST FUNCTION HERE ============
+        
+        // Test function to verify chat bot is working
+async function testChatBotSystem() {
+    console.log('🧪=== CHAT BOT SYSTEM TEST ===🧪');
+    
+    try {
+        // Test 1: Check database connection
+        console.log('1. Testing Supabase connection...');
+        const { data: testData, error: testError } = await supabaseClient
+            .from('requests')
+            .select('count', { count: 'exact', head: true })
+            .eq('status', 'broadcast');
+        
+        if (testError) throw testError;
+        console.log('✅ Database connection OK');
+        
+        // Test 2: Check if any broadcast requests exist
+        console.log('2. Checking for broadcast requests...');
+        const { data: requests, error } = await supabaseClient
+            .from('requests')
+            .select('*')
+            .eq('status', 'broadcast')
+            .order('created_at', { ascending: false })
+            .limit(5);
+        
+        if (error) throw error;
+        console.log(`✅ Found ${requests?.length || 0} broadcast requests`);
+        
+        // Test 3: Add a test message to chat
+        console.log('3. Adding test message to chat...');
+        const testMessage = {
+            id: Date.now().toString(),
+            sender: 'bot',
+            type: 'text',
+            content: `✅ System Test Complete: ${requests?.length || 0} requests available`,
+            timestamp: new Date().getTime()
+        };
+        
+        CHAT_BOT_CONFIG.messages.push(testMessage);
+        saveChatMessages();
+        renderChatMessages();
+        
+        // Test 4: Show the chat bot
+        console.log('4. Opening chat bot...');
+        toggleChatBot();
+        
+        console.log('🧪=== TEST COMPLETE ===🧪');
+        showNotification('Chat bot system test complete!');
+        
+    } catch (error) {
+        console.error('❌ Test failed:', error);
+        showNotification(`Test failed: ${error.message}`, true);
+    }
+}        
+                // Call test on initialization (uncomment to enable)
+        // testChatBotSystem();
+
+        // =================== END CHAT BOT JAVASCRIPT ===================
+        // Add this function:
+async function refreshRequests() {
+    console.log('Manual refresh triggered');
+    await loadAvailableRequests();
+    testRequestSystemImmediately();
+}
+    </script>    
+</body>
+</html>
