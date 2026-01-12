@@ -437,6 +437,11 @@
       html {
         font-size: 15px;
       }
+
+      /* INSERT THE FIX HERE */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
       
       .container {
         padding: 0 15px;
@@ -449,6 +454,8 @@
       .logo {
         font-size: 20px;
       }
+
+      
       
       /* Compact navigation for mobile */
       .nav {
@@ -632,14 +639,233 @@
       }
     }
 
+    /* Style to change select text to dark once an option is chosen */
+    select.filled {
+      color: #1a1a1a !important;
+    }
+
     /* Spinner Animation */
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+   /* INTRO MAP OVERLAY - UPDATED */
+#introMap {
+  position: fixed;
+  inset: 0;
+  background: #f8f9fa;
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.map-stage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.abuja-map {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  transform: scale(1.3);
+  animation: mapZoom 10s ease-in-out forwards;
+  opacity: 0.8;
+}
+
+@keyframes mapZoom {
+  0%   { transform: scale(1.8); opacity: 0.6; }
+  60%  { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
+/* Google-style Pins */
+.google-pin {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -100%);
+  opacity: 0;
+  animation: pinDrop 0.5s ease forwards;
+  pointer-events: none;
+}
+
+.google-pin::before {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #ea4335; /* Google red color */
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.google-pin::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  top: 6px;
+  left: 10px;
+  transform: rotate(45deg);
+}
+
+/* Featured Pins (different colors) */
+.featured-pin {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -100%);
+  opacity: 0;
+  animation: featuredPinDrop 0.8s ease forwards;
+  pointer-events: none;
+}
+
+.featured-pin::before {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background: #4285f4; /* Google blue for featured pins */
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+.featured-pin::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  top: 8px;
+  left: 11px;
+  transform: rotate(45deg);
+}
+
+/* Different colors for different featured profiles */
+.featured-pin.pin-1::before { background: #4285f4; } /* Blue */
+.featured-pin.pin-2::before { background: #34a853; } /* Green */
+.featured-pin.pin-3::before { background: #fbbc05; } /* Yellow */
+
+@keyframes pinDrop {
+  0% { opacity: 0; transform: translate(-50%, -120%); }
+  70% { opacity: 1; transform: translate(-50%, -105%); }
+  100% { opacity: 1; transform: translate(-50%, -100%); }
+}
+
+@keyframes featuredPinDrop {
+  0% { opacity: 0; transform: translate(-50%, -150%) scale(0.5); }
+  50% { opacity: 1; transform: translate(-50%, -110%) scale(1.1); }
+  100% { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+}
+
+/* Stat Card */
+.stat-card {
+  position: absolute;
+  background: white;
+  padding: 14px 18px;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  max-width: 260px;
+  font-size: 14px;
+  z-index: 10;
+  border: 1px solid #e0e0e0;
+}
+
+.stat-card.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Branding - Updated */
+.intro-brand {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+  color: #1a1a1a;
+  opacity: 0;
+  animation: brandIn 2s ease forwards;
+  animation-delay: 7s;
+  z-index: 5;
+}
+
+.brand-text {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.9);
+}
+
+.brand-text sup {
+  font-size: 10px;
+  vertical-align: super;
+  margin-left: 1px;
+}
+
+.tagline {
+  display: block;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-top: 8px;
+  color: #1a1a1a;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  display: block;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; /* Changed from Georgia */
+  font-size: 16px;
+  font-weight: 500; /* Changed from italic */
+  opacity: 0.7;
+  margin-top: 6px;
+  color: #555;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+@keyframes brandIn {
+  to { opacity: 1; }
+}
+
   </style>
 </head>
 <body>
+
+    <!-- INTRO MAP SEQUENCE - UPDATED -->
+<div id="introMap">
+  <div class="map-stage">
+    <!-- Map background without broken image -->
+    <div class="abuja-map"></div>
+
+    <!-- Pins container -->
+    <div id="pinsLayer"></div>
+
+    <!-- Floating stat card -->
+    <div id="statCard" class="stat-card hidden"></div>
+
+       <!-- Branding -->
+    <div class="intro-brand">
+      <strong class="brand-text">TrafficAbuja<sup>®</sup></strong>
+      <span class="tagline">10,000+ NEAR ME</span>
+       <span class="subtitle">What will be my request?</span>
+    </div>
+  </div>
+</div>
+
   <!-- Off-Hours Banner -->
   <div id="offHoursBanner" class="off-hours-banner">
     <i class="fas fa-moon"></i>
@@ -680,74 +906,193 @@
           <!-- Live Date Display -->
           <span class="live-date" id="liveDate">Loading date...</span>
           
-          <h1>NOT TOO FAR,<br>NOT TOO LATE,<br>NEVER SOLO.</h1>
-          <p> i.e., Maitama, Asokoro, and surrounding areas fall within service range. </p>
+          <h1>CLOSE ENOUGH,<br>RIGHT ON TIME,<br>'X' JOINED ME.</h1>
+          <p> i.e., NOT TOO FAR. NOT SO LATE. NEVER SOLO.</p>
           
           <!-- Statistics Section - CLEAN VERSION -->
           <div class="stats-section">
             <div class="stat-item">
-              <div class="stat-percentage">99%</div>
-              <div class="stat-label">Personalization</div>
+              <div class="stat-percentage">TAG 59%</div>
+              <div class="stat-label">Transactions as 'Business Expense'</div>
             </div>
             
             <div class="stat-item">
-              <div class="stat-percentage">99%</div>
-              <div class="stat-label">Adaptive</div>
+              <div class="stat-percentage">GET 59%</div>
+              <div class="stat-label">Off Sourcing Headaches</div>
             </div>
             
             <div class="stat-item">
-              <div class="stat-percentage">99%</div>
-              <div class="stat-label">Data Privacy</div>
+              <div class="stat-percentage">SPOT 100%</div>
+              <div class="stat-label">Excellence on Demand</div>
             </div>
           </div>
           
           <p class="form-subtitle">SET THINGS IN MOTION. MAKE A REQUEST.</p>
           
-          <!-- FORM - FIXED FOR MOBILE TOUCH -->
-          <form method="POST" action="https://script.google.com/macros/s/AKfycby5wHYLm1352Ovu5-EJCJ7p9YSf3gMN4_n6CBZs8ajfL2-ZaQuJxEMdM5-DCSKHKaDD/exec" id="waitlistForm">
-            <!-- Honeypot field -->
-            <input type="text" name="_gotcha" style="display: none;">
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-              <div>
-                <input type="text" name="first_name" placeholder="First Name *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
-              </div>
-              
-              <div>
-                <input type="text" name="last_name" placeholder="Last Name *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
-              </div>
-              
-              <div style="grid-column: span 2;">
-                <input type="email" name="email" placeholder="Email Address *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
-              </div>
-              
-              <div style="grid-column: span 2;">
-                <input type="tel" name="phone" placeholder="Phone Number *" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; -webkit-appearance: none; appearance: none;">
-              </div>
-              
-              <div style="grid-column: span 2;">
-                <select name="attendance" required style="width: 100%; padding: 16px 15px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 16px; background: white; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%231a1a1a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;">
-                  <option value="" disabled selected hidden>Service Type *</option>
-                  <option value="trafficabuja_live">TrafficAbuja LIVE</option>
-                  <option value="trafficabuja_at_it_first">TrafficAbuja AT-IT-FIRST</option>
-                  <option value="experience_orchestration">Experience an Orchestration</option>
-                  <option value="naming_rights_perpetuity">Naming Rights & Perpetuity (i.e., monuments only)</option>
-                </select>
-              </div>
-              
-              <!-- Hidden field for off-hours detection -->
-              <input type="hidden" name="off_hours" id="offHoursField" value="no">
+          <!-- UPDATED FORM SECTION - COMPACT VERSION -->
+<form method="POST" action="https://script.google.com/macros/s/AKfycbz5Xjt1dPofjCVBznqP8Inp81Xemn9ks5L7s7AoI3C81zxrOoicIDkG8nrEey1Y_GaA/exec" id="waitlistForm">
+    <!-- Honeypot field -->
+    <input type="text" name="_gotcha" style="display: none;">
+    
+    <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+        
+        <!-- BASIC INFO SECTION -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
+                <input type="text" name="first_name" placeholder="Name *" required 
+                       style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px;">
             </div>
             
-            <button type="submit" id="submitBtn" style="width: 100%; padding: 16px; background: #1a1a1a; color: white; border: none; border-radius: 4px; font-size: 17px; font-weight: 600; cursor: pointer; position: relative; -webkit-appearance: none; appearance: none;">
-              <span id="btnText">CLICK</span>
-              <div id="btnSpinner" style="display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
-                <div style="width: 20px; height: 20px; border: 2px solid #ffffff; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite;"></div>
-              </div>
-            </button>
-          </form>
-          
-          <p style="font-size: 13px; color: #888; margin-top: 15px; text-align: center;">In some cases, response times may exceed the standard 9-minute window.</p>
+            <div>
+                <input type="tel" name="phone" placeholder="Phone Number *" required 
+                       style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px;">
+            </div>
+        </div>
+        
+        <!-- EMAIL -->
+        <div>
+            <input type="email" name="email" placeholder="Email Address *" required 
+                   style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px;">
+        </div>
+        
+<!-- SERVICE CLASS -->
+<div>
+    <select name="service_class" id="serviceClass" required 
+            style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px; background: white; appearance: none; -webkit-appearance: none; background-image: url(&quot;data:image/svg+xml;utf8,&lt;svg fill='%23999999' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'&gt;&lt;path d='M7 10l5 5 5-5z'/&gt;&lt;/svg&gt;&quot;); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; color: #999999;">
+        <option value="" disabled selected hidden>Service Class *</option>
+        <option value="trafficabuja_live" style="color: #1a1a1a !important;">TrafficAbuja LIVE</option>
+        <option value="trafficabuja_at_it_first" style="color: #1a1a1a !important;">TrafficAbuja AT-IT-FIRST</option>
+        <option value="upgrade_arrangement" style="color: #1a1a1a !important;">Upgrade an Arrangement</option>
+    </select>
+    <div id="serviceWarning" style="display: none; color: #ff6b6b; font-size: 14px; margin-top: 5px; padding: 8px; background: #fff5f5; border-radius: 4px;">
+        <i class="fas fa-info-circle"></i> Please contact TrafficAbuja directly for this service
+    </div>
+</div>
+
+        <!-- LOCATION & COMPLETION WINDOW - SIDE BY SIDE WITH PLACEHOLDER -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+    <!-- LOCATION BOX -->
+    <div>
+        <input type="text" name="exact_location" placeholder="Map link / Location in Full *" required 
+               style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px;">
+    </div>
+    
+    <!-- COMPLETION WINDOW BOX WITH LABEL -->
+    <div>
+        <div style="position: relative;">
+            <input type="datetime-local" name="completion_window" required 
+                   style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px; color: transparent;"
+                   onfocus="this.style.color='#1a1a1a'"
+                   onblur="if(!this.value) this.style.color='transparent'">
+            <div style="position: absolute; top: 0; left: 0; pointer-events: none; padding: 14px; color: #666; font-size: 16px; width: 100%;"
+                 id="completionPlaceholder">
+                Completion Window *
+            </div>
+        </div>
+    </div>
+</div>
+        
+        <!-- DESCRIPTION -->
+        <div>
+            <textarea name="description" placeholder="Description of Request *" required 
+                      rows="3" style="width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px; resize: vertical; min-height: 80px;"></textarea>
+        </div>
+        
+        <!-- PERSON SELECTION - COMPACT GRID -->
+        <div>
+            <div style="font-size: 14px; color: #666; margin-bottom: 10px;"> (Select size that apply) *</div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                <label style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; padding: 12px 0;">
+                    <input type="radio" name="persons_needed" value="1" required style="width: 18px; height: 18px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 700; color: #1a1a1a;">1</div>
+                        <div style="font-size: 12px; color: #666;">Solo</div>
+                    </div>
+                </label>
+                <label style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; padding: 12px 0;">
+                    <input type="radio" name="persons_needed" value="2" style="width: 18px; height: 18px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 700; color: #1a1a1a;">2</div>
+                        <div style="font-size: 12px; color: #666;">Duo</div>
+                    </div>
+                </label>
+                <label style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; padding: 12px 0;">
+                    <input type="radio" name="persons_needed" value="3" style="width: 18px; height: 18px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 700; color: #1a1a1a;">3</div>
+                        <div style="font-size: 12px; color: #666;">Trio</div>
+                    </div>
+                </label>
+                <label style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; padding: 12px 0;">
+                    <input type="radio" name="persons_needed" value="4" style="width: 18px; height: 18px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 700; color: #1a1a1a;">4+</div>
+                        <div style="font-size: 12px; color: #666;">Group</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <!-- REQUIREMENTS CHECKBOXES - EVENLY SPACED -->
+<div>
+    <div style="font-size: 14px; color: #666; margin-bottom: 10px;">Requirements (Select all that apply)</div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); background: #f8f9fa; padding: 15px; border-radius: 8px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; justify-content: center;">
+            <input type="checkbox" name="requirement_live_video" value="live_video" style="width: 18px; height: 18px;">
+            <span style="font-size: 14px;">Live Video</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; justify-content: center;">
+            <input type="checkbox" name="requirement_post_event_report" value="post_event_report" style="width: 18px; height: 18px;">
+            <span style="font-size: 14px;">Post-Event Report</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; justify-content: center;">
+            <input type="checkbox" name="requirement_none" value="none" style="width: 18px; height: 18px;">
+            <span style="font-size: 14px;">None</span>
+        </label>
+    </div>
+</div>
+        
+ <!-- POINT OF CONTACT -->
+        <div>
+            <div style="font-size: 14px; color: #666; margin-bottom: 10px;">Point of Contact</div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="radio" name="is_point_of_contact" value="yes" required style="width: 18px; height: 18px;">
+                        <span style="font-size: 14px;">Yes, I am the point of contact</span>
+                    </label>
+                    
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="radio" name="is_point_of_contact" value="no" style="width: 18px; height: 18px;">
+                        <span style="font-size: 14px;">No, I'm not the point of contact</span>
+                    </label>
+                </div>
+                
+                <div id="alternateContact" style="display: none; margin-top: 10px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <input type="text" name="alternate_contact_name" placeholder="Contact Person's Name" 
+                               style="width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px;">
+                        <input type="tel" name="alternate_contact_phone" placeholder="Contact Person's Phone" 
+                               style="width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 16px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden fields -->
+        <input type="hidden" name="off_hours" id="offHoursField" value="no">
+        <input type="hidden" name="request_type" id="requestType" value="public_request">
+    </div>
+    
+
+<button type="button" id="chequeForXBtn" 
+        style="width: 100%; padding: 16px; background: #000000; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">
+    <span style="font-family: 'Times New Roman', Times, serif; font-size: 20px; font-weight: 700;">
+        Cheque<span style="font-family: 'Lucida Handwriting', cursive; font-style: italic; font-weight: normal; font-size: 22px; margin: 0 4px 0 0; position: relative; top: -1px; left: -1px;">for</span>X
+    </span>
+</button>
+
+<p style="font-size: 13px; color: #888; margin-top: 15px; text-align: center;">In some cases, response times may exceed the standard 9-minute window.</p>
           
           <!-- Loading Overlay (hidden by default) -->
           <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
@@ -864,6 +1209,86 @@
       }
     }
 
+        // NEW: Logic to turn the Service Class text dark on selection AND handle upgrade orchestration
+    const serviceClass = document.getElementById('serviceClass');
+    const serviceWarning = document.getElementById('serviceWarning');
+    
+    if (serviceClass) {
+        serviceClass.addEventListener('change', function() {
+            if (this.value === 'upgrade_arrangement') {
+                // Show warning
+                serviceWarning.style.display = 'block';
+                
+                // Scroll to show the warning
+                setTimeout(() => {
+                    serviceWarning.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+                
+                // Reset dropdown after 2 seconds
+                setTimeout(() => {
+                    // Reset to empty/placeholder
+                    this.value = "";
+                    this.classList.remove('filled');
+                    this.style.color = '#999999';
+                    
+                    // Hide warning after dropdown is reset
+                    setTimeout(() => {
+                        serviceWarning.style.display = 'none';
+                    }, 500);
+                }, 2000);
+            } else if (this.value !== "") {
+                // Normal selection behavior for other options
+                this.classList.add('filled');
+                this.style.color = '#1a1a1a';
+                serviceWarning.style.display = 'none';
+            } else {
+                // If resetting to empty
+                this.classList.remove('filled');
+                this.style.color = '#999999';
+                serviceWarning.style.display = 'none';
+            }
+        });
+    }
+
+// FIXED: Simple working version
+document.addEventListener('DOMContentLoaded', function() {
+  const chequeBtn = document.getElementById('chequeForXBtn');
+  if (chequeBtn) {
+    chequeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const form = document.getElementById('waitlistForm');
+      
+      // Validate required fields
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      
+      // Show loading overlay
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      if (loadingOverlay) {
+        loadingOverlay.style.display = 'flex';
+      }
+      
+      // Store location for simulation page
+      const locationInput = document.querySelector('input[name="exact_location"]');
+      const location = locationInput ? locationInput.value : 'Gwarinpa, Abuja';
+      if (location && location.trim() !== '') {
+        localStorage.setItem('trafficabuja_request_location', location);
+      }
+      
+      // Submit form the SIMPLE way
+      form.submit();
+      
+      // Redirect after a delay
+      setTimeout(() => {
+        window.location.href = 'map-simulation.html';
+      }, 2000);
+    });
+  }
+});
     // Desktop Tooltips - Simplified
     document.addEventListener('DOMContentLoaded', function() {
       // Update live date on page load
@@ -1055,6 +1480,112 @@
         });
       }
     });
-  </script>
+
+  
+/* INTRO MAP LOGIC - UPDATED */
+document.addEventListener("DOMContentLoaded", () => {
+  const pinsLayer = document.getElementById("pinsLayer");
+  const statCard = document.getElementById("statCard");
+  const introMap = document.getElementById("introMap");
+
+  // Generate 60 Google-style pins across Abuja
+  for (let i = 0; i < 60; i++) {
+    const pin = document.createElement("div");
+    pin.className = "google-pin";
+    // Position pins across Abuja area
+    const left = 30 + Math.random() * 40; // Abuja area roughly 30-70% horizontally
+    const top = 30 + Math.random() * 40; // Abuja area roughly 30-70% vertically
+    pin.style.left = `${left}%`;
+    pin.style.top = `${top}%`;
+    pin.style.animationDelay = `${i * 0.04}s`;
+    pinsLayer.appendChild(pin);
+  }
+
+  const featured = [
+  {
+    id: 1,
+    x: "42%",
+    y: "38%",
+    html: `
+      <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 12px;">
+        <strong style="font-size: 1.2em;">Contact No. 411</strong>
+        <small style="font-size: 0.75em; color: #666; font-weight: 500;">🟢 0.3mi</small>
+      </div>
+      <div style="font-size: 0.95em; line-height: 1.5; color: #333;">
+        +200 Friends made<br>
+        13 places in 12 hours<br>
+        Excellent memory for faces
+      </div>
+    `
+  },
+  {
+    id: 2,
+    x: "55%",
+    y: "45%",
+    html: `
+      <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 12px;">
+        <strong style="font-size: 1.2em;">Contact No. 927</strong>
+        <small style="font-size: 0.75em; color: #666; font-weight: 500;">🟢 0.1mi</small>
+      </div>
+      <div style="font-size: 0.95em; line-height: 1.5; color: #333;">
+        +15 proof of funds<br>
+        Skilled conversationalist<br>
+        Elegant career transitions
+      </div>
+    `
+  },
+  {
+    id: 3,
+    x: "48%",
+    y: "55%",
+    html: `
+      <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 12px;">
+        <strong style="font-size: 1.2em;">Contact No. 2601</strong>
+        <small style="font-size: 0.75em; color: #666; font-weight: 500;">🟢 0.9mi</small>
+      </div>
+      <div style="font-size: 0.95em; line-height: 1.5; color: #333;">
+        Built 50k audience<br>
+        Legendary cooking instinct<br>
+        Success rate with legendary dishes 90%. Recipe compliance: 0%.
+      </div>
+    `
+  }
+];
+
+  // Add featured pins
+  featured.forEach((item, i) => {
+    setTimeout(() => {
+      const featuredPin = document.createElement("div");
+      featuredPin.className = `featured-pin pin-${item.id}`;
+      featuredPin.style.left = item.x;
+      featuredPin.style.top = item.y;
+      featuredPin.style.animationDelay = `${i * 2.5}s`;
+      pinsLayer.appendChild(featuredPin);
+    }, 1500 + i * 2500);
+  });
+
+  // Show stat cards for featured profiles
+  featured.forEach((item, i) => {
+    setTimeout(() => {
+      statCard.style.left = `calc(${item.x} + 100px)`;
+      statCard.style.top = item.y;
+      statCard.innerHTML = item.html;
+      statCard.classList.remove("hidden");
+
+      setTimeout(() => {
+        statCard.classList.add("hidden");
+      }, 2200);
+    }, 2500 + i * 2500);
+  });
+
+  // End intro & reveal site (keeping the same 10-second timing)
+  setTimeout(() => {
+    introMap.style.transition = "opacity 1s ease";
+    introMap.style.opacity = 0;
+    setTimeout(() => introMap.remove(), 1000);
+  }, 10000);
+});
+</script>
+
 </body>
 </html>
