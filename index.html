@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -946,7 +946,6 @@
       color: #64748b;
       font-weight: 700;
       letter-spacing: -0.02em;
-      white-space: nowrap;
       padding-left: 5rem;
     }
 
@@ -2063,8 +2062,10 @@
 
     .edge-header-logo {
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
       flex-shrink: 0;
+      gap: 0.15rem;
     }
 
     .edge-header-logo img {
@@ -2074,12 +2075,34 @@
       object-fit: contain;
     }
 
+    .edge-header-logo-tagline {
+      font-family: "Snell Roundhand", "Brush Script MT", "Segoe Script", "Lucida Handwriting", cursive;
+      font-size: 0.72rem;
+      font-style: italic;
+      line-height: 1;
+      letter-spacing: 0.03em;
+      color: #475569;
+      white-space: nowrap;
+    }
+
     .edge-header-nav {
       display: flex;
       align-items: center;
-      gap: 3rem;
+      gap: 0.85rem;
       flex-wrap: wrap;
       justify-content: flex-end;
+      margin-left: auto;
+    }
+
+    .edge-header-nav-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #0f172a;
+      margin-right: 0.35rem;
+      width: 100%;
+      text-align: right;
+      margin-bottom: 0.5rem;
     }
 
     .edge-header-nav a {
@@ -2106,15 +2129,81 @@
       width: 100%;
     }
 
+    .edge-header-nav .edge-social-link,
+    .edge-header-nav .edge-social-button {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e2e8f0;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .edge-header-nav .edge-social-link::after {
+      display: none;
+    }
+
+    .edge-header-nav .edge-social-button {
+      appearance: none;
+      cursor: pointer;
+      color: #2c2c2c;
+    }
+
+    .edge-header-nav .edge-social-link:hover,
+    .edge-header-nav .edge-social-button:hover {
+      transform: translateY(-1px);
+      border-color: #cbd5e1;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    .edge-header-nav .edge-social-link i,
+    .edge-header-nav .edge-social-button i {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .edge-header-nav .edge-social-link.edge-social-instagram:hover,
+    .edge-header-nav .edge-social-link.edge-social-instagram:focus-visible {
+      color: #d9467a;
+    }
+
+    .edge-header-nav .edge-social-link.edge-social-twitter:hover,
+    .edge-header-nav .edge-social-link.edge-social-twitter:focus-visible {
+      color: #1da1f2;
+    }
+
+    .edge-header-nav .edge-social-link.edge-social-discord:hover,
+    .edge-header-nav .edge-social-link.edge-social-discord:focus-visible {
+      color: #5865f2;
+    }
+
+    .edge-header-nav .edge-social-button:hover,
+    .edge-header-nav .edge-social-button:focus-visible {
+      color: #2563eb;
+    }
+
     @media (max-width: 768px) {
       .edge-header-shell {
         padding: 1.5rem 2rem 0;
       }
 
       .edge-header-inner {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: 0.75rem;
+      }
+
+      .edge-header-nav-title {
+        width: auto;
+        text-align: left;
+        margin-bottom: 0;
+        margin-right: 0.5rem;
       }
 
       .timeline-track > .timeline-entry:first-of-type {
@@ -2123,7 +2212,18 @@
 
       .edge-header-nav {
         gap: 1.5rem;
-        justify-content: flex-start;
+        width: auto;
+        justify-content: flex-end;
+        align-self: center;
+      }
+
+      .timeline-date {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      .timeline-date br {
+        display: none;
       }
     }
   </style>
@@ -2132,7 +2232,24 @@
 
   <div class="edge-header-shell">
     <div class="edge-header-inner">
-      <div class="edge-header-logo"><img src="logo.png" alt="Uncle Sam logo"></div>
+      <div class="edge-header-logo">
+        <img src="logo.png" alt="Uncle Sam logo">
+        <div class="edge-header-logo-tagline">Address1st</div>
+      </div>
+      <div class="edge-header-nav" aria-label="Social links">
+        <a class="edge-social-link edge-social-instagram" href="#" aria-label="Instagram">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </a>
+        <a class="edge-social-link edge-social-twitter" href="#" aria-label="Twitter">
+          <i class="fab fa-twitter" aria-hidden="true"></i>
+        </a>
+        <a class="edge-social-link edge-social-discord" href="#" aria-label="Discord">
+          <i class="fab fa-discord" aria-hidden="true"></i>
+        </a>
+        <button class="edge-social-button" type="button" aria-label="More social links">
+          <i class="fas fa-plus" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2158,7 +2275,7 @@
           <article class="timeline-entry">
             <div class="timeline-marker">
               <span class="timeline-dot-shell" aria-hidden="true"><span class="timeline-dot"></span></span>
-              <h3 class="timeline-date">1,000 Views</h3>
+              <h3 class="timeline-date">1st Ave, Gwarinpa</h3>
             </div>
             <div class="timeline-entry-content event-layout">
               <!-- LEFT SECTION: Gallery, cover story, discussion -->
@@ -2167,7 +2284,7 @@
                   <div class="image-gallery">
                     <div class="gallery-track" aria-label="Invite visuals">
                       <figure class="gallery-slide">
-                        <img src="https://images.unsplash.com/photo-1559385301-0187cb6eff46?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Invite preview A" />
+                        <img src="street.png" alt="Invite preview A" />
                           <div class="timeline-image-overlay">
                             <div class="watermark-brand">
                               <div class="watermark-icon">
@@ -2310,7 +2427,7 @@
                     <!-- live cover story -->
                     <div class="cover-story active">
                       <div class="cover-content">
-                        <div class="cover-label cover-live-label"><span class="live-dot" aria-hidden="true"></span>Live till</div>
+                        <div class="cover-label cover-live-label"><span class="live-dot" aria-hidden="true"></span>Immediate Occupancy</div>
                         <div class="cover-detail cover-detail--title">
                           <span>Mid Winter, January 22</span>
                         </div>
@@ -2357,7 +2474,7 @@
           <article class="timeline-entry">
             <div class="timeline-marker">
               <span class="timeline-dot-shell" aria-hidden="true"><span class="timeline-dot"></span></span>
-              <h3 class="timeline-date">7,999 Views</h3>
+              <h3 class="timeline-date">2nd Ave, Gwarinpa</h3>
             </div>
             <div class="timeline-entry-content event-layout">
               <!-- LEFT SECTION: Gallery, cover story, discussion -->
@@ -2366,7 +2483,7 @@
                 <div class="image-gallery">
                   <div class="gallery-track" aria-label="Invite visuals">
                     <figure class="gallery-slide">
-                      <img src="https://images.unsplash.com/photo-1629008149868-f25b10ba225d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Invite preview A" />
+                      <img src="street 1.png" alt="Invite preview A" />
                         <div class="timeline-image-overlay">
                           <div class="watermark-brand">
                             <div class="watermark-icon">
@@ -2509,7 +2626,7 @@
                     <!-- live cover story -->
                     <div class="cover-story active">
                       <div class="cover-content">
-                        <div class="cover-label cover-live-label"><span class="live-dot" aria-hidden="true"></span>Live till</div>
+                        <div class="cover-label cover-live-label"><span class="live-dot" aria-hidden="true"></span>Immediate Occupancy</div>
                         <div class="cover-detail cover-detail--title">
                           <span>Late Spring, May 22</span>
                         </div>
@@ -2556,7 +2673,7 @@
           <article class="timeline-entry">
             <div class="timeline-marker">
               <span class="timeline-dot-shell" aria-hidden="true"><span class="timeline-dot"></span></span>
-              <h3 class="timeline-date">2,101 Views</h3>
+              <h3 class="timeline-date">3rd Ave, Gwarinpa</h3>
             </div>
             <div class="timeline-entry-content event-layout">
               <!-- LEFT SECTION: Gallery, cover story, discussion -->
@@ -2565,7 +2682,7 @@
                 <div class="image-gallery">
                   <div class="gallery-track" aria-label="Invite visuals">
                     <figure class="gallery-slide">
-                      <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Invite preview A" />
+                      <img src="street 2.png" alt="Invite preview A" />
                         <div class="timeline-image-overlay">
                           <div class="watermark-brand">
                             <div class="watermark-icon">
@@ -2708,7 +2825,7 @@
                     <!-- live cover story -->
                     <div class="cover-story active">
                       <div class="cover-content">
-                        <div class="cover-label cover-live-label"><span class="live-dot" aria-hidden="true"></span>Live till</div>
+                        <div class="cover-label cover-live-label"><span class="live-dot" aria-hidden="true"></span>Immediate Occupancy</div>
                         <div class="cover-detail cover-detail--title">
                           <span>Late Summer, September 22</span>
                         </div>
@@ -3083,9 +3200,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
