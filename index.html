@@ -271,13 +271,6 @@
       background: #eef2f7;
     }
 
-    .gallery-track > .gallery-slide:not(:first-child) {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      pointer-events: none;
-    }
-
     .gallery-slide > img {
       width: 100%;
       height: 100%;
@@ -352,48 +345,17 @@
       pointer-events: auto;
     }
 
-    .floating-action-button {
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: none;
-      background: rgba(17, 17, 17, 0.6);
-      color: #fff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(6px);
-    }
-
-    .floating-action-button:hover,
-    .floating-action-button:focus-visible {
-      background: rgba(17, 17, 17, 0.85);
-    }
-
-    .floating-action-button svg {
-      width: 20px;
-      height: 20px;
-    }
-
     .floating-menu {
-      width: 120px;
-      min-width: 120px;
+      width: 156px;
+      min-width: 156px;
       background: transparent;
       border-radius: 0;
       padding: 0;
-      display: none;
+      display: flex;
       flex-direction: column;
       gap: 0.25rem;
       box-shadow: none;
       backdrop-filter: none;
-    }
-
-    .floating-action-container.is-open .floating-menu {
-      display: flex;
-      animation: floatFade 0.35s ease both;
     }
 
     .floating-menu-item {
@@ -424,17 +386,6 @@
       width: 18px;
       min-width: 18px;
       text-align: center;
-    }
-
-    @keyframes floatFade {
-      from {
-        opacity: 0;
-        transform: translate(6px, 6px);
-      }
-      to {
-        opacity: 1;
-        transform: translate(0, 0);
-      }
     }
 
     /* cover / live story */
@@ -507,19 +458,39 @@
     }
 
     .cover-detail--meta {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 1rem;
-      font-size: 0.9rem;
-      color: #475569;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #111827;
+      line-height: 1.35;
       flex-wrap: nowrap;
+      width: 100%;
     }
 
     .cover-detail-item {
       display: inline-flex;
+      flex: 1 1 0;
       align-items: center;
+      justify-content: center;
       gap: 0.35rem;
       white-space: nowrap;
+    }
+
+    .cover-detail-mark {
+      font-family: "Segoe UI Symbol", "Arial Unicode MS", "Inter", sans-serif;
+      font-size: 0.86em;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .cover-detail-mark.is-yes {
+      color: #16a34a;
+    }
+
+    .cover-detail-mark.is-no {
+      color: #dc2626;
     }
 
     .cover-label {
@@ -668,7 +639,10 @@
     }
 
     .discussion-shell details:not([open]) > .discussion-head .discussion-body {
-      display: none;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
     }
 
     .discussion-toggle:hover {
@@ -753,7 +727,7 @@
 
     .edge-header-shell {
       width: 100%;
-      padding: 2rem 4rem 0;
+      padding: 1rem 4rem 0;
       position: relative;
       z-index: 1;
     }
@@ -763,7 +737,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 2rem;
-      padding: 1rem 0;
+      padding: 0.5rem 0;
       margin: 0 auto 0.9rem;
     }
 
@@ -854,7 +828,7 @@
 
     @media (max-width: 768px) {
       .edge-header-shell {
-        padding: 1.5rem 2rem 0;
+        padding: 0.85rem 2rem 0;
       }
 
       .edge-header-inner {
@@ -905,7 +879,6 @@
     <div class="edge-header-inner">
       <div class="edge-header-logo">
         <img src="logo.png" alt="Uncle Sam logo">
-        <div class="edge-header-logo-tagline">Address1st</div>
       </div>
       <div class="edge-header-nav" aria-label="Social links">
         <button class="edge-social-link edge-social-twitter" type="button" aria-label="Personalize">
@@ -956,124 +929,9 @@
                               </div>
                             </div>
                             <div class="floating-action-container">
-                              <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <line x1="12" y1="5" x2="12" y2="19" />
-                                  <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                              </button>
-                              <div class="floating-menu" role="menu">
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                              </div>
-                            </div>
-                          </div>
-                      </figure>
-                      <figure class="gallery-slide">
-                        <img src="street 1.png" alt="Invite preview B" />
-                          <div class="timeline-image-overlay">
-                            <div class="watermark-brand">
-                              <div class="watermark-icon">
-                                <img src="logo.png" alt="Address1st Badge" />
-                              </div>
-                              <div class="watermark-handle">
-                                <span>Address1st</span>
-                                <i class="fas fa-check-circle verified-badge-water"></i>
-                              </div>
-                            </div>
-                            <div class="floating-action-container">
-                              <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <line x1="12" y1="5" x2="12" y2="19" />
-                                  <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                              </button>
-                              <div class="floating-menu" role="menu">
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                              </div>
-                            </div>
-                          </div>
-                      </figure>
-                      <figure class="gallery-slide">
-                        <img src="street 2.png" alt="Invite preview C" />
-                          <div class="timeline-image-overlay">
-                            <div class="watermark-brand">
-                              <div class="watermark-icon">
-                                <img src="logo.png" alt="Address1st Badge" />
-                              </div>
-                              <div class="watermark-handle">
-                                <span>Address1st</span>
-                                <i class="fas fa-check-circle verified-badge-water"></i>
-                              </div>
-                            </div>
-                            <div class="floating-action-container">
-                              <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <line x1="12" y1="5" x2="12" y2="19" />
-                                  <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                              </button>
-                              <div class="floating-menu" role="menu">
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                              </div>
-                            </div>
-                          </div>
-                      </figure>
-                      <figure class="gallery-slide">
-                        <img src="street.png" alt="Invite preview D" />
-                          <div class="timeline-image-overlay">
-                            <div class="watermark-brand">
-                              <div class="watermark-icon">
-                                <img src="logo.png" alt="Address1st Badge" />
-                              </div>
-                              <div class="watermark-handle">
-                                <span>Address1st</span>
-                                <i class="fas fa-check-circle verified-badge-water"></i>
-                              </div>
-                            </div>
-                            <div class="floating-action-container">
-                              <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <line x1="12" y1="5" x2="12" y2="19" />
-                                  <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                              </button>
-                              <div class="floating-menu" role="menu">
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                              </div>
-                            </div>
-                          </div>
-                      </figure>
-                      <figure class="gallery-slide">
-                        <img src="street 1.png" alt="Invite preview E" />
-                          <div class="timeline-image-overlay">
-                            <div class="watermark-brand">
-                              <div class="watermark-icon">
-                                <img src="logo.png" alt="Address1st Badge" />
-                              </div>
-                              <div class="watermark-handle">
-                                <span>Address1st</span>
-                                <i class="fas fa-check-circle verified-badge-water"></i>
-                              </div>
-                            </div>
-                            <div class="floating-action-container">
-                              <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <line x1="12" y1="5" x2="12" y2="19" />
-                                  <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                              </button>
-                              <div class="floating-menu" role="menu">
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                            <div class="floating-menu" role="menu">
+                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-exclamation-circle"></i><span>See Options</span></button>
+                                <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
                               </div>
                             </div>
                           </div>
@@ -1093,10 +951,13 @@
                         </div>
                         <div class="cover-detail cover-detail--meta flex flex-wrap gap-x-5 gap-y-1">
                           <span class="cover-detail-item">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="16" height="16" fill="currentColor">
-                              <path d="M20.54 11.23l-8.49-8.51a3 3 0 00-4.24 0L2.47 8.54a3 3 0 000 4.24l8.51 8.49a3 3 0 004.24 0l5.32-5.32a3 3 0 00-.12-4.72zM13 5.91l6.78 6.78a1 1 0 01.09 1.34l-1.93 1.92L9.97 6.92 13 5.91zM7.5 10.5a1.5 1.5 0 11-2.97.13 1.5 1.5 0 012.97-.13z"></path>
-                            </svg>
-                            <span>Agency & Legal Waiver + ₦5,000</span>
+                            <span>Lease <span class="cover-detail-mark is-yes">✓</span></span>
+                          </span>
+                          <span class="cover-detail-item">
+                            <span>Sale <span class="cover-detail-mark is-no">✕</span></span>
+                          </span>
+                          <span class="cover-detail-item">
+                            <span>Joint Venture <span class="cover-detail-mark is-no">✕</span></span>
                           </span>
                         </div>
                       </div>
@@ -1154,124 +1015,9 @@
                             </div>
                           </div>
                           <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
                             <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street 1.png" alt="Invite preview B" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street 2.png" alt="Invite preview C" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street.png" alt="Invite preview D" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street 1.png" alt="Invite preview E" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-exclamation-circle"></i><span>See Options</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
                             </div>
                           </div>
                         </div>
@@ -1291,10 +1037,13 @@
                         </div>
                         <div class="cover-detail cover-detail--meta flex flex-wrap gap-x-5 gap-y-1">
                           <span class="cover-detail-item">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="16" height="16" fill="currentColor">
-                              <path d="M20.54 11.23l-8.49-8.51a3 3 0 00-4.24 0L2.47 8.54a3 3 0 000 4.24l8.51 8.49a3 3 0 004.24 0l5.32-5.32a3 3 0 00-.12-4.72zM13 5.91l6.78 6.78a1 1 0 01.09 1.34l-1.93 1.92L9.97 6.92 13 5.91zM7.5 10.5a1.5 1.5 0 11-2.97.13 1.5 1.5 0 012.97-.13z"></path>
-                            </svg>
-                            <span>$380 + $2.50</span>
+                            <span>Lease <span class="cover-detail-mark is-yes">✓</span></span>
+                          </span>
+                          <span class="cover-detail-item">
+                            <span>Sale <span class="cover-detail-mark is-no">✕</span></span>
+                          </span>
+                          <span class="cover-detail-item">
+                            <span>Joint Venture <span class="cover-detail-mark is-no">✕</span></span>
                           </span>
                         </div>
                       </div>
@@ -1317,7 +1066,7 @@
                           <div class="discussion-handle">@GreatOsagie</div>
                         </div>
                         <p class="discussion-body">
-                          Beautiful venue! Can't wait for the evening. The garden setting looks absolutely perfect for networking.
+                          Here's what you don't find elsewhere. Food that eats. St. Mary's that teaches. Sobats Consult for study, for work, for a fresh start cross borders. Something's being done correctly in this neighborhood.
                         </p>
                         <span class="discussion-toggle"><span class="toggle-open">Hide</span><span class="toggle-closed">Show</span></span>
                       </summary>
@@ -1352,124 +1101,9 @@
                             </div>
                           </div>
                           <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
                             <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street 1.png" alt="Invite preview B" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street 2.png" alt="Invite preview C" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street.png" alt="Invite preview D" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
-                            </div>
-                          </div>
-                        </div>
-                    </figure>
-                    <figure class="gallery-slide">
-                      <img src="street 1.png" alt="Invite preview E" />
-                        <div class="timeline-image-overlay">
-                          <div class="watermark-brand">
-                            <div class="watermark-icon">
-                              <img src="logo.png" alt="Address1st Badge" />
-                            </div>
-                            <div class="watermark-handle">
-                              <span>Address1st</span>
-                              <i class="fas fa-check-circle verified-badge-water"></i>
-                            </div>
-                          </div>
-                          <div class="floating-action-container">
-                            <button class="floating-action-button" type="button" aria-label="Open action menu" aria-expanded="false">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            </button>
-                            <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-user"></i><span>Account</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-cog"></i><span>Settings</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-exclamation-circle"></i><span>See Options</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
                             </div>
                           </div>
                         </div>
@@ -1489,10 +1123,13 @@
                         </div>
                         <div class="cover-detail cover-detail--meta flex flex-wrap gap-x-5 gap-y-1">
                           <span class="cover-detail-item">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="16" height="16" fill="currentColor">
-                              <path d="M20.54 11.23l-8.49-8.51a3 3 0 00-4.24 0L2.47 8.54a3 3 0 000 4.24l8.51 8.49a3 3 0 004.24 0l5.32-5.32a3 3 0 00-.12-4.72zM13 5.91l6.78 6.78a1 1 0 01.09 1.34l-1.93 1.92L9.97 6.92 13 5.91zM7.5 10.5a1.5 1.5 0 11-2.97.13 1.5 1.5 0 012.97-.13z"></path>
-                            </svg>
-                            <span>$380 + $2.50</span>
+                            <span>Lease <span class="cover-detail-mark is-yes">✓</span></span>
+                          </span>
+                          <span class="cover-detail-item">
+                            <span>Sale <span class="cover-detail-mark is-no">✕</span></span>
+                          </span>
+                          <span class="cover-detail-item">
+                            <span>Joint Venture <span class="cover-detail-mark is-no">✕</span></span>
                           </span>
                         </div>
                       </div>
@@ -1515,7 +1152,7 @@
                           <div class="discussion-handle">@GreatOsagie</div>
                         </div>
                         <p class="discussion-body">
-                          Welcome to our summer kick-off celebration! The beach club is ready to host us for an unforgettable night.
+                          You notice how nobody over there is stressed? Food hits every time. St. Mary's stays producing little geniuses. And the minute anybody mentions "abroad," it's Sobats this, Sobats that. Honestly? They're either blessed or they know something we don't. Probably both.
                         </p>
                         <span class="discussion-toggle"><span class="toggle-open">Hide</span><span class="toggle-closed">Show</span></span>
                       </summary>
@@ -1555,73 +1192,6 @@
       
     })();
 
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const containers = document.querySelectorAll('.floating-action-container');
-      const labelMap = {
-        Account: 'Buy',
-        Settings: 'Sell',
-        Logout: 'Complaint'
-      };
-      const iconMap = {
-        Buy: 'fas fa-shopping-cart',
-        Sell: 'fas fa-tag',
-        Complaint: 'fas fa-exclamation-circle'
-      };
-
-      document.querySelectorAll('.floating-menu-item span').forEach(label => {
-        const nextLabel = labelMap[label.textContent.trim()];
-        if (nextLabel) {
-          label.textContent = nextLabel;
-        }
-      });
-
-      document.querySelectorAll('.floating-menu-item').forEach(item => {
-        const label = item.querySelector('span');
-        const icon = item.querySelector('i');
-        if (!label || !icon) return;
-
-        const nextIcon = iconMap[label.textContent.trim()];
-        if (nextIcon) {
-          icon.className = nextIcon;
-        }
-      });
-
-      containers.forEach(container => {
-        const button = container.querySelector('.floating-action-button');
-        const menu = container.querySelector('.floating-menu');
-        if (!button || !menu) return;
-
-        const toggleState = () => {
-          const isOpen = container.classList.toggle('is-open');
-          button.setAttribute('aria-expanded', String(isOpen));
-        };
-
-        button.addEventListener('click', event => {
-          event.stopPropagation();
-          containers.forEach(other => {
-            if (other !== container) {
-              other.classList.remove('is-open');
-              other.querySelector('.floating-action-button')?.setAttribute('aria-expanded', 'false');
-            }
-          });
-          toggleState();
-        });
-
-        menu.addEventListener('click', event => {
-          event.stopPropagation();
-        });
-      });
-
-      containers.forEach(container => {
-        const button = container.querySelector('.floating-action-button');
-        if (button) {
-          container.classList.add('is-open');
-          button.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
   </script>
 </body>
 </html>
