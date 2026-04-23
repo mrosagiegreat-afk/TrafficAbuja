@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -1603,46 +1603,56 @@
     .landing-event-actions{
       position: absolute;
       right: 14px;
-      bottom: 14px;
+      top: 14px;
+      bottom: auto;
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
-      gap: 4px;
+      align-items: stretch;
+      gap: 0.25rem;
+      width: 156px;
+      min-width: 156px;
       z-index: 2;
     }
 
     .landing-event-action-btn{
-      border: 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
       background: transparent;
       color: #ffffff;
       display: inline-flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 7px;
-      padding: 6px 8px;
+      gap: 0.45rem;
+      padding: 0.38rem 0.45rem;
       border-radius: 10px;
-      font-size: 13px;
+      font-size: 0.9rem;
       font-weight: 500;
       line-height: 1;
       cursor: pointer;
+      text-align: right;
       text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
-      transition: background-color 180ms ease;
+      transition: background 0.2s ease;
     }
 
     .landing-event-action-btn:hover,
     .landing-event-action-btn:focus-visible{
-      background: rgba(255,255,255,.12);
+      background: rgba(255,255,255,.08);
       outline: none;
+    }
+
+    .landing-event-action-btn.done-action{
+      width: auto;
+      align-self: flex-end;
     }
 
     .landing-event-action-icon{
       position: relative;
-      width: 18px;
-      height: 18px;
       display: inline-flex;
+      width: 18px;
+      min-width: 18px;
       align-items: center;
       justify-content: center;
-      flex: 0 0 auto;
     }
 
     .landing-event-action-icon svg{
@@ -1658,15 +1668,15 @@
 
     .landing-event-action-badge{
       position: absolute;
-      top: -6px;
-      left: -7px;
+      top: -7px;
+      left: -8px;
       min-width: 14px;
       height: 14px;
       padding: 0 3px;
       border-radius: 999px;
       background: #dc2626;
-      color: #ffffff;
-      font-size: 9px;
+      color: #fff;
+      font-size: 0.58rem;
       font-weight: 700;
       line-height: 14px;
       text-align: center;
@@ -3712,6 +3722,35 @@
       border-radius: 0;
     }
 
+    .landing-event-carousel-dots{
+      position: absolute;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      z-index: 3;
+      pointer-events: auto;
+    }
+
+    .landing-event-carousel-dot{
+      width: 10px;
+      height: 10px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.58);
+      cursor: pointer;
+      padding: 0;
+      transition: transform 180ms ease, background-color 180ms ease;
+    }
+
+    .landing-event-carousel-dot.is-active{
+      background: #111111;
+      transform: scale(1.05);
+    }
+
     .landing-event-body{
       position: static;
       left: auto;
@@ -4697,8 +4736,8 @@
 <article class="landing-event-card" data-base-price="3450000">
 <div class="landing-event-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4733,8 +4772,8 @@
 <article class="landing-event-card" data-base-price="5200000">
 <div class="landing-event-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4769,8 +4808,8 @@
 <article class="landing-event-card" data-base-price="2250000" data-details-end="21:00 PM" data-details-status="offline">
 <div class="landing-event-image" style="background-image: url('https://plus.unsplash.com/premium_photo-1661872779873-5ce7b9235a0e?q=80&amp;w=1203&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4806,8 +4845,8 @@
 <article class="landing-event-card" data-base-price="2980000">
 <div class="landing-event-image" style="background-image: url('https://images.unsplash.com/photo-1707484687082-9493754d389f?q=80&amp;w=1170&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4842,8 +4881,8 @@
 <article class="landing-event-card" data-base-price="4100000">
 <div class="landing-event-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4879,8 +4918,8 @@
 <article class="landing-event-card" data-base-price="3780000" data-details-end="21:00 PM" data-details-status="offline">
 <div class="landing-event-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4915,8 +4954,8 @@
 <article class="landing-event-card" data-base-price="6450000">
 <div class="landing-event-image" style="background-image: url('https://plus.unsplash.com/premium_photo-1661872731017-f16222b794cf?q=80&amp;w=1183&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4952,8 +4991,8 @@
 <article class="landing-event-card" data-base-price="2640000">
 <div class="landing-event-image" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&amp;w=1170&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Handpicked</span></button>
-<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span><span>Request Viewing</span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -4988,8 +5027,8 @@
 <article class="landing-event-card" data-base-price="3220000" data-details-end="21:00 PM" data-details-status="offline">
 <div class="landing-event-image" style="background-image: url('https://images.unsplash.com/photo-1542928658-22251e208ac1?q=80&amp;w=1074&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
 <div class="landing-event-actions">
-<button class="landing-event-action-btn" type="button"><span>Handpicked</span><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span></button>
-<button class="landing-event-action-btn" type="button"><span>Request Viewing</span><span class="landing-event-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 12-8 8-8-8 8-8 8 8Z"></path><circle cx="12" cy="12" r="1.5"></circle></svg></span></button>
+<button class="landing-event-action-btn" type="button"><span class="landing-event-action-icon"><span class="landing-event-action-badge">0</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.2 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H7.4"></path></svg></span><span>Add to cart</span></button>
+<button class="landing-event-action-btn done-action" type="button">Done</button>
 </div>
 </div>
 <div class="landing-event-body">
@@ -5035,6 +5074,107 @@
     }
 
     guardShareButtons();
+
+    function initializeLandingEventCarousels() {
+      const imageFrames = Array.from(document.querySelectorAll(".landing-event-image"));
+      if (!imageFrames.length) return;
+
+      const virtualSlides = [
+        { position: "center center", size: "cover" },
+        { position: "24% center", size: "118%" },
+        { position: "76% center", size: "118%" },
+        { position: "center 32%", size: "112%" }
+      ];
+
+      imageFrames.forEach((frame) => {
+        const existingImage = frame.style.backgroundImage || window.getComputedStyle(frame).backgroundImage;
+        if (!existingImage || existingImage === "none") return;
+
+        frame.style.touchAction = "pan-y";
+        frame.style.cursor = "grab";
+
+        const dots = document.createElement("div");
+        dots.className = "landing-event-carousel-dots";
+        dots.setAttribute("aria-label", "Image navigation");
+
+        let activeIndex = 0;
+        let startX = 0;
+        let startY = 0;
+        let pointerActive = false;
+
+        const dotButtons = virtualSlides.map((slide, index) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "landing-event-carousel-dot";
+          dot.setAttribute("aria-label", `Show image ${index + 1}`);
+          dot.addEventListener("click", (event) => {
+            event.stopPropagation();
+            setActiveSlide(index);
+          });
+          dots.appendChild(dot);
+          return dot;
+        });
+
+        const setActiveSlide = (index) => {
+          activeIndex = (index + virtualSlides.length) % virtualSlides.length;
+          const activeSlide = virtualSlides[activeIndex];
+
+          frame.style.backgroundImage = existingImage;
+          frame.style.backgroundPosition = activeSlide.position;
+          frame.style.backgroundSize = activeSlide.size;
+
+          dotButtons.forEach((dot, dotIndex) => {
+            const isActive = dotIndex === activeIndex;
+            dot.classList.toggle("is-active", isActive);
+            dot.setAttribute("aria-current", isActive ? "true" : "false");
+          });
+        };
+
+        const moveBy = (direction) => {
+          setActiveSlide(activeIndex + direction);
+        };
+
+        frame.addEventListener("pointerdown", (event) => {
+          if (event.target.closest(".landing-event-carousel-dots, .landing-event-actions")) {
+            return;
+          }
+
+          pointerActive = true;
+          startX = event.clientX;
+          startY = event.clientY;
+          frame.style.cursor = "grabbing";
+        });
+
+        frame.addEventListener("pointerup", (event) => {
+          if (!pointerActive) return;
+          pointerActive = false;
+          frame.style.cursor = "grab";
+
+          const deltaX = event.clientX - startX;
+          const deltaY = event.clientY - startY;
+
+          if (Math.abs(deltaX) < 28 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+            return;
+          }
+
+          if (deltaX < 0) {
+            moveBy(1);
+          } else {
+            moveBy(-1);
+          }
+        });
+
+        frame.addEventListener("pointercancel", () => {
+          pointerActive = false;
+          frame.style.cursor = "grab";
+        });
+
+        frame.appendChild(dots);
+        setActiveSlide(0);
+      });
+    }
+
+    initializeLandingEventCarousels();
 
     function initializeLandingTopicSelection() {
       const topicButtons = Array.from(document.querySelectorAll(".landing-topic-btn"));
