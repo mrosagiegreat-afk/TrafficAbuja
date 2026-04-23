@@ -820,7 +820,7 @@
                             </div>
                             <div class="floating-action-container">
                             <div class="floating-menu" role="menu">
-                                <button class="floating-menu-item" type="button" role="menuitem"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Cart Listings</span></button>
+                                <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Handpicked</span></button>
                                 <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
                               </div>
                             </div>
@@ -906,7 +906,7 @@
                           </div>
                           <div class="floating-action-container">
                             <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Cart Listings</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Handpicked</span></button>
                               <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
                             </div>
                           </div>
@@ -992,7 +992,7 @@
                           </div>
                           <div class="floating-action-container">
                             <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Cart Listings</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Handpicked</span></button>
                               <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
                             </div>
                           </div>
@@ -1080,6 +1080,14 @@
       window.addEventListener("scroll", updateTimelineProgress, { passive: true });
       window.addEventListener("resize", updateTimelineProgress);
       updateTimelineProgress();
+
+      document.querySelectorAll("[data-handpicked-link]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var target = button.getAttribute("data-handpicked-link");
+          if (!target) return;
+          window.location.href = target;
+        });
+      });
       
     })();
 
