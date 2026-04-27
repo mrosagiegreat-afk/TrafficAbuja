@@ -146,6 +146,21 @@
             max-width: 26rem;
         }
         @media (max-width: 980px) {
+            .profile-main {
+                height: auto;
+                padding: 1rem;
+                overflow: visible;
+            }
+            .timeline-panel {
+                min-height: auto;
+                padding: 0;
+            }
+            .timeline-shell {
+                border-radius: 0;
+            }
+            .timeline-top {
+                padding: 0;
+            }
             .timeline-body {
                 padding: 0 1rem 1.2rem;
             }
@@ -153,15 +168,19 @@
                 left: 14px;
                 top: 0;
                 bottom: 0;
-                mask-image: linear-gradient(to bottom, transparent 0, transparent 31px, black 31px);
-                -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 31px, black 31px);
+                mask-image: none;
+                -webkit-mask-image: none;
             }
             .timeline-entry {
                 display: block;
+                grid-template-columns: 1fr;
                 gap: 0.85rem;
                 padding: 2.4rem 0 1.6rem;
+                padding-left: 0;
             }
             .timeline-marker {
+                position: relative;
+                top: auto;
                 max-width: none;
                 min-height: 32px;
             }
@@ -181,7 +200,10 @@
             }
             .timeline-entry-content {
                 padding-left: 2.85rem;
-                margin-top: 0.9rem;
+                padding-right: 0;
+            }
+            .timeline-track > .timeline-entry:first-of-type {
+                padding-top: 0;
             }
         }
         .custom-scroll::-webkit-scrollbar {
@@ -419,7 +441,7 @@
         return (
             <Card className="w-full max-w-sm overflow-hidden rounded-2xl border-none bg-transparent text-card-foreground shadow-none transition-all duration-300">
                 <CardHeader className="p-0">
-                    <div className="flex items-start gap-4 px-6 pb-3 pt-0">
+                    <div className="flex items-start gap-4 px-6 pb-1 pt-0">
                         <div className="relative h-24 w-24 flex-shrink-0 rounded-lg overflow-hidden shadow-md">
                             <img src={imageUrl} alt={title} className="h-full w-full object-cover" />
                         </div>
@@ -437,7 +459,7 @@
                         </div>
                     </div>
                 </CardHeader>
-                <CardContent className="space-y-4 px-6 pb-6">
+                <CardContent className="space-y-2 px-6 pb-6">
                     <MotionUl className="relative space-y-2" variants={containerVariants} initial="hidden" animate="visible">
                         {steps.map((step, idx) => {
                             const { iconName, iconClassName, lineClassName } = getStatusAttributes(step.status);
@@ -516,7 +538,7 @@
             imageUrl: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=400&h=300&fit=crop",
             status: "Awaiting Documents",
             title: "1st Ave, Gwarinpa",
-            price: 3200.00,
+            price: 39550.00,
             buttonText: "Manage Proposal",
             steps: stepsData
         };
