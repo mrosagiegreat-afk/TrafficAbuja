@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -785,6 +785,49 @@
       color: rgba(255,255,255,.55);
       margin-top: 4px;
       font-weight: 700;
+    }
+
+    .price-wrapper {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      padding-right: 10px;
+      max-width: calc(100% - 20px);
+    }
+
+    .price-overlay {
+      margin: 0;
+      font-size: clamp(20px, 2vw, 28px);
+      line-height: 1.35;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      font-style: normal;
+      font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", sans-serif;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+      white-space: nowrap;
+    }
+
+    .price-number:focus {
+      outline: none;
+    }
+
+    .price-suffix {
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .helper-text {
+      font-size: 12px;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+      font-family: "Plus Jakarta Sans", "Inter", "Segoe UI", sans-serif;
+      line-height: 1.2;
+      margin: 0;
     }
 
     .bottom{
@@ -3724,10 +3767,11 @@
 
     .landing-event-carousel-dots{
       position: absolute;
-      left: 50%;
+      right: 14px;
       bottom: 14px;
-      transform: translateX(-50%);
+      transform: none;
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 10px;
@@ -4694,7 +4738,12 @@
 </head>
 <body>
 <!-- ========== HEADER ========== -->
-<header class="site-header">
+<trafficabuja-header
+  logo-src="logo.png"
+  brand="trafficabuja"
+  page-title="trafficabuja"
+  personalize-href="overlay.html"
+></trafficabuja-header>
 
 <!-- ========== END HEADER ========== -->
 <!-- MEET OUR TEAM (between cars and footer) -->
@@ -4740,7 +4789,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Tuesday, April 28</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -4776,7 +4825,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Monday, April 27</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -4812,7 +4861,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Sunday, April 26</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -4849,7 +4898,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Saturday, April 25</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -4885,7 +4934,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Friday, April 24</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -4922,7 +4971,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Thursday, April 23</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -4958,7 +5007,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Wednesday, April 22</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -4995,7 +5044,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Tuesday, April 21</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -5031,7 +5080,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-meta">
-<span class="landing-live-label">100 lbs minimum</span>
+<span class="landing-live-label">Monday, April 20</span>
 </div>
 <div class="landing-event-title-row">
 <div class="landing-event-specs">
@@ -5356,6 +5405,93 @@
     }
 
     initializeDoneButtons();
-  </script>
+
+    function formatNumber(num) {
+      return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function setCursor(span) {
+      const text = span.innerText;
+      const pos = text.includes('.00') ? text.length - 3 : text.length;
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.setStart(span.firstChild || span, pos);
+      range.setEnd(span.firstChild || span, pos);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    function addPriceOverlays() {
+      const images = document.querySelectorAll('.landing-event-image');
+      let isFirst = true;
+      images.forEach(image => {
+        const overlay = document.createElement('div');
+        overlay.className = 'price-overlay';
+
+        const nairaSpan = document.createElement('span');
+        nairaSpan.textContent = '₦ ';
+        nairaSpan.className = 'naira-sign';
+
+        const digitsSpan = document.createElement('span');
+        digitsSpan.textContent = '';
+        digitsSpan.contentEditable = 'true';
+        digitsSpan.className = 'price-number';
+
+        const suffixSpan = document.createElement('span');
+        suffixSpan.textContent = '.00';
+        suffixSpan.className = 'price-suffix';
+
+        digitsSpan.addEventListener('input', () => {
+          let text = digitsSpan.innerText.replace(/,/g, '').replace(/\D/g, '');
+          if (text === '') {
+            digitsSpan.innerText = '';
+            setCursor(digitsSpan);
+            return;
+          }
+
+          let num = parseInt(text, 10);
+          digitsSpan.innerText = Number.isNaN(num) ? '' : num.toLocaleString('en-US');
+          setCursor(digitsSpan);
+        });
+
+        overlay.appendChild(nairaSpan);
+        overlay.appendChild(digitsSpan);
+        overlay.appendChild(suffixSpan);
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'price-wrapper';
+
+        const helper2 = document.createElement('div');
+        helper2.className = 'helper-text';
+        helper2.textContent = 'E.g., 5000';
+
+        const helper1 = document.createElement('div');
+        helper1.className = 'helper-text';
+        helper1.textContent = 'Enter your price here';
+
+        wrapper.appendChild(helper2);
+        wrapper.appendChild(overlay);
+        wrapper.appendChild(helper1);
+        image.appendChild(wrapper);
+        setCursor(digitsSpan);
+
+        if (isFirst) {
+          digitsSpan.focus();
+          isFirst = false;
+        }
+      });
+    }
+
+    addPriceOverlays();
+
+    // Ensure the first price input is focused on page load
+    setTimeout(() => {
+      const firstDigits = document.querySelector('.price-number');
+      if (firstDigits) {
+        firstDigits.focus();
+      }
+    }, 100);
+</script>
+<script src="components/trafficabuja-header.js"></script>
 </body>
 </html>
