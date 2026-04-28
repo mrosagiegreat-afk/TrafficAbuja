@@ -958,7 +958,11 @@
 </head>
 <body>
 
-  <trafficabuja-header logo-src="logo.png" brand="trafficabuja" page-title="trafficabuja"></trafficabuja-header>
+  <trafficabuja-header
+    logo-src="logo.png"
+    brand="trafficabuja"
+    page-title="trafficabuja"
+  ></trafficabuja-header>
 
   <main class="profile-main" id="profileMain">
     <section class="timeline-panel" id="timelinePanel" aria-label="Timeline from notifications">
@@ -983,7 +987,7 @@
                 <!-- Image gallery carousel -->
                   <div class="image-gallery">
                     <div class="gallery-track" aria-label="Invite visuals">
-                      <figure class="gallery-slide" id="streetPreviewCard" data-summary-preview>
+                      <figure class="gallery-slide" id="streetPreviewCard" data-summary-preview data-summary-id="streetPreviewCard">
                         <img class="gallery-preview-image" src="street.png" alt="Invite preview A" />
                           <div class="gallery-summary-card" aria-hidden="true">
                             <div class="gallery-summary-shell">
@@ -993,7 +997,7 @@
                                   <p class="gallery-summary-meta">Total Budget</p>
                                 </div>
                                 <div class="gallery-summary-total">
-                                  <span class="gallery-summary-total-value">$39,550</span>
+                                  <span class="gallery-summary-total-value">$39,550.00</span>
                                 </div>
                               </div>
                               <div class="gallery-summary-list" role="list" aria-label="Project budgets">
@@ -1032,7 +1036,7 @@
                             </div>
                             <div class="floating-action-container">
                             <div class="floating-menu" role="menu">
-                                <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span data-handpicked-label>Pick Here</span></button>
+                                <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html?timelineCard=streetPreviewCard"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span data-handpicked-label>Pick Here</span></button>
                                 <button class="floating-menu-item is-dull" type="button" role="menuitem" data-next-link="next.html" aria-disabled="true"><i class="fas fa-tag"></i><span>Next</span></button>
                               </div>
                             </div>
@@ -1104,8 +1108,43 @@
                 <!-- Image gallery carousel -->
                 <div class="image-gallery">
                   <div class="gallery-track" aria-label="Invite visuals">
-                    <figure class="gallery-slide">
-                      <img src="street 1.png" alt="Invite preview A" />
+                    <figure class="gallery-slide" id="streetPreviewCard2" data-summary-preview data-summary-id="streetPreviewCard2">
+                      <img class="gallery-preview-image" src="street 1.png" alt="Invite preview A" />
+                        <div class="gallery-summary-card" aria-hidden="true">
+                          <div class="gallery-summary-shell">
+                            <div class="gallery-summary-head">
+                              <div>
+                                <h4 class="gallery-summary-title">Summary</h4>
+                                <p class="gallery-summary-meta">Total Budget</p>
+                              </div>
+                              <div class="gallery-summary-total">
+                                <span class="gallery-summary-total-value">$28,900.00</span>
+                              </div>
+                            </div>
+                            <div class="gallery-summary-list" role="list" aria-label="Project budgets">
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Interior Finishing</div>
+                                <div class="gallery-summary-budget">$9,400</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Security Setup</div>
+                                <div class="gallery-summary-budget">$4,200</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Parking Upgrade</div>
+                                <div class="gallery-summary-budget">$6,100</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Water Reticulation</div>
+                                <div class="gallery-summary-budget">$3,800</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Common Area Lighting</div>
+                                <div class="gallery-summary-budget">$5,400</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <div class="timeline-image-overlay">
                           <div class="watermark-brand">
                             <div class="watermark-icon">
@@ -1118,8 +1157,8 @@
                           </div>
                           <div class="floating-action-container">
                             <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Handpicked</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html?timelineCard=streetPreviewCard2"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span data-handpicked-label>Pick Here</span></button>
+                              <button class="floating-menu-item is-dull" type="button" role="menuitem" data-next-link="next.html" aria-disabled="true"><i class="fas fa-tag"></i><span>Next</span></button>
                             </div>
                           </div>
                         </div>
@@ -1190,8 +1229,43 @@
                 <!-- Image gallery carousel -->
                 <div class="image-gallery">
                   <div class="gallery-track" aria-label="Invite visuals">
-                    <figure class="gallery-slide">
-                      <img src="street 2.png" alt="Invite preview A" />
+                    <figure class="gallery-slide" id="streetPreviewCard3" data-summary-preview data-summary-id="streetPreviewCard3">
+                      <img class="gallery-preview-image" src="street 2.png" alt="Invite preview A" />
+                        <div class="gallery-summary-card" aria-hidden="true">
+                          <div class="gallery-summary-shell">
+                            <div class="gallery-summary-head">
+                              <div>
+                                <h4 class="gallery-summary-title">Summary</h4>
+                                <p class="gallery-summary-meta">Total Budget</p>
+                              </div>
+                              <div class="gallery-summary-total">
+                                <span class="gallery-summary-total-value">$33,480.00</span>
+                              </div>
+                            </div>
+                            <div class="gallery-summary-list" role="list" aria-label="Project budgets">
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Roof Repair</div>
+                                <div class="gallery-summary-budget">$7,900</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Power Backup</div>
+                                <div class="gallery-summary-budget">$8,600</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Perimeter Fencing</div>
+                                <div class="gallery-summary-budget">$6,200</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Drainage Works</div>
+                                <div class="gallery-summary-budget">$4,980</div>
+                              </div>
+                              <div class="gallery-summary-row" role="listitem">
+                                <div class="gallery-summary-project">Landscape Refresh</div>
+                                <div class="gallery-summary-budget">$5,800</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <div class="timeline-image-overlay">
                           <div class="watermark-brand">
                             <div class="watermark-icon">
@@ -1204,8 +1278,8 @@
                           </div>
                           <div class="floating-action-container">
                             <div class="floating-menu" role="menu">
-                              <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span>Handpicked</span></button>
-                              <button class="floating-menu-item" type="button" role="menuitem"><i class="fas fa-tag"></i><span>Request Viewing</span></button>
+                              <button class="floating-menu-item" type="button" role="menuitem" data-handpicked-link="list.html?timelineCard=streetPreviewCard3"><span class="floating-menu-icon"><span class="floating-menu-badge">0</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></span><span data-handpicked-label>Pick Here</span></button>
+                              <button class="floating-menu-item is-dull" type="button" role="menuitem" data-next-link="next.html" aria-disabled="true"><i class="fas fa-tag"></i><span>Next</span></button>
                             </div>
                           </div>
                         </div>
@@ -1275,14 +1349,8 @@
       var timelinePanel = document.getElementById("timelinePanel");
       var timelineTrack = document.getElementById("timelineTrack");
       var timelineAxisProgress = document.getElementById("timelineAxisProgress");
-      var streetPreviewCard = document.getElementById("streetPreviewCard");
-      var primaryHandpickedLabel = streetPreviewCard
-        ? streetPreviewCard.querySelector("[data-handpicked-label]")
-        : null;
-      var primaryNextButton = streetPreviewCard
-        ? streetPreviewCard.querySelector("[data-next-link]")
-        : null;
-      var handpickedLabelInterval = null;
+      var summaryPreviewCards = Array.from(document.querySelectorAll("[data-summary-preview]"));
+      var handpickedLabelIntervals = new Map();
 
       function updateTimelineProgress() {
         if (!timelinePanel || !timelineTrack || !timelineAxisProgress) return;
@@ -1311,7 +1379,8 @@
 
       document.querySelectorAll("[data-next-link]").forEach(function (button) {
         button.addEventListener("click", function () {
-          if (!streetPreviewCard || !streetPreviewCard.classList.contains("is-summary-active")) return;
+          var previewCard = button.closest("[data-summary-preview]");
+          if (!previewCard || !previewCard.classList.contains("is-summary-active")) return;
 
           var target = button.getAttribute("data-next-link");
           if (!target) return;
@@ -1319,51 +1388,62 @@
         });
       });
 
-      function stopHandpickedLabelLoop() {
-        if (handpickedLabelInterval) {
-          window.clearInterval(handpickedLabelInterval);
-          handpickedLabelInterval = null;
+      function stopHandpickedLabelLoop(previewCard) {
+        var existingInterval = handpickedLabelIntervals.get(previewCard);
+        if (existingInterval) {
+          window.clearInterval(existingInterval);
+          handpickedLabelIntervals.delete(previewCard);
         }
       }
 
-      function setHandpickedLabel(text) {
-        if (primaryHandpickedLabel) {
-          primaryHandpickedLabel.textContent = text;
+      function setHandpickedLabel(previewCard, text) {
+        var label = previewCard.querySelector("[data-handpicked-label]");
+        if (label) {
+          label.textContent = text;
         }
       }
 
-      function startHandpickedLabelLoop() {
-        if (!primaryHandpickedLabel || handpickedLabelInterval) return;
+      function startHandpickedLabelLoop(previewCard) {
+        if (!previewCard || handpickedLabelIntervals.has(previewCard)) return;
 
         var labels = ["Handpicked", "Edit"];
         var index = 0;
-        setHandpickedLabel(labels[index]);
+        setHandpickedLabel(previewCard, labels[index]);
 
-        handpickedLabelInterval = window.setInterval(function () {
+        var intervalId = window.setInterval(function () {
           index = (index + 1) % labels.length;
-          setHandpickedLabel(labels[index]);
+          setHandpickedLabel(previewCard, labels[index]);
         }, 1000);
+
+        handpickedLabelIntervals.set(previewCard, intervalId);
       }
 
       function syncStreetPreviewState() {
-        if (!streetPreviewCard) return;
         var params = new URLSearchParams(window.location.search);
-        var isSummaryActive = params.get("showSummary") === "1";
-        streetPreviewCard.classList.toggle("is-summary-active", isSummaryActive);
+        var activeSummaryId = params.get("showSummary");
+        var hasSummaryActive = false;
 
-        stopHandpickedLabelLoop();
+        summaryPreviewCards.forEach(function (previewCard) {
+          var previewId = previewCard.getAttribute("data-summary-id");
+          var isSummaryActive = activeSummaryId === previewId;
+          var nextButton = previewCard.querySelector("[data-next-link]");
 
-        if (isSummaryActive) {
-          startHandpickedLabelLoop();
-        } else {
-          setHandpickedLabel("Pick Here");
-        }
+          previewCard.classList.toggle("is-summary-active", isSummaryActive);
+          stopHandpickedLabelLoop(previewCard);
 
-        if (primaryNextButton) {
-          primaryNextButton.setAttribute("aria-disabled", isSummaryActive ? "false" : "true");
-        }
+          if (isSummaryActive) {
+            hasSummaryActive = true;
+            startHandpickedLabelLoop(previewCard);
+          } else {
+            setHandpickedLabel(previewCard, "Pick Here");
+          }
 
-        if (isSummaryActive) {
+          if (nextButton) {
+            nextButton.setAttribute("aria-disabled", isSummaryActive ? "false" : "true");
+          }
+        });
+
+        if (hasSummaryActive) {
           var cleanUrl = window.location.pathname + window.location.hash;
           window.history.replaceState({}, "", cleanUrl);
         }
