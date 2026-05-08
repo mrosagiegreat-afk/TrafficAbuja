@@ -143,6 +143,11 @@
             padding: 0;
             width: 100%;
         }
+        .timeline-followup {
+            width: 100%;
+            padding-top: 3.5rem;
+            margin-left: calc(26rem + clamp(1rem, 2vw, 2.1rem));
+        }
         .next-card-shell {
             width: 100%;
             max-width: 26rem;
@@ -168,16 +173,17 @@
             }
             .timeline-axis {
                 left: 14px;
-                top: 0;
+                top: 14px;
                 bottom: 52px;
                 mask-image: none;
                 -webkit-mask-image: none;
             }
             .timeline-entry {
-                display: block;
-                grid-template-columns: 1fr;
-                gap: 0.85rem;
-                padding: 2.4rem 0 1.6rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 0.35rem;
+                padding: 2rem 0 1.15rem;
                 padding-left: 0;
             }
             .timeline-marker {
@@ -185,6 +191,8 @@
                 top: auto;
                 max-width: none;
                 min-height: 32px;
+                width: 100%;
+                padding-left: 0;
             }
             .timeline-dot-shell {
                 left: 0;
@@ -201,8 +209,14 @@
                 padding-left: 2.85rem;
             }
             .timeline-entry-content {
-                padding-left: 1.35rem;
+                padding-left: 2.85rem;
                 padding-right: 0;
+                padding-top: 0.35rem;
+            }
+            .timeline-followup {
+                margin-left: 0;
+                padding-top: 0.15rem;
+                padding-left: 1.35rem;
             }
             .timeline-track > .timeline-entry:first-of-type {
                 padding-top: 0;
@@ -237,6 +251,14 @@
     brand="trafficabuja"
     page-title="trafficabuja"
     personalize-href="overlay.html"
+    nav-mode="stacked-links"
+    products-href="#"
+    about-label="About"
+    about-href="faq.html"
+    blog-href="#"
+    contact-href="#"
+    privacy-href="#"
+    terms-href="#"
 ></trafficabuja-header>
 
 <main class="profile-main">
@@ -248,15 +270,10 @@
                     <div class="timeline-axis" aria-hidden="true">
                         <div class="timeline-axis-progress" id="timelineAxisProgress"></div>
                     </div>
-                    <article class="timeline-entry">
-                        <div class="timeline-marker">
-                            <span class="timeline-dot-shell" aria-hidden="true"><span class="timeline-dot"></span></span>
-                            <h3 class="timeline-date">1st Ave, Gwarinpa</h3>
-                        </div>
-                        <div class="timeline-entry-content">
-                            <div id="root" class="next-card-shell"></div>
-                        </div>
-                    </article>
+                    <div id="selectedTimelineEntries"></div>
+                    <div class="timeline-entry-content timeline-followup">
+                        <div id="root" class="next-card-shell"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -431,21 +448,35 @@
             default: return { iconName: "Circle", iconClassName: "text-muted-foreground", lineClassName: "bg-border" };
         }
     };
-    
-    // ============================================================
-    // MAIN PROPOSAL TRACKER CARD COMPONENT
-    // ============================================================
-    const ProposalTrackerCard = ({ imageUrl, status, title, summaryCopy, steps, buttonText }) => {
-        const [acceptedTerms, setAcceptedTerms] = React.useState(false);
-        const containerVariants = {
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-        };
-        const itemVariants = {
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 12 } }
-        };
-        
+
+    const CART_STORAGE_KEY = "trafficAbujaCartSelections";
+
+    function getStoredCartSelections() {
+        try {
+            const rawValue = window.localStorage.getItem(CART_STORAGE_KEY);
+            if (!rawValue) return [];
+
+            const parsedValue = JSON.parse(rawValue);
+            if (!Array.isArray(parsedValue) || !parsedValue.length) {
+                return [];
+            }
+
+            return parsedValue.map((item, index) => ({
+                id: item?.id || `selected-item-${index + 1}`,
+                title: item?.title || "1 Bedroom Apartment",
+                status: item?.status || "Awaiting Documents",
+                location: item?.location || "1st Ave, Gwarinpa",
+                summaryCopy: item?.summaryCopy || "This quarter which funds your savings is made possible via closure of underutilized supply-demand gaps. We're now extending the same to public",
+                imageUrl: item?.imageUrl || "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=400&h=300&fit=crop"
+            }));
+        } catch (error) {
+            return [];
+        }
+    }
+
+    const selectedTimelineItems = getStoredCartSelections();
+
+    const SelectedPropertyCard = ({ imageUrl, status, title, summaryCopy }) => {
         return (
             <Card className="w-full max-w-sm overflow-hidden rounded-2xl border-none bg-transparent text-card-foreground shadow-none transition-all duration-300">
                 <CardHeader className="p-0">
@@ -463,7 +494,27 @@
                         <div className="clear-both"></div>
                     </div>
                 </CardHeader>
-                <CardContent className="space-y-2 px-6 pb-6">
+            </Card>
+        );
+    };
+    
+    // ============================================================
+    // MAIN PROPOSAL TRACKER CARD COMPONENT
+    // ============================================================
+    const ProposalTrackerCard = ({ steps, buttonText }) => {
+        const [acceptedTerms, setAcceptedTerms] = React.useState(false);
+        const containerVariants = {
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+        };
+        const itemVariants = {
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 12 } }
+        };
+        
+        return (
+            <Card className="w-full max-w-sm overflow-hidden rounded-2xl border-none bg-transparent text-card-foreground shadow-none transition-all duration-300">
+                <CardContent className="space-y-2 px-6 pb-6 pt-0">
                     <MotionUl className="relative space-y-2" variants={containerVariants} initial="hidden" animate="visible">
                         {steps.map((step, idx) => {
                             const { iconName, iconClassName, lineClassName } = getStatusAttributes(step.status);
@@ -540,24 +591,11 @@
             { title: "Credit Assessment Approved", description: "View Details", date: "10th January, 10:40", status: "completed", icon: "CheckCircle2" },
             { title: "Proposal Sent", description: "View proposal", date: "12th January, 13:24", status: "completed", icon: "CheckCircle2" },
         ];
-        
-        const proposal = {
-            imageUrl: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=400&h=300&fit=crop",
-            status: "Awaiting Documents",
-            title: "1 Bedroom Apartment",
-            summaryCopy: "This quarter which funds your savings is made possible via closure of underutilized supply-demand gaps. We're now extending the same to public",
-            buttonText: "Submit",
-            steps: stepsData
-        };
-        
+
         return (
                 <ProposalTrackerCard
-                    imageUrl={proposal.imageUrl}
-                    status={proposal.status}
-                    title={proposal.title}
-                    summaryCopy={proposal.summaryCopy}
-                    steps={proposal.steps}
-                    buttonText={proposal.buttonText}
+                    steps={stepsData}
+                    buttonText="Submit"
                 />
         );
     };
@@ -569,6 +607,38 @@
         root.render(React.createElement(DemoApp));
     } else if (rootElement) {
         ReactDOM.render(React.createElement(DemoApp), rootElement);
+    }
+
+    const selectedEntriesElement = document.getElementById("selectedTimelineEntries");
+    if (selectedEntriesElement) {
+        const SelectedEntriesApp = () => (
+            <>
+                {selectedTimelineItems.map((item) => (
+                    <article className="timeline-entry" key={item.id}>
+                        <div className="timeline-marker">
+                            <span className="timeline-dot-shell" aria-hidden="true"><span className="timeline-dot"></span></span>
+                            <h3 className="timeline-date">{item.location}</h3>
+                        </div>
+                        <div className="timeline-entry-content">
+                            <div className="next-card-shell">
+                                <SelectedPropertyCard
+                                    imageUrl={item.imageUrl}
+                                    status={item.status}
+                                    title={item.title}
+                                    summaryCopy={item.summaryCopy}
+                                />
+                            </div>
+                        </div>
+                    </article>
+                ))}
+            </>
+        );
+
+        if (ReactDOM.createRoot) {
+            ReactDOM.createRoot(selectedEntriesElement).render(React.createElement(SelectedEntriesApp));
+        } else {
+            ReactDOM.render(React.createElement(SelectedEntriesApp), selectedEntriesElement);
+        }
     }
 
     (function () {
