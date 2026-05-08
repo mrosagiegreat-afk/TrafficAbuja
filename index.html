@@ -1721,7 +1721,7 @@
     }
 
     .landing-event-action-btn{
-      width: 100%;
+      width: auto;
       box-sizing: border-box;
       border: none;
       background: transparent;
@@ -1730,26 +1730,32 @@
       align-items: center;
       justify-content: flex-end;
       gap: 0.45rem;
-      padding: 0.38rem 0.45rem;
-      border-radius: 10px;
+      align-self: flex-end;
+      padding: 0.18rem 0;
+      border-radius: 0;
       font-size: 0.9rem;
       font-weight: 500;
       line-height: 1;
       cursor: pointer;
       text-align: right;
       text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
-      transition: background 0.2s ease;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
 
     .landing-event-action-btn:hover,
     .landing-event-action-btn:focus-visible{
-      background: rgba(255,255,255,.08);
+      background: transparent;
+      color: rgba(255,255,255,.92);
+      opacity: 0.82;
       outline: none;
+    }
+
+    .landing-event-action-btn.is-in-cart{
+      background: transparent;
     }
 
     .landing-event-action-btn.done-action{
       width: auto;
-      align-self: flex-end;
     }
 
     .landing-event-action-icon{
@@ -4968,7 +4974,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Strobe &amp; Co. <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -4976,7 +4982,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>23:00 – 07:00 hrs</span>
 </span>
 </div>
 </div>
@@ -4998,7 +5004,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Alibi Event Studio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5006,7 +5012,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>09:30 – 14:45 hrs</span>
 </span>
 </div>
 </div>
@@ -5028,7 +5034,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Meetings &amp; Incentives Worldwide (M&amp;IW) <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5036,7 +5042,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>01:15 – 08:30 hrs</span>
 </span>
 </div>
 </div>
@@ -5059,7 +5065,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>AE Events <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5067,7 +5073,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>12:00 – 19:20 hrs</span>
 </span>
 </div>
 </div>
@@ -5089,7 +5095,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Runway 7 Fashion <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5097,7 +5103,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>04:45 – 09:00 hrs</span>
 </span>
 </div>
 </div>
@@ -5120,7 +5126,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>FulFive, LLC <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5128,7 +5134,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>20:30 – 02:15 hrs</span>
 </span>
 </div>
 </div>
@@ -5150,7 +5156,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Events of Elegance <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5158,7 +5164,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>15:15 – 21:45 hrs</span>
 </span>
 </div>
 </div>
@@ -5181,7 +5187,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>ESI Global <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5189,7 +5195,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>00:00 – 06:00 hrs</span>
 </span>
 </div>
 </div>
@@ -5211,7 +5217,7 @@
 </div>
 <div class="landing-event-body">
 <div class="landing-event-title-row">
-<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Team Lead, Portfolio <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
+<p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">2.4k attendees <span>&bull;</span> 105 events <span>&bull;</span> 10y hosting</span><span>Oak Event Group <i data-lucide="verified" class="landing-event-verified-badge" aria-hidden="true"></i></span></p>
 <div class="landing-event-specs">
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 10l3 3 7-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -5219,7 +5225,7 @@
 </span>
 <span class="landing-event-spec">
 <svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M5 5l10 10M15 5l-10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>14:00 – 22:00 hrs</span>
+<span>23:30 – 18:50 hrs</span>
 </span>
 </div>
 </div>
@@ -5631,6 +5637,84 @@
     }
 
     initializeDoneButtons();
+
+    function initializeLandingCartButtons() {
+      const cartButtons = Array.from(
+        document.querySelectorAll(".landing-event-action-btn:not(.done-action)")
+      );
+      if (!cartButtons.length) return;
+
+      const selectedCards = new Set();
+      const cartStorageKey = "trafficAbujaCartSelections";
+
+      const extractBackgroundImageUrl = (imageElement) => {
+        if (!imageElement) return "";
+        const backgroundImage = window.getComputedStyle(imageElement).backgroundImage || "";
+        const match = backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+        return match ? match[1] : "";
+      };
+
+      const buildCartItem = (button) => {
+        const card = button.closest(".landing-event-card");
+        const image = card?.querySelector(".landing-event-image");
+        const copy = card?.querySelector(".landing-event-copy");
+
+        return {
+          id: card?.dataset.basePrice || String(Date.now()),
+          title: "1 Bedroom Apartment",
+          status: "Awaiting Documents",
+          location: "1st Ave, Gwarinpa",
+          summaryCopy: copy ? copy.textContent.trim() : "",
+          imageUrl: extractBackgroundImageUrl(image)
+        };
+      };
+
+      const persistSelectedCards = () => {
+        const selectedItems = Array.from(selectedCards).map(buildCartItem);
+        localStorage.setItem(cartStorageKey, JSON.stringify(selectedItems));
+      };
+
+      const updateCartBadges = () => {
+        const cartCount = selectedCards.size;
+
+        cartButtons.forEach((button) => {
+          const badge = button.querySelector(".landing-event-action-badge");
+          const label = button.querySelector("span:last-child");
+          const isSelected = selectedCards.has(button);
+
+          if (badge) {
+            badge.textContent = String(cartCount);
+          }
+
+          button.classList.toggle("is-in-cart", isSelected);
+          button.setAttribute("aria-pressed", isSelected ? "true" : "false");
+
+          if (label) {
+            label.textContent = isSelected ? "Added to cart" : "Add to cart";
+          }
+        });
+
+        persistSelectedCards();
+      };
+
+      cartButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+
+          if (selectedCards.has(button)) {
+            selectedCards.delete(button);
+          } else {
+            selectedCards.add(button);
+          }
+
+          updateCartBadges();
+        });
+      });
+
+      updateCartBadges();
+    }
+
+    initializeLandingCartButtons();
 
     function formatNumber(num) {
       return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
