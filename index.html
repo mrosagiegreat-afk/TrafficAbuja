@@ -830,6 +830,14 @@
       margin: 0;
     }
 
+    .helper-text.is-valid {
+      color: #86efac;
+    }
+
+    .helper-text.is-invalid {
+      color: #fca5a5;
+    }
+
     .landing-award-stamp {
       position: absolute;
       top: 10px;
@@ -3689,17 +3697,57 @@
 
     initializeLandingCartButtons();
 
-    function updateOrderCopy(card, enteredPrice) {
-      const copy = card.querySelector('.landing-event-copy');
-      if (!copy) return;
+    function formatCurrency(value) {
+      return `$${Number(value).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`;
+    }
 
-      if (!copy.dataset.originalText) {
-        copy.dataset.originalText = copy.textContent.trim();
+    function formatQuantity(value) {
+      const roundedValue = Math.abs(value - Math.round(value)) < 0.001
+        ? Math.round(value)
+        : Number(value.toFixed(2));
+
+      return roundedValue.toLocaleString('en-US', {
+        minimumFractionDigits: Number.isInteger(roundedValue) ? 0 : 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function updateOrderCopy(card, enteredPrice) {
+      const helperTexts = card.querySelectorAll('.helper-text');
+
+      const unitPrice = Number(card.dataset.orderUnitPrice || 0);
+      const minQuantity = Number(card.dataset.orderMinimumQuantity || 0);
+      const unitLabel = card.dataset.orderUnitLabel || '';
+      const defaultHelperText = card.dataset.helperRateText || '';
+
+      if (helperTexts.length >= 2) {
+        helperTexts[0].textContent = defaultHelperText;
+        helperTexts[1].textContent = 'Enter your price here';
+        helperTexts.forEach((helper) => {
+          helper.classList.remove('is-valid', 'is-invalid');
+        });
       }
 
-      card.classList.remove('is-showing-order-math');
-      copy.classList.remove('is-order-math');
-      copy.innerHTML = copy.dataset.originalText;
+      if (!enteredPrice || !unitPrice || !minQuantity || !unitLabel) {
+        return;
+      }
+
+      const orderedQuantity = enteredPrice / unitPrice;
+      const quantityDelta = orderedQuantity - minQuantity;
+      const isValidOrder = quantityDelta >= 0;
+      const deltaLabel = `${formatQuantity(Math.abs(quantityDelta))} ${unitLabel} ${isValidOrder ? 'above' : 'below'} minimum (${formatQuantity(minQuantity)} ${unitLabel})`;
+      const statusLabel = `Status: ${isValidOrder ? 'Valid Order' : 'Invalid Order'}`;
+      const stateClass = isValidOrder ? 'is-valid' : 'is-invalid';
+
+      if (helperTexts.length >= 2) {
+        helperTexts[0].textContent = statusLabel;
+        helperTexts[1].textContent = deltaLabel;
+        helperTexts[0].classList.add(stateClass);
+        helperTexts[1].classList.add(stateClass);
+      }
     }
 
     function setCursor(span) {
@@ -3716,8 +3764,18 @@
     function addPriceOverlays() {
       const images = document.querySelectorAll('.landing-event-image');
       let isFirst = true;
-      images.forEach(image => {
+      images.forEach((image, index) => {
         const card = image.closest('.landing-event-card');
+        const unitLabel = index < 5 ? 'kg' : 'ton';
+        const unitPrice = index < 5 ? 4000 : 400000;
+        const minimumQuantity = 100;
+        const helperRateText = `${formatCurrency(unitPrice)}/${unitLabel}`;
+
+        card.dataset.orderUnitLabel = unitLabel;
+        card.dataset.orderUnitPrice = String(unitPrice);
+        card.dataset.orderMinimumQuantity = String(minimumQuantity);
+        card.dataset.helperRateText = helperRateText;
+
         const overlay = document.createElement('div');
         overlay.className = 'price-overlay';
 
@@ -3800,7 +3858,7 @@
 
         const helper2 = document.createElement('div');
         helper2.className = 'helper-text';
-        helper2.textContent = 'E.g., 5000';
+        helper2.textContent = helperRateText;
 
         const helper1 = document.createElement('div');
         helper1.className = 'helper-text';
