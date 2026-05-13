@@ -3834,6 +3834,12 @@
         ? {
             topText: 'Available Now',
             bottomText: 'Quality Assured',
+            topFontSize: '18',
+            topFontWeight: '700',
+            topLetterSpacing: '0.5',
+            bottomFontSize: '10',
+            bottomFontWeight: '400',
+            bottomLetterSpacing: '1',
             recipientText: '50 Tons',
             dateText: 'In Stock',
             iconMarkup: `
@@ -3844,6 +3850,12 @@
         : {
             topText: 'Restocking Soon',
             bottomText: 'Sold Out',
+            topFontSize: '18',
+            topFontWeight: '700',
+            topLetterSpacing: '0.5',
+            bottomFontSize: '18',
+            bottomFontWeight: '700',
+            bottomLetterSpacing: '0.5',
             recipientText: '',
             dateText: '',
             iconMarkup: `
@@ -3877,10 +3889,10 @@
           </defs>
           <path d="${createSerratedPath()}" fill="#ffffff"></path>
           <circle cx="96" cy="96" r="78" fill="#ffffff"></circle>
-          <text fill="#111827" font-size="18" font-weight="700" letter-spacing="0.5">
+          <text fill="#111827" font-size="${stampCopy.topFontSize}" font-weight="${stampCopy.topFontWeight}" letter-spacing="${stampCopy.topLetterSpacing}">
             <textPath href="#${topCurveId}" startOffset="50%" text-anchor="middle">${stampCopy.topText}</textPath>
           </text>
-          <text fill="#111827" font-size="10" letter-spacing="1">
+          <text fill="#111827" font-size="${stampCopy.bottomFontSize}" font-weight="${stampCopy.bottomFontWeight}" letter-spacing="${stampCopy.bottomLetterSpacing}">
             <textPath href="#${bottomCurveId}" startOffset="50%" text-anchor="middle">${stampCopy.bottomText}</textPath>
           </text>
         </svg>
