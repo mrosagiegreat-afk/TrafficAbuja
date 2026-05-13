@@ -893,6 +893,28 @@
       margin-top: 2px;
     }
 
+    .landing-award-stamp--offline .landing-award-stamp-content {
+      transform: translateY(0);
+    }
+
+    .landing-award-stamp--offline .landing-award-stamp-recipient,
+    .landing-award-stamp--offline .landing-award-stamp-date {
+      display: none;
+    }
+
+    .landing-award-stamp--offline .landing-award-stamp-star {
+      width: auto;
+      height: auto;
+      margin-top: 0;
+      font-size: 30px;
+      line-height: 1;
+      color: #dc2626;
+      filter: saturate(1.35) hue-rotate(-10deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .bottom{
       margin-top:auto;
       padding-top: 12px;
@@ -2034,7 +2056,7 @@
       align-items: center;
       justify-content: flex-start;
       gap: 6px;
-      margin-top: 2px;
+      margin-top: 0;
       align-self: flex-start;
       font-weight: 600;
       color: #6b7280;
@@ -2065,8 +2087,8 @@
 
     .landing-event-purchase .landing-event-verified-date{
       display: block;
-      margin-top: 4px;
-      margin-bottom: 6px;
+      margin-top: 2px;
+      margin-bottom: 1px;
       align-self: flex-start;
       color: #9ca3af;
       font-size: 11px;
@@ -4083,7 +4105,7 @@
       width: auto;
       display: flex;
       flex-wrap: nowrap;
-      gap: 16px;
+      gap: 8px;
       align-items: center;
       justify-content: flex-start;
     }
@@ -4987,9 +5009,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 87 <span>&bull;</span> Recent supply, 2d 14h</span><span>Cocoa Pod Husks</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5012,9 +5034,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 312 <span>&bull;</span> Recent supply, 1d 22h</span><span>Eggshells</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5037,9 +5059,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 1.4k <span>&bull;</span> Recent supply, 5d 3h</span><span>Groundnut Husk</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5063,9 +5085,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 94 <span>&bull;</span> Recent supply, 6d 8h</span><span>Groundnut Shells</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5088,9 +5110,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 2.8k <span>&bull;</span> Recent supply, 12h</span><span>Maize Cobs</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5114,9 +5136,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 523 <span>&bull;</span> Recent supply, 4d 7h</span><span>Maize Stover</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5139,9 +5161,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 76 <span>&bull;</span> Recent supply, 3d 1h</span><span>Palm Kernel Shells</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5165,9 +5187,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 1.2k <span>&bull;</span> Recent supply, 2d 4h</span><span>Rice Husks</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5190,9 +5212,9 @@
 <div class="landing-event-title-row">
 <p class="landing-event-subtitle"><span class="landing-event-subtitle-handle">Total buyers, 4.1k <span>&bull;</span> Recent supply, 18h</span><span>Sesame Seed</span></p>
 <div class="landing-event-specs landing-event-specs--triple">
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10-12%</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M10 4.3v1.4M10 14.3v1.4M4.3 10h1.4M14.3 10h1.4M6 6l1 1M13 13l1 1M14 6l-1 1M7 13l-1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg><span>Unprocessed</span></span>
-<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 16s4-4.1 4-7a4 4 0 1 0-8 0c0 2.9 4 7 4 7Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="10" cy="9" r="1.3" fill="currentColor"></circle></svg><span>Nigeria</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><path d="M10 3.5C8.1 6 5.8 8.1 5.8 11a4.2 4.2 0 0 0 8.4 0c0-2.9-2.3-5-4.2-7.5Z" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span>10 - 12% Moisture</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><span class="landing-event-spec-icon" aria-hidden="true">🍃</span><span>Unprocessed</span></span>
+<span class="landing-event-spec landing-event-spec--inline"><svg aria-hidden="true" class="landing-event-spec-icon" viewbox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="#16a34a"></rect><rect x="7.5" y="4" width="5" height="12" fill="#ffffff"></rect></svg><span>Nigeria</span></span>
 </div>
 </div>
             <div class="landing-event-footer">
@@ -5828,7 +5850,7 @@
       const topCurveId = `card-stamp-top-curve-${compactAwardStampId}`;
       const bottomCurveId = `card-stamp-bottom-curve-${compactAwardStampId}`;
       const stamp = document.createElement('div');
-      stamp.className = 'landing-award-stamp';
+      stamp.className = `landing-award-stamp${isAvailableStamp ? '' : ' landing-award-stamp--offline'}`;
       stamp.setAttribute('aria-hidden', 'true');
       const stampCopy = isAvailableStamp
         ? {
@@ -5844,12 +5866,10 @@
         : {
             topText: 'Restocking Soon',
             bottomText: 'Quality Assured',
-            recipientText: 'March',
-            dateText: 'Next Batch',
+            recipientText: '',
+            dateText: '',
             iconMarkup: `
-          <svg class="landing-award-stamp-star" viewBox="0 0 24 24" aria-hidden="true" style="color:#dc2626;">
-            <text x="12" y="16.5" text-anchor="middle" fill="currentColor" font-size="16">⛔</text>
-          </svg>`
+          <span class="landing-award-stamp-star" aria-hidden="true">🚫</span>`
           };
 
       const createSerratedPath = () => {
