@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Aethera Private Bank | Complete Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0A0F1A;
+            --bg-card: #111827;
+            --accent-gold: #C9A03D;
+            --accent-gold-light: #DFB760;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --info: #3B82F6;
+            --border: #1F2937;
+            --hover-bg: rgba(201, 160, 61, 0.1);
+            --transition: all 0.2s ease;
+            --header-overlay-offset: clamp(88px, 11vw, 120px);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Dashboard App */
+        .dashboard-app {
+            display: none;
+            min-height: 100vh;
+            background: #ffffff;
+            color: #111827;
+            --bg-card: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #4B5563;
+            --text-muted: #6B7280;
+            --border: #D1D5DB;
+            --hover-bg: rgba(201, 160, 61, 0.12);
+        }
+
+        .dashboard-hero {
+            min-height: auto;
+            background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.40) 55%, rgba(255,255,255,0.92) 92%), url('https://plus.unsplash.com/premium_photo-1746025616326-b205e7be5aa0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-start;
+            padding: calc(44px + var(--header-overlay-offset)) clamp(18px, 4vw, 72px) 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.86));
+            pointer-events: none;
+        }
+
+        .dashboard-hero-inner {
+            position: relative;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            z-index: 1;
+        }
+
+        .dashboard-hero-copy {
+            max-width: 720px;
+            color: #111827;
+        }
+
+        .dashboard-hero-copy h1 {
+            font-size: clamp(2.3rem, 4vw, 4rem);
+            line-height: 1.02;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.8rem;
+        }
+
+        .dashboard-hero-copy p {
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 46rem;
+            color: #1f2937;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 0 clamp(18px, 4vw, 72px) 3rem;
+            background: #ffffff;
+            margin-top: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pages-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .dashboard-footer-nav {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(201, 160, 61, 0.15);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem 1.75rem;
+        }
+
+        .nav-item {
+            color: #4B5563;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.7;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            cursor: pointer;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--accent-gold-light);
+        }
+
+        .nav-item.active {
+            color: var(--accent-gold);
+        }
+
+        .nav-item.sign-out {
+            opacity: 0.9;
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Grids */
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Account Cards */
+        .account-card {
+            background: transparent;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: none;
+        }
+
+        .account-activity-section {
+            background: transparent;
+            border: none;
+            padding: 1.5rem 0 0;
+            box-shadow: none;
+        }
+
+        .account-summary-panel {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            display: grid;
+            gap: 1.5rem;
+            color: #111827;
+            backdrop-filter: none;
+        }
+
+        .account-summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .account-summary-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        .account-summary-title-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .verified-badge-water {
+            color: #3897f0;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+        }
+
+        .verified-badge-water svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: currentColor;
+        }
+
+        .account-summary-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-size: 0.95rem;
+            color: #111827;
+            margin: 0;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #10B981;
+            color: #ffffff;
+            font-size: 0.8rem;
+        }
+
+        .account-summary-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .account-summary-badge {
+            background: rgba(17,24,39,0.04);
+            border: 1px solid rgba(17,24,39,0.08);
+            border-radius: 999px;
+            padding: 0.55rem 0.9rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .account-summary-heading {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .account-summary-heading p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .summary-card {
+            background: rgba(255,255,255,0.92);
+            border-radius: 24px;
+            padding: 1.2rem 1.25rem;
+            border: 1px solid rgba(17,24,39,0.08);
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .summary-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.85rem;
+        }
+
+        .summary-card .summary-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.9rem;
+            color: #111827;
+        }
+
+        .summary-card .summary-subtext {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .summary-subtext-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .summary-subtext-icon i {
+            width: 16px;
+            height: 16px;
+            color: var(--accent-gold);
+        }
+
+        .lease-progress-panel {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        .lease-panel-card {
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(17,24,39,0.08);
+            border-radius: 24px;
+            padding: 1.25rem;
+        }
+
+        .lease-panel-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1.35rem;
+        }
+
+        .lease-progress-layout {
+            display: grid;
+            grid-template-columns: 130px minmax(0, 1fr);
+            gap: 2.75rem;
+            align-items: start;
+        }
+
+        .lease-progress-ring {
+            width: 136px;
+            height: 136px;
+            border-radius: 50%;
+            background: conic-gradient(#2f9e44 0deg 360deg, rgba(47,158,68,0.14) 360deg);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .lease-progress-ring::before {
+            content: "";
+            width: 118px;
+            height: 118px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid rgba(47,158,68,0.15);
+            grid-area: 1 / 1;
+        }
+
+        .lease-progress-content {
+            grid-area: 1 / 1;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1;
+            transform: translateY(1px);
+        }
+
+        .lease-progress-percent {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .lease-progress-days {
+            margin-top: 0.35rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #2f9e44;
+        }
+
+        .lease-progress-caption {
+            margin-top: 0.28rem;
+            font-size: 0.56rem;
+            color: var(--text-muted);
+            line-height: 1.25;
+        }
+
+        .lease-progress-list {
+            display: grid;
+            gap: 0.85rem;
+            padding-top: 1.1rem;
+        }
+
+        .lease-progress-item {
+            display: grid;
+            grid-template-columns: 22px minmax(0, 1fr) auto;
+            gap: 0.75rem;
+            align-items: center;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid rgba(17,24,39,0.08);
+        }
+
+        .lease-progress-item:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .lease-progress-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(47,158,68,0.12);
+            color: #2f9e44;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lease-progress-icon i {
+            width: 13px;
+            height: 13px;
+        }
+
+        .lease-progress-label {
+            font-size: 0.85rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .lease-progress-date {
+            font-size: 0.85rem;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+
+        .lease-progress-date.is-success {
+            color: #2f9e44;
+            font-weight: 700;
+        }
+
+        .payment-breakdown-list {
+            display: grid;
+            gap: 0.2rem;
+        }
+
+        .payment-breakdown-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(17,24,39,0.08);
+        }
+
+        .payment-breakdown-row:last-child {
+            border-bottom: none;
+        }
+
+        .payment-breakdown-label {
+            font-size: 0.84rem;
+            color: #4b5563;
+        }
+
+        .payment-breakdown-label.is-green {
+            color: #2f9e44;
+            font-weight: 600;
+        }
+
+        .payment-breakdown-label.is-orange {
+            color: #f97316;
+            font-weight: 600;
+        }
+
+        .payment-breakdown-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #111827;
+            white-space: nowrap;
+            text-align: right;
+        }
+
+        .payment-breakdown-value.is-green {
+            color: #2f9e44;
+        }
+
+        .payment-breakdown-value.is-orange {
+            color: #f97316;
+        }
+
+        .account-type {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-gold);
+        }
+
+        .account-number {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: monospace;
+            margin: 0.3rem 0;
+        }
+
+        .account-balance {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        /* Transaction Table */
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transaction-table th, .transaction-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .transaction-table th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .amount-positive {
+            color: var(--success);
+        }
+
+        .amount-negative {
+            color: var(--danger);
+        }
+
+        /* Transaction Type (Credit/Debit) */
+        .txn-type {
+            display:flex;
+            align-items:center;
+            gap:0.5rem;
+            font-size:0.9rem;
+        }
+        .txn-icon {
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            width:28px;
+            height:24px;
+            border-radius:6px;
+        }
+        .txn-icon.credit {
+            color: var(--success);
+            background: rgba(16,185,129,0.06);
+            border: 1px solid rgba(16,185,129,0.12);
+        }
+        .txn-icon.debit {
+            color: var(--danger);
+            background: rgba(239,68,68,0.04);
+            border: 1px solid rgba(239,68,68,0.10);
+        }
+
+        /* Beneficiary List */
+        .beneficiary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Holdings */
+        .holding-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .holding-bar {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 0.3rem;
+        }
+
+        .holding-fill {
+            height: 100%;
+            background: var(--accent-gold);
+            width: 0%;
+        }
+
+        /* Card Styles */
+        .physical-card {
+            background: linear-gradient(135deg, #1A1F2E, #0D1322);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-chip {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-number {
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        /* Document List */
+        .doc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Profile Form */
+        .profile-form input, .profile-form select {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--accent-gold);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-gold);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .grid-4, .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .account-summary-panel {
+                padding: 0;
+            }
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .main-content {
+                padding: 0 24px 2rem;
+            }
+            .dashboard-footer-nav {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+            .lease-progress-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .grid-4, .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .grid-4, .grid-3, .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 0 14px 2.5rem;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .dashboard-hero {
+                padding: calc(44px + var(--header-overlay-offset)) 14px 1rem;
+            }
+            .main-content {
+                padding: 0 14px 1.5rem;
+            }
+            .card {
+                border-radius: 16px;
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1rem;
+            }
+            .account-card {
+                padding: 1rem;
+            }
+            .transaction-table {
+                width: 100%;
+                overflow-x: auto;
+            }
+            .transaction-table th,
+            .transaction-table td {
+                padding: 0.75rem;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+            .txn-type {
+                gap: 0.35rem;
+                font-size: 0.85rem;
+            }
+            .txn-icon {
+                width: 24px;
+                height: 20px;
+            }
+            .dashboard-footer-nav {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+            }
+            .nav-item {
+                width: 100%;
+                justify-content: center;
+            }
+            .lease-progress-layout {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                gap: 1.25rem;
+            }
+            .lease-progress-list {
+                width: 100%;
+            }
+            .lease-progress-item {
+                grid-template-columns: 22px minmax(0, 1fr);
+            }
+            .lease-progress-date {
+                grid-column: 2;
+                white-space: normal;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Dashboard App -->
+<div class="dashboard-app" id="dashboardApp">
+<!-- ========== HEADER ========== -->
+<trafficabuja-header
+  logo-src="logo.png"
+  brand="trafficabuja"
+  page-title="trafficabuja"
+  personalize-href="overlay.html"
+  nav-mode="stacked-links"
+  scroll-mode="overlay"
+  overlay-text-color="#000000"
+  overlay-muted-color="rgba(0,0,0,0.72)"
+  solid-background="rgba(255,255,255,0.96)"
+  solid-text-color="#000000"
+  solid-muted-color="#64748b"
+  products-href="#"
+  about-label="About"
+  about-href="faq.html"
+  blog-href="#"
+  contact-href="#"
+  privacy-href="#"
+  terms-href="#"
+></trafficabuja-header>
+
+<!-- ========== END HEADER ========== -->
+<div class="dashboard-hero">
+    <div class="dashboard-hero-inner" id="accountsList"></div>
+</div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="pages-wrap">
+        <!-- ==================== ACCOUNTS PAGE ==================== -->
+        <div id="page-accounts" class="page active-page">
+            <div class="card account-activity-section" style="margin-top:1.5rem;">
+                <h3 style="margin-bottom:1rem;">History</h3>
+                <table class="transaction-table" id="accountTransactionsTable">
+                    <thead>
+                        <tr><th>Date</th><th>Type</th><th>Amount</th><th>Description</th><th>Reference</th></tr>
+                    </thead>
+                    <tbody id="accountTransactionsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== TRANSFERS PAGE ==================== -->
+        <div id="page-transfers" class="page">
+            <div class="grid-2">
+                <div>
+                    <h2 class="section-title">New Transfer</h2>
+                    <div class="card">
+                        <select id="transferFromAccount" style="width:100%; padding:0.8rem; background:var(--bg-dark); border:1px solid var(--border); border-radius:12px; color:var(--text-primary); margin-bottom:1rem;">
+                            <option value="checking">Checking (••••4521) - $4,234,567</option>
+                            <option value="savings">Savings (••••7890) - $12,345,678</option>
+                            <option value="investment">Investment (••••2345) - $68,234,120</option>
+                        </select>
+                        <input type="text" id="transferRecipient" placeholder="Recipient Name" style="width:100%; padding:0.8rem; background:var(--bg-dark); border:1px solid var(--border); border-radius:12px; color:var(--text-primary); margin-bottom:1rem;">
+                        <input type="text" id="transferAccountNumber" placeholder="Account Number / IBAN" style="width:100%; padding:0.8rem; background:var(--bg-dark); border:1px solid var(--border); border-radius:12px; color:var(--text-primary); margin-bottom:1rem;">
+                        <input type="number" id="transferAmount" placeholder="Amount" style="width:100%; padding:0.8rem; background:var(--bg-dark); border:1px solid var(--border); border-radius:12px; color:var(--text-primary); margin-bottom:1rem;">
+                        <select id="transferCurrency" style="width:100%; padding:0.8rem; background:var(--bg-dark); border:1px solid var(--border); border-radius:12px; color:var(--text-primary); margin-bottom:1rem;">
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="SGD">SGD - Singapore Dollar</option>
+                        </select>
+                        <textarea id="transferReference" placeholder="Reference (optional)" style="width:100%; padding:0.8rem; background:var(--bg-dark); border:1px solid var(--border); border-radius:12px; color:var(--text-primary); margin-bottom:1rem; resize:vertical;"></textarea>
+                        <button class="btn-primary" onclick="sendTransfer()" style="width:100%;">Review & Send</button>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="section-title">Frequent Beneficiaries</h2>
+                    <div class="card" id="beneficiariesList"></div>
+                    
+                    <h2 class="section-title" style="margin-top:1.5rem;">Recent Transfers</h2>
+                    <div class="card" id="recentTransfersList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PORTFOLIO PAGE ==================== -->
+        <div id="page-portfolio" class="page">
+            <h2 class="section-title">Investment Portfolio</h2>
+            <p style="color:var(--text-muted); margin-bottom:1.5rem;">Total portfolio value: <strong id="portfolioTotal">$68,234,120</strong> | YTD Return: <strong style="color:var(--success);">+8.42%</strong></p>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Asset Allocation</h3>
+                    <canvas id="allocationChart" style="max-height:250px; width:100%; margin:1rem 0;"></canvas>
+                    <div id="holdingsDetailed"></div>
+                </div>
+                <div class="card">
+                    <h3>Performance History</h3>
+                    <canvas id="performanceChart" style="max-height:250px; width:100%;"></canvas>
+                    <div style="margin-top:1rem;">
+                        <div class="holding-row"><span>2024 Return</span><span style="color:var(--success);">+12.3%</span></div>
+                        <div class="holding-row"><span>2023 Return</span><span style="color:var(--success);">+9.7%</span></div>
+                        <div class="holding-row"><span>2022 Return</span><span style="color:var(--danger);">-4.2%</span></div>
+                        <div class="holding-row"><span>Since Inception (5y)</span><span style="color:var(--success);">+47.8%</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top:1.5rem;">
+                <h3>Individual Holdings</h3>
+                <table class="transaction-table">
+                    <thead><tr><th>Asset</th><th>Value</th><th>Allocation</th><th>Return (YTD)</th></tr></thead>
+                    <tbody id="holdingsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== CARDS PAGE ==================== -->
+        <div id="page-cards" class="page">
+            <h2 class="section-title">Your Cards</h2>
+            <div class="grid-2" id="cardsList"></div>
+            
+            <div class="card" style="margin-top:1.5rem;">
+                <h3>Card Settings</h3>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0; border-bottom:1px solid var(--border);">
+                    <span>Card Freeze / Unfreeze</span>
+                    <button class="btn-outline" onclick="alert('Card frozen temporarily')">Freeze Card</button>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0; border-bottom:1px solid var(--border);">
+                    <span>Spending Limits</span>
+                    <button class="btn-outline" onclick="alert('Adjust spending limits')">Adjust Limits</button>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0;">
+                    <span>Request Virtual Card</span>
+                    <button class="btn-outline" onclick="alert('Virtual card generated')">Generate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== DOCUMENTS PAGE ==================== -->
+        <div id="page-documents" class="page">
+            <h2 class="section-title">Document Center</h2>
+            <div class="grid-3" style="margin-bottom:1.5rem;">
+                <div class="card" style="text-align:center; cursor:pointer;" onclick="alert('Downloading monthly statements...')">
+                    <i class="fas fa-file-pdf" style="font-size:2rem; color:var(--danger);"></i>
+                    <h3>Monthly Statements</h3>
+                    <p style="font-size:0.8rem;">Last 12 months</p>
+                </div>
+                <div class="card" style="text-align:center; cursor:pointer;" onclick="alert('Downloading tax documents...')">
+                    <i class="fas fa-file-invoice-dollar" style="font-size:2rem; color:var(--success);"></i>
+                    <h3>Tax Documents</h3>
+                    <p style="font-size:0.8rem;">1099, Interest statements</p>
+                </div>
+                <div class="card" style="text-align:center; cursor:pointer;" onclick="alert('Downloading portfolio reports...')">
+                    <i class="fas fa-chart-line" style="font-size:2rem; color:var(--info);"></i>
+                    <h3>Portfolio Reports</h3>
+                    <p style="font-size:0.8rem;">Quarterly performance</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>All Documents</h3>
+                <div id="documentsList"></div>
+            </div>
+        </div>
+
+        <!-- ==================== PROFILE PAGE ==================== -->
+        <div id="page-profile" class="page">
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Personal Information</h3>
+                    <div class="profile-form">
+                        <label>Full Name</label>
+                        <input type="text" id="profileName" value="William Reynolds">
+                        <label>Email Address</label>
+                        <input type="email" id="profileEmail" value="william.reynolds@aethera.com">
+                        <label>Phone Number</label>
+                        <input type="tel" id="profilePhone" value="+41 79 123 45 67">
+                        <label>Address</label>
+                        <input type="text" id="profileAddress" value="Bahnhofstrasse 12, 8001 Zurich, Switzerland">
+                        <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Security Settings</h3>
+                    <div style="margin-bottom:1rem;">
+                        <label>Two-Factor Authentication</label>
+                        <div style="display:flex; justify-content:space-between; margin-top:0.5rem;">
+                            <span>Status: <span style="color:var(--success);">Enabled</span></span>
+                            <button class="btn-outline" onclick="alert('2FA settings')">Manage</button>
+                        </div>
+                    </div>
+                    <div style="margin-bottom:1rem;">
+                        <label>Change Password</label>
+                        <button class="btn-outline" style="margin-top:0.5rem; width:100%;" onclick="alert('Password change initiated')">Update Password</button>
+                    </div>
+                    <div>
+                        <label>Session Management</label>
+                        <button class="btn-outline" style="margin-top:0.5rem; width:100%;" onclick="alert('Logged out of all devices')">Logout All Devices</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-top:1.5rem;">
+                <h3>Notification Preferences</h3>
+                <div style="display:flex; justify-content:space-between; padding:1rem 0; border-bottom:1px solid var(--border);">
+                    <span>Email Alerts for Transactions</span>
+                    <input type="checkbox" checked style="width:20px; height:20px;">
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:1rem 0; border-bottom:1px solid var(--border);">
+                    <span>SMS for Large Transfers (>$50,000)</span>
+                    <input type="checkbox" checked style="width:20px; height:20px;">
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:1rem 0;">
+                    <span>Weekly Portfolio Summary</span>
+                    <input type="checkbox" checked style="width:20px; height:20px;">
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="dashboard-footer-nav">
+            <button class="nav-item active" type="button" data-page="accounts">Accounts</button>
+            <button class="nav-item" type="button" data-page="transfers">Transfers</button>
+            <button class="nav-item" type="button" data-page="portfolio">Portfolio</button>
+            <button class="nav-item" type="button" data-page="cards">Cards</button>
+            <button class="nav-item" type="button" data-page="documents">Documents</button>
+            <button class="nav-item" type="button" data-page="profile">Profile</button>
+            <button class="nav-item sign-out" type="button" onclick="logout()">Sign Out</button>
+        </div>
+    </div>
+</div>
+
+<!-- Transfer Modal -->
+<div class="modal" id="transferModal">
+    <div class="modal-content">
+        <h3>Confirm Transfer</h3>
+        <p id="modalTransferDetails"></p>
+        <div class="modal-buttons" style="display:flex; gap:1rem; margin-top:1rem;">
+            <button class="btn-outline" onclick="closeTransferModal()">Cancel</button>
+            <button class="btn-primary" onclick="confirmTransfer()">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==================== DEMO DATA ====================
+    let balanceVisible = true;
+    let chartInstance = null;
+    let allocationChart = null;
+    let performanceChart = null;
+    let pendingTransfer = null;
+    
+    // Account data
+const accounts = [
+    { type: "Private Checking", number: "****4521", balance: 4234567, available: 4234567, currency: "USD" },
+    { type: "Savings Account", number: "****7890", balance: 12345678, available: 12345678, currency: "USD" }
+];
+    
+    // Transactions
+    const allTransactions = [
+        { date: "2025-03-14", desc: "Wire Transfer - Aethera London", amount: -1250000, balance: 42123456, reference: "TXN#4167314" },
+        { date: "2025-03-12", desc: "Dividend - Aethera Capital", amount: 342000, balance: 43373456, reference: "TXN#4167305" },
+        { date: "2025-03-10", desc: "Real Estate Distribution", amount: 890000, balance: 43031456, reference: "TXN#4167306" },
+        { date: "2025-03-08", desc: "Private Jet Maintenance", amount: -187500, balance: 42141456, reference: "TXN#4167298" },
+        { date: "2025-03-05", desc: "Art Purchase - Christie's", amount: -2450000, balance: 42328956, reference: "TXN#4111921" },
+        { date: "2025-03-01", desc: "Interest - Swiss Bond", amount: 128750, balance: 44778956, reference: "TXN#4111537" },
+        { date: "2025-02-25", desc: "Charitable Donation - Foundation", amount: -500000, balance: 44650206 },
+        { date: "2025-02-20", desc: "Private Equity Distribution", amount: 2100000, balance: 45150206 }
+    ];
+    
+    // Beneficiaries
+    const beneficiaries = [
+        { name: "Reynolds Family Trust", account: "CH93 0000 1234 5678 9000 0", bank: "Aethera Bank" },
+        { name: "William Reynolds (Self)", account: "****4521", bank: "Aethera Bank" },
+        { name: "Geneva Philanthropic Foundation", account: "CH56 0483 1234 5678 9001", bank: "Credit Suisse" },
+        { name: "Vantage Capital Partners", account: "GB33 BUKB 1234 5678 9012", bank: "Barclays" }
+    ];
+    
+    // Holdings
+    const holdings = [
+        { name: "Aethera Private Equity Fund", value: 24500000, allocation: 36, return: 14.2 },
+        { name: "Global Equities (Managed)", value: 18200000, allocation: 27, return: 9.8 },
+        { name: "Real Assets (Timber/RE)", value: 12800000, allocation: 19, return: 7.5 },
+        { name: "Fixed Income / Bonds", value: 7800000, allocation: 11, return: 4.2 },
+        { name: "Gold & Precious Metals", value: 4200000, allocation: 6, return: 18.3 },
+        { name: "Private Art Collection", value: 734120, allocation: 1, return: 12.1 }
+    ];
+    
+    // Cards
+    const cards = [
+        { type: "Platinum Black", number: "**** **** **** 4502", expiry: "12/28", limit: 5000000, spent: 124567, frozen: false },
+        { type: "Business Elite", number: "**** **** **** 6712", expiry: "08/27", limit: 2500000, spent: 34289, frozen: false }
+    ];
+    
+    // Documents
+    const documents = [
+        { name: "March 2025 Statement", date: "2025-04-01", type: "PDF", size: "2.4 MB" },
+        { name: "February 2025 Statement", date: "2025-03-01", type: "PDF", size: "2.1 MB" },
+        { name: "2024 Tax Summary", date: "2025-01-15", type: "PDF", size: "4.8 MB" },
+        { name: "Q4 2024 Portfolio Report", date: "2025-01-10", type: "PDF", size: "3.2 MB" },
+        { name: "Annual Fee Disclosure", date: "2024-12-01", type: "PDF", size: "1.1 MB" }
+    ];
+    
+    // ==================== UTILITY FUNCTIONS ====================
+    function formatMoney(amount) {
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
+    }
+    
+    function formatDate(dateStr) {
+        return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    
+    // ==================== PAGE RENDERING ====================
+    function renderAccounts() {
+        const container = document.getElementById('accountsList');
+        container.innerHTML = `
+            <div class="account-summary-panel">
+                <div class="account-summary-header">
+                    <div class="account-summary-heading">
+                        <div class="account-summary-title account-summary-title-row">
+                            <span>Nixole LLC</span>
+                            <i data-lucide="verified" class="verified-badge-water" aria-hidden="true"></i>
+                        </div>
+                        <p class="account-summary-status">Account Owner</p>
+                    </div>
+                </div>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h4>Balance</h4>
+                        <div class="summary-value">$4,500.00</div>
+                        <div class="summary-subtext">Available Funds</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Days Running</h4>
+                        <div class="summary-value">01 of 30 days</div>
+                        <div class="summary-subtext">$150.00 per day</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>End Date</h4>
+                        <div class="summary-value">
+                            <span class="summary-subtext-icon"><i data-lucide="calendar-days" aria-hidden="true"></i><span>Saturday</span></span>
+                        </div>
+                        <div class="summary-subtext">May 16, 2026</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Weather</h4>
+                        <div class="summary-value">90&deg;</div>
+                        <div class="summary-subtext">Partly Cloudy</div>
+                    </div>
+                </div>
+                <div class="lease-progress-panel">
+                    <div class="lease-panel-card">
+                        <div class="lease-panel-title">Lease Progress</div>
+                        <div class="lease-progress-layout">
+                            <div class="lease-progress-ring" aria-hidden="true">
+                                <div class="lease-progress-content">
+                                    <div class="lease-progress-percent">100%</div>
+                                    <div class="lease-progress-days">30 / 30</div>
+                                    <div class="lease-progress-caption">Days Completed</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="lease-progress-list">
+                                    <div class="lease-progress-item">
+                                        <span class="lease-progress-icon"><i data-lucide="calendar-days" aria-hidden="true"></i></span>
+                                        <span class="lease-progress-label">Start Date</span>
+                                        <span class="lease-progress-date">May 20, 2025</span>
+                                    </div>
+                                    <div class="lease-progress-item">
+                                        <span class="lease-progress-icon"><i data-lucide="badge-dollar-sign" aria-hidden="true"></i></span>
+                                        <span class="lease-progress-label">Total Lease Amount</span>
+                                        <span class="lease-progress-date">$9,000.00</span>
+                                    </div>
+                                    <div class="lease-progress-item">
+                                        <span class="lease-progress-icon"><i data-lucide="badge-check" aria-hidden="true"></i></span>
+                                        <span class="lease-progress-label">Status</span>
+                                        <span class="lease-progress-date is-success">Payment made in full</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lease-panel-card">
+                        <div class="lease-panel-title">Tell You What</div>
+                        <div class="payment-breakdown-list">
+                            <div class="payment-breakdown-row">
+                                <span class="payment-breakdown-label is-green">Traffic in Vicinity: Yes</span>
+                                <span class="payment-breakdown-value">Address: 23rd Wuye, FCT</span>
+                            </div>
+                            <div class="payment-breakdown-row">
+                                <span class="payment-breakdown-label">Placement: Left Wing</span>
+                                <span class="payment-breakdown-value is-orange">Reach: 500+ daily</span>
+                            </div>
+                            <div class="payment-breakdown-row">
+                                <span class="payment-breakdown-label is-orange">Peak Hours: 4PM - 8PM</span>
+                                <span class="payment-breakdown-value is-green">Pedestrian Activity: Yes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        const tbody = document.getElementById('accountTransactionsBody');
+        tbody.innerHTML = allTransactions.slice(0, 6).map(t => `
+            <tr>
+                <td>${formatDate(t.date)}</td>
+                <td>
+                    <div class="txn-type">
+                        <span class="txn-icon ${t.amount > 0 ? 'credit' : 'debit'}"><i class="fas ${t.amount > 0 ? 'fa-arrow-down' : 'fa-arrow-up'}"></i></span>
+                        <span style="color:var(--text-muted);">${t.amount > 0 ? 'Credit' : 'Debit'}</span>
+                    </div>
+                </td>
+                <td class="${t.amount > 0 ? 'amount-positive' : 'amount-negative'}">${t.amount > 0 ? '+' : ''}${formatMoney(t.amount)}</td>
+                <td>${t.desc}</td>
+                <td>${t.reference ? t.reference : formatMoney(t.balance)}</td>
+            </tr>
+        `).join('');
+    }
+    
+    function renderBeneficiaries() {
+        const container = document.getElementById('beneficiariesList');
+        container.innerHTML = beneficiaries.map(b => `
+            <div class="beneficiary-item">
+                <div>
+                    <div style="font-weight:600;">${b.name}</div>
+                    <div style="font-size:0.7rem; color:var(--text-muted);">${b.account}</div>
+                </div>
+                <button class="btn-outline" style="padding:0.3rem 1rem;" onclick="fillBeneficiary('${b.name}', '${b.account}')">Pay</button>
+            </div>
+        `).join('');
+    }
+    
+    function fillBeneficiary(name, account) {
+        document.getElementById('transferRecipient').value = name;
+        document.getElementById('transferAccountNumber').value = account;
+    }
+    
+    function renderRecentTransfers() {
+        const container = document.getElementById('recentTransfersList');
+        container.innerHTML = allTransactions.filter(t => t.amount < 0).slice(0, 3).map(t => `
+            <div class="beneficiary-item">
+                <div>
+                    <div style="font-weight:600;">${t.desc}</div>
+                    <div style="font-size:0.7rem; color:var(--text-muted);">${formatDate(t.date)}</div>
+                </div>
+                <div style="color:var(--danger);">${formatMoney(t.amount)}</div>
+            </div>
+        `).join('');
+    }
+    
+    function renderHoldings() {
+        const tbody = document.getElementById('holdingsTable');
+        tbody.innerHTML = holdings.map(h => `
+            <tr>
+                <td>${h.name}</td>
+                <td>${formatMoney(h.value)}</td>
+                <td>${h.allocation}%</td>
+                <td style="color:${h.return > 0 ? 'var(--success)' : 'var(--danger)'};">${h.return > 0 ? '+' : ''}${h.return}%</td>
+            </tr>
+        `).join('');
+        
+        const detailed = document.getElementById('holdingsDetailed');
+        detailed.innerHTML = holdings.map(h => `
+            <div>
+                <div class="holding-row"><span>${h.name}</span><span>${formatMoney(h.value)} (${h.allocation}%)</span></div>
+                <div class="holding-bar"><div class="holding-fill" style="width:${h.allocation}%;"></div></div>
+            </div>
+        `).join('');
+    }
+    
+    function renderCards() {
+        const container = document.getElementById('cardsList');
+        container.innerHTML = cards.map(c => `
+            <div class="physical-card">
+                <div class="card-chip"><i class="fas fa-microchip"></i></div>
+                <div class="card-number">${c.number}</div>
+                <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+                    <span>VALID THRU ${c.expiry}</span>
+                    <span><i class="fab fa-cc-visa"></i> ${c.type}</span>
+                </div>
+                <div style="margin-top:1rem; display:flex; justify-content:space-between;">
+                    <span>Limit: ${formatMoney(c.limit)}</span>
+                    <span>Spent: ${formatMoney(c.spent)}</span>
+                </div>
+                <div style="margin-top:0.5rem;">
+                    <div class="holding-bar"><div class="holding-fill" style="width:${(c.spent/c.limit)*100}%; background:var(--accent-gold);"></div></div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function renderDocuments() {
+        const container = document.getElementById('documentsList');
+        container.innerHTML = documents.map(doc => `
+            <div class="doc-item">
+                <div>
+                    <div style="font-weight:600;">${doc.name}</div>
+                    <div style="font-size:0.7rem; color:var(--text-muted);">${formatDate(doc.date)} • ${doc.size}</div>
+                </div>
+                <button class="btn-outline" style="padding:0.3rem 1rem;" onclick="alert('Downloading ${doc.name}...')">Download</button>
+            </div>
+        `).join('');
+    }
+    
+    function renderRecentTransactions() {
+        const container = document.getElementById('recentTransactions');
+        container.innerHTML = allTransactions.slice(0, 5).map(t => `
+            <div class="beneficiary-item" style="padding:0.8rem 0;">
+                <div>
+                    <div style="font-weight:500;">${t.desc}</div>
+                    <div style="font-size:0.7rem; color:var(--text-muted);">${formatDate(t.date)}</div>
+                </div>
+                <div class="${t.amount > 0 ? 'amount-positive' : 'amount-negative'}">${t.amount > 0 ? '+' : ''}${formatMoney(t.amount)}</div>
+            </div>
+        `).join('');
+    }
+    
+    // ==================== CHARTS ====================
+    function generateChartData(days) {
+        const labels = [];
+        const data = [];
+        let value = 68000000;
+        for (let i = days; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            value = value * (1 + (Math.random() - 0.48) * 0.008);
+            data.push(value);
+        }
+        return { labels, data };
+    }
+    
+    let currentChartData = generateChartData(90);
+    
+    function initChart() {
+        const ctx = document.getElementById('portfolioChart').getContext('2d');
+        if (chartInstance) chartInstance.destroy();
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: currentChartData.labels,
+                datasets: [{ label: 'Portfolio Value', data: currentChartData.data, borderColor: '#C9A03D', backgroundColor: 'rgba(201,160,61,0.05)', borderWidth: 2, fill: true, tension: 0.4 }]
+            },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => formatMoney(ctx.raw) } } }, scales: { y: { ticks: { callback: (val) => formatMoney(val), color: '#9CA3AF' }, grid: { color: '#1F2937' } }, x: { ticks: { color: '#9CA3AF' }, grid: { color: '#1F2937' } } } }
+        });
+    }
+    
+    function updateChart() {
+        const period = document.getElementById('chartPeriod').value;
+        currentChartData = generateChartData(parseInt(period));
+        if (chartInstance) {
+            chartInstance.data.labels = currentChartData.labels;
+            chartInstance.data.datasets[0].data = currentChartData.data;
+            chartInstance.update();
+        }
+    }
+    
+    function initAllocationChart() {
+        const ctx = document.getElementById('allocationChart').getContext('2d');
+        if (allocationChart) allocationChart.destroy();
+        allocationChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: { labels: holdings.map(h => h.name), datasets: [{ data: holdings.map(h => h.value), backgroundColor: ['#C9A03D', '#DFB760', '#8B6914', '#F5C842', '#E8B84B', '#D4A02A'], borderWidth: 0 }] },
+            options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: '#9CA3AF' } } } }
+        });
+    }
+    
+    function initPerformanceChart() {
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        if (performanceChart) performanceChart.destroy();
+        performanceChart = new Chart(ctx, {
+            type: 'bar',
+            data: { labels: ['2020', '2021', '2022', '2023', '2024', '2025 YTD'], datasets: [{ label: 'Annual Return %', data: [8.2, 15.4, -4.2, 9.7, 12.3, 8.4], backgroundColor: '#C9A03D', borderRadius: 8 }] },
+            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: (val) => val + '%' }, grid: { color: '#1F2937' } } } }
+        });
+    }
+    
+    // ==================== TRANSFER ====================
+    let pendingTransferData = null;
+    
+    function sendTransfer() {
+        const recipient = document.getElementById('transferRecipient').value;
+        const account = document.getElementById('transferAccountNumber').value;
+        const amount = document.getElementById('transferAmount').value;
+        const currency = document.getElementById('transferCurrency').value;
+        const reference = document.getElementById('transferReference').value;
+        
+        if (!recipient || !account || !amount || amount <= 0) {
+            alert('Please fill all fields');
+            return;
+        }
+        
+        pendingTransferData = { recipient, account, amount, currency, reference };
+        document.getElementById('modalTransferDetails').innerHTML = `
+            <p><strong>Recipient:</strong> ${recipient}</p>
+            <p><strong>Account:</strong> ${account}</p>
+            <p><strong>Amount:</strong> ${currency} ${parseFloat(amount).toLocaleString()}</p>
+            <p><strong>Reference:</strong> ${reference || '—'}</p>
+            <p style="margin-top:1rem;">Confirmation code: AETH-${Math.floor(Math.random()*10000)}</p>
+        `;
+        document.getElementById('transferModal').classList.add('active');
+    }
+    
+    function closeTransferModal() {
+        document.getElementById('transferModal').classList.remove('active');
+        pendingTransferData = null;
+    }
+    
+    function confirmTransfer() {
+        alert(`Transfer initiated successfully!\nReference: AETH-${Math.floor(Math.random()*10000)}\nA relationship manager will confirm within 15 minutes.`);
+        closeTransferModal();
+        // Clear form
+        document.getElementById('transferRecipient').value = '';
+        document.getElementById('transferAccountNumber').value = '';
+        document.getElementById('transferAmount').value = '';
+        document.getElementById('transferReference').value = '';
+    }
+    
+    // ==================== BALANCE TOGGLE ====================
+    function toggleBalanceVisibility() {
+        balanceVisible = !balanceVisible;
+        const eyeIcon = document.getElementById('balanceEyeIcon');
+        const netWorth = document.getElementById('totalNetWorth');
+        const liquid = document.getElementById('liquidAssets');
+        const investments = document.getElementById('investments');
+        const credit = document.getElementById('creditAvailable');
+        
+        if (balanceVisible) {
+            netWorth.innerHTML = '$127,483,291';
+            liquid.innerHTML = '$42,891,450';
+            investments.innerHTML = '$68,234,120';
+            credit.innerHTML = '$16,357,721';
+            eyeIcon.className = 'fas fa-eye';
+        } else {
+            netWorth.innerHTML = '••••••••';
+            liquid.innerHTML = '••••••••';
+            investments.innerHTML = '••••••••';
+            credit.innerHTML = '••••••••';
+            eyeIcon.className = 'fas fa-eye-slash';
+        }
+    }
+    
+    // ==================== PAGE NAVIGATION ====================
+    function switchPage(pageName) {
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
+        document.getElementById(`page-${pageName}`).classList.add('active-page');
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        const activeNav = document.querySelector(`.nav-item[data-page="${pageName}"]`);
+        if (activeNav) activeNav.classList.add('active');
+    }
+    
+    // ==================== PROFILE ====================
+    function saveProfile() {
+        const name = document.getElementById('profileName').value;
+        const greetingName = document.getElementById('greetingName');
+        if (greetingName) {
+            greetingName.innerHTML = `Welcome back, ${name.split(' ')[0]}`;
+        }
+        alert('Profile updated successfully');
+    }
+    // ==================== AUTO-START DASHBOARD ====================
+document.addEventListener('DOMContentLoaded', function() {
+    // Hide login overlay if it exists
+    const overlay = document.getElementById('loginOverlay');
+    if (overlay) overlay.style.display = 'none';
+    
+    // Show dashboard
+    document.getElementById('dashboardApp').style.display = 'block';
+    
+    // Render all content
+    renderAccounts();
+    if (window.lucide) window.lucide.createIcons();
+    renderBeneficiaries();
+    renderRecentTransfers();
+    renderHoldings();
+    renderCards();
+    renderDocuments();
+    initAllocationChart();
+    initPerformanceChart();
+    switchPage('accounts');
+    
+    // Setup navigation
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const page = item.getAttribute('data-page');
+            if (page) switchPage(page);
+        });
+    });
+});
+
+// Close modal on outside click (keep this if you want modal functionality)
+window.onclick = function(e) {
+    const modal = document.getElementById('transferModal');
+    if (e.target === modal) closeTransferModal();
+}
+</script>
+<script src="components/trafficabuja-header.js"></script>
+</body>
+</html>
