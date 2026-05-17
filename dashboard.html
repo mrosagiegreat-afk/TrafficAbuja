@@ -318,6 +318,12 @@
             font-size: 0.95rem;
         }
 
+        .account-summary-partner {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
         .account-summary-actions {
             display: flex;
             align-items: center;
@@ -1205,7 +1211,7 @@
                             <span>Nixole LLC</span>
                             <i data-lucide="verified" class="verified-badge-water" aria-hidden="true"></i>
                         </div>
-                        <p class="account-summary-status">Account Owner</p>
+                        <p class="account-summary-partner">Partner since March 2025</p>
                     </div>
                     <div class="account-summary-actions">
                         <div class="motion-button-wrapper">
@@ -1254,7 +1260,9 @@
                     </div>
                     <div class="summary-card">
                         <h4>Weather</h4>
-                        <div class="summary-value">90&deg;</div>
+                        <div class="summary-value">
+                            <span class="summary-subtext-icon"><i data-lucide="cloud-sun" aria-hidden="true"></i><span>90&deg;</span></span>
+                        </div>
                         <div class="summary-subtext">Partly Cloudy</div>
                     </div>
                 </div>
