@@ -420,21 +420,23 @@
         }
 
         .summary-card {
-            background: rgba(255,255,255,0.92);
+            background: transparent;
             border-radius: 24px;
             padding: 1.2rem 1.25rem;
-            border: 1px solid rgba(17,24,39,0.08);
+            border: none;
             min-height: 140px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 0 36px rgba(255,255,255,0.22);
         }
 
         .summary-card h4 {
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--text-muted);
+            color: #111827;
             margin-bottom: 0.85rem;
+            text-shadow: 0 0 18px rgba(255,255,255,0.42), 0 3px 10px rgba(255,255,255,0.28);
         }
 
         .summary-card .summary-value {
@@ -442,12 +444,14 @@
             font-weight: 700;
             margin-bottom: 0.9rem;
             color: #111827;
+            text-shadow: 0 0 22px rgba(255,255,255,0.5), 0 4px 14px rgba(255,255,255,0.32);
         }
 
         .summary-card .summary-subtext {
             font-size: 0.83rem;
-            color: var(--text-muted);
+            color: #111827;
             line-height: 1.55;
+            text-shadow: 0 0 16px rgba(255,255,255,0.42), 0 3px 10px rgba(255,255,255,0.26);
         }
 
         .summary-subtext-icon {
@@ -471,8 +475,8 @@
         }
 
         .lease-panel-card {
-            background: rgba(255,255,255,0.92);
-            border: 1px solid rgba(17,24,39,0.08);
+            background: transparent;
+            border: none;
             border-radius: 24px;
             padding: 1.25rem;
         }
@@ -485,7 +489,63 @@
         }
 
         .lease-progress-layout {
-            display: block;
+            display: grid;
+            grid-template-columns: 130px minmax(0, 1fr);
+            gap: 2.75rem;
+            align-items: start;
+        }
+
+        .lease-progress-ring {
+            width: 136px;
+            height: 136px;
+            border-radius: 50%;
+            background: conic-gradient(#2f9e44 0deg 360deg, rgba(47,158,68,0.14) 360deg);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .lease-progress-ring::before {
+            content: "";
+            width: 118px;
+            height: 118px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 1px solid rgba(47,158,68,0.15);
+            grid-area: 1 / 1;
+        }
+
+        .lease-progress-content {
+            grid-area: 1 / 1;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1;
+            transform: translateY(1px);
+        }
+
+        .lease-progress-percent {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .lease-progress-days {
+            margin-top: 0.35rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #2f9e44;
+        }
+
+        .lease-progress-caption {
+            margin-top: 0.28rem;
+            font-size: 0.56rem;
+            color: var(--text-muted);
+            line-height: 1.25;
         }
 
         .lease-progress-list {
@@ -543,7 +603,8 @@
 
         .payment-breakdown-list {
             display: grid;
-            gap: 0.2rem;
+            gap: 0.85rem;
+            padding-top: 2.45rem;
         }
 
         .payment-breakdown-row {
@@ -551,12 +612,13 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            padding: 1rem 0;
+            padding: 0 0 0.85rem;
             border-bottom: 1px solid rgba(17,24,39,0.08);
         }
 
         .payment-breakdown-row:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
 
         .payment-breakdown-label {
@@ -912,6 +974,11 @@
                 width: 100%;
                 justify-content: center;
             }
+            .lease-progress-layout {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                gap: 1.25rem;
+            }
             .lease-progress-item,
             .payment-breakdown-row {
                 grid-template-columns: 1fr;
@@ -1126,6 +1193,13 @@
                     <div class="lease-panel-card">
                         <div class="lease-panel-title">Lease Progress</div>
                         <div class="lease-progress-layout">
+                            <div class="lease-progress-ring" aria-hidden="true">
+                                <div class="lease-progress-content">
+                                    <div class="lease-progress-percent">100%</div>
+                                    <div class="lease-progress-days">30 / 30</div>
+                                    <div class="lease-progress-caption">Days Completed</div>
+                                </div>
+                            </div>
                             <div>
                                 <div class="lease-progress-list">
                                     <div class="lease-progress-item">
@@ -1148,7 +1222,6 @@
                         </div>
                     </div>
                     <div class="lease-panel-card">
-                        <div class="lease-panel-title">Tell You What</div>
                         <div class="payment-breakdown-list">
                             <div class="payment-breakdown-row">
                                 <span class="payment-breakdown-label is-green">Traffic in Vicinity: Yes</span>
