@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ares Capital Group | Merchant Banking</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#ffffff;color:#111827;font-family:'Manrope',sans-serif;}
+.hero{min-height:90vh;background:linear-gradient(95deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.82) 45%,rgba(139,44,44,.12) 100%),url('https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg');background-size:cover;background-position:center;display:flex;align-items:center;padding:7.5rem 6% 4rem;}
+.hero-inner{max-width:1180px;width:100%;}
+.hero h1{font-size:clamp(2.7rem,6vw,4rem);font-weight:400;line-height:1.03;color:#111827;letter-spacing:-0.032em;}
+.hero p{margin-top:1rem;font-size:1.02rem;line-height:1.7;max-width:60ch;color:#4b5563;}
+.tag{color:#8B2C2C;letter-spacing:2px;font-size:.78rem;font-weight:700;margin-bottom:1rem;}
+.title-static{display:block;font-weight:400;}
+.title-switch{position:relative;display:block;min-width:9.2ch;height:1.15em;margin-top:.08em;vertical-align:top;overflow:hidden;text-align:left;color:#8B2C2C;}
+.title-word{position:absolute;inset:0;font-weight:700;opacity:0;transform:translateY(130%);transition:transform 520ms cubic-bezier(.22,.9,.18,1),opacity 280ms ease;white-space:nowrap;}
+.title-word.is-active{opacity:1;transform:translateY(0);}
+.title-word.is-exit{opacity:0;transform:translateY(-130%);}
+.btn-red{background:#8B2C2C;border:none;padding:1rem 2.2rem;font-weight:700;color:#fff;margin-top:2rem;cursor:pointer;}
+.btn-red:hover{filter:brightness(1.06);}
+.hero-stats-wrap{margin-top:2.4rem;padding-top:1.2rem;border-top:1px solid rgba(201,160,61,.22);max-width:980px;}
+.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;padding:0;}
+.hero-stat{text-align:left;min-width:120px;}
+.hero-stat .number{font-size:3rem;font-weight:700;color:#111827;font-family:'Playfair Display',serif;line-height:1;}
+.hero-stat .label{margin-top:.45rem;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:#111827;}
+.bank-ecosystem{background:#07121C;color:#F0F4F8;font-family:'Inter',sans-serif;}
+.bank-ecosystem h2,.bank-ecosystem h3,.bank-ecosystem h4,.bank-ecosystem .serif{font-family:'Playfair Display',serif;}
+.bank-section{padding:6rem 6%;max-width:1600px;margin:0 auto;}
+.bank-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin:2rem 0;}
+.bank-stat-card{background:#0F1E2C;padding:2rem;text-align:center;border:1px solid rgba(201,160,61,.15);transition:all .3s cubic-bezier(.2,.9,.4,1.1);}
+.bank-stat-card:hover{transform:translateY(-4px);border-color:#C9A03D;}
+.bank-stat-number{font-size:2.8rem;font-weight:700;color:#C9A03D;font-family:'Playfair Display',serif;margin-bottom:.5rem;}
+.bank-stat-label{font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:#9AAFB9;}
+.bank-stat-desc{font-size:.8rem;color:#9AAFB9;margin-top:.5rem;}
+.bank-section-title{font-size:2.8rem;font-weight:600;margin-bottom:1rem;letter-spacing:-.02em;}
+.bank-section-subtitle{font-size:1rem;color:#9AAFB9;max-width:600px;margin-bottom:3rem;line-height:1.6;}
+.bank-services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.bank-service-card{background:#0F1E2C;padding:2rem;border:1px solid rgba(201,160,61,.15);transition:all .3s cubic-bezier(.2,.9,.4,1.1);}
+.bank-service-card:hover{border-color:#C9A03D;transform:translateY(-6px);}
+.bank-service-icon{font-size:2.5rem;margin-bottom:1.2rem;}
+.bank-service-card h3{font-size:1.3rem;margin-bottom:.75rem;}
+.bank-service-card p{color:#9AAFB9;font-size:.9rem;line-height:1.6;margin-bottom:1rem;}
+.bank-service-link{color:#C9A03D;text-decoration:none;font-size:.8rem;font-weight:600;display:inline-flex;align-items:center;gap:.3rem;}
+.bank-presence-section{background:linear-gradient(135deg,#13293D,#07121C);border-radius:24px;margin:2rem 0;padding:3rem;}
+.bank-presence-title{font-size:2.8rem;font-weight:600;margin-bottom:1rem;letter-spacing:-.02em;font-family:'Playfair Display',serif;color:#F0F4F8;}
+.bank-presence-title span{color:#C9A03D;}
+.bank-presence-subtitle{font-size:1rem;color:#9AAFB9;max-width:600px;margin-bottom:3rem;line-height:1.6;}
+.bank-region-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:2rem;}
+.bank-region-card{background:rgba(255,255,255,.03);padding:1.5rem;border-radius:12px;}
+.bank-region-card h4{color:#C9A03D;margin-bottom:1rem;font-size:1.1rem;}
+.bank-region-card ul{list-style:none;}
+.bank-region-card li{font-size:.85rem;color:#9AAFB9;padding:.3rem 0;}
+.bank-leadership-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+.bank-leader-card{text-align:center;}
+.bank-leader-image{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#13293D,#07121C);border-radius:50%;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#C9A03D;border:2px solid rgba(201,160,61,.15);}
+.bank-leader-card h4{font-size:1.1rem;margin-bottom:.25rem;}
+.bank-leader-title{font-size:.75rem;color:#C9A03D;letter-spacing:1px;}
+.bank-insights-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.bank-insight-card{background:#0F1E2C;overflow:hidden;border:1px solid rgba(201,160,61,.15);}
+.bank-insight-content{padding:1.5rem;}
+.bank-insight-category{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:#C9A03D;margin-bottom:.5rem;}
+.bank-insight-title{font-size:1.1rem;font-weight:600;margin-bottom:.75rem;line-height:1.4;}
+.bank-insight-date{font-size:.7rem;color:#9AAFB9;margin-bottom:.75rem;}
+.bank-cta-section{background:linear-gradient(135deg,#C9A03D,#B88A2E);border-radius:24px;padding:4rem;text-align:center;margin:3rem 0;}
+.bank-cta-section h2{color:#0C1B2A;font-size:2rem;margin-bottom:1rem;}
+.bank-cta-section p{color:#0C1B2A;opacity:.85;max-width:500px;margin:0 auto 2rem;}
+.bank-btn-cta{background:#0C1B2A;color:#C9A03D;border:none;padding:1rem 2rem;font-weight:700;cursor:pointer;}
+.bank-footer{background:#050D12;padding:4rem 6% 2rem;margin-top:4rem;border-top:1px solid rgba(201,160,61,.15);}
+.bank-footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.5fr;gap:2rem;margin-bottom:3rem;}
+.bank-footer-col h4{font-size:.85rem;letter-spacing:1px;margin-bottom:1.2rem;color:#C9A03D;text-transform:uppercase;}
+.bank-footer-col p{color:#9AAFB9;font-size:.8rem;line-height:1.6;margin-bottom:1rem;}
+.bank-footer-col a{display:block;color:#9AAFB9;text-decoration:none;font-size:.8rem;margin-bottom:.6rem;}
+.bank-social-links{display:flex;gap:1rem;margin-top:1rem;}
+.bank-social-links a{font-size:1.2rem;margin-bottom:0;}
+.bank-copyright{border-top:1px solid rgba(201,160,61,.15);padding-top:2rem;color:#9AAFB9;font-size:.75rem;text-align:center;line-height:1.7;}
+.bank-legal-line{margin-top:.6rem;max-width:900px;margin-left:auto;margin-right:auto;}
+@media (max-width: 1100px){.bank-stats-grid,.bank-services-grid,.bank-region-grid,.bank-leadership-grid,.bank-insights-grid,.bank-footer-grid{grid-template-columns:repeat(2,1fr);}.hero-stats{gap:1.5rem;}.hero-stat .number{font-size:2.5rem;}}
+@media (max-width: 720px){.bank-stats-grid,.bank-services-grid,.bank-region-grid,.bank-leadership-grid,.bank-insights-grid,.bank-footer-grid{grid-template-columns:1fr;}.bank-section{padding:4rem 6%;}.bank-cta-section{padding:2.5rem 1.5rem;}.bank-section-title,.bank-presence-title{font-size:2.1rem;}.hero-stats{padding:1.1rem 1rem;gap:1.2rem;}.hero-stat{min-width:calc(50% - .6rem);}.hero-stat .number{font-size:2.1rem;}.hero-stat .label{font-size:.68rem;letter-spacing:1.3px;}}
+</style>
+</head>
+<body>
+<trafficabuja-header
+  logo-src="logo.png"
+  brand="trafficabuja"
+  page-title="trafficabuja"
+  personalize-href="overlay.html"
+  nav-mode="stacked-links"
+  scroll-mode="overlay"
+  overlay-text-color="#000000"
+  overlay-muted-color="rgba(0,0,0,0.72)"
+  solid-background="rgba(255,255,255,0.96)"
+  solid-text-color="#000000"
+  solid-muted-color="#64748b"
+  products-href="#"
+  about-label="About"
+  about-href="faq.html"
+  blog-href="#"
+  contact-href="#"
+  privacy-href="#"
+  terms-href="#"
+></trafficabuja-header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="tag">SMB TRADE, MADE SIMPLER</div>
+    <h1><span class="title-static">This makes you</span> <span class="title-switch" id="titleSwitch" aria-live="polite"></span></h1>
+    <p>Managing a small business today is already tough. Avoid further complications by ditching outdated, tedious trade methods. Our goal is to streamline SMB trade, making it easier and faster than ever.</p>
+    <button class="btn-red">Institutional access only</button>
+    <div class="hero-stats-wrap">
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="number">$47.3B</div><div class="label">GROUP ASSETS</div></div>
+        <div class="hero-stat"><div class="number">230+</div><div class="label">FAMILIES SERVED</div></div>
+        <div class="hero-stat"><div class="number">98%</div><div class="label">RETENTION (15+ YRS)</div></div>
+        <div class="hero-stat"><div class="number">34</div><div class="label">COUNTRIES</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bank-ecosystem">
+  <section class="bank-section">
+    <h2 class="bank-section-title">The Aethera ecosystem</h2>
+    <p class="bank-section-subtitle">A vertically integrated conglomerate — from banking to industrial assets.</p>
+    <div class="bank-services-grid">
+      <article class="bank-service-card"><div class="bank-service-icon">🏦</div><h3>Aethera Bank SA</h3><p>Swiss-regulated private bank offering multi-currency accounts, wealth management, and institutional custody. Member of Swiss Bankers Association.</p><a class="bank-service-link" href="#">Explore banking</a></article>
+      <article class="bank-service-card"><div class="bank-service-icon">📈</div><h3>Aethera Capital</h3><p>Principal investments in private equity, venture capital, and structured credit. Direct co-investment opportunities for clients.</p><a class="bank-service-link" href="#">Explore capital</a></article>
+      <article class="bank-service-card"><div class="bank-service-icon">🏭</div><h3>Aethera Industrials</h3><p>Manufacturing, aerospace components, and logistics. 18 production facilities across 3 continents.</p><a class="bank-service-link" href="#">Explore industrials</a></article>
+      <article class="bank-service-card"><div class="bank-service-icon">🏗️</div><h3>Aethera Real Estate</h3><p>Commercial, residential, and industrial properties. $12.8B portfolio across Tier 1 global cities.</p><a class="bank-service-link" href="#">Explore real estate</a></article>
+      <article class="bank-service-card"><div class="bank-service-icon">⚡</div><h3>Aethera Energy</h3><p>Renewable infrastructure, oil & gas midstream, and energy transition investments.</p><a class="bank-service-link" href="#">Explore energy</a></article>
+      <article class="bank-service-card"><div class="bank-service-icon">🔒</div><h3>Aethera Trust</h3><p>Multi-jurisdictional trust administration, family governance, and philanthropic advisory.</p><a class="bank-service-link" href="#">Explore trust</a></article>
+    </div>
+  </section>
+
+  <section class="bank-section">
+    <div class="bank-presence-section">
+      <h2 class="bank-presence-title">Global <span>footprint</span></h2>
+      <p class="bank-presence-subtitle">34 countries | 57 offices | 24/7 coverage</p>
+      <div class="bank-region-grid">
+        <div class="bank-region-card"><h4>Americas</h4><ul><li>New York (Headquarters)</li><li>Miami (LatAm Hub)</li><li>San Francisco (Tech Banking)</li><li>Sao Paulo (Private Office)</li><li>Toronto (Wealth Management)</li></ul></div>
+        <div class="bank-region-card"><h4>Europe</h4><ul><li>Zurich (Banking HQ)</li><li>London (EMEA Advisory)</li><li>Geneva (Trust Services)</li><li>Luxembourg (Fund Platform)</li><li>Monaco (Family Office)</li></ul></div>
+        <div class="bank-region-card"><h4>Asia-Pacific</h4><ul><li>Singapore (APAC HQ)</li><li>Hong Kong (Greater China)</li><li>Tokyo (Japan Desk)</li><li>Sydney (Australia)</li><li>Mumbai (India Advisory)</li></ul></div>
+        <div class="bank-region-card"><h4>Middle East & Africa</h4><ul><li>Dubai (Private Office)</li><li>Abu Dhabi (Sovereign Relations)</li><li>Riyadh (KSA Desk)</li><li>Johannesburg (Africa)</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bank-section">
+    <h2 class="bank-section-title">Group leadership</h2>
+    <p class="bank-section-subtitle">Fifth-generation family principals and institutional executives</p>
+    <div class="bank-leadership-grid">
+      <article class="bank-leader-card"><div class="bank-leader-image">A</div><h4>Alexander von Aethera</h4><div class="bank-leader-title">Group Chairman & CEO</div><div class="bank-stat-desc">Fifth generation</div></article>
+      <article class="bank-leader-card"><div class="bank-leader-image">H</div><h4>Dr. Helena Voss</h4><div class="bank-leader-title">President, Aethera Bank</div><div class="bank-stat-desc">Former FINMA</div></article>
+      <article class="bank-leader-card"><div class="bank-leader-image">J</div><h4>James Whitfield</h4><div class="bank-leader-title">CIO, Aethera Capital</div><div class="bank-stat-desc">30 years PE experience</div></article>
+      <article class="bank-leader-card"><div class="bank-leader-image">C</div><h4>Clara Dumont</h4><div class="bank-leader-title">Head of Family Office</div><div class="bank-stat-desc">Multi-family office expert</div></article>
+    </div>
+  </section>
+
+  <section class="bank-section">
+    <h2 class="bank-section-title">Recent insights</h2>
+    <p class="bank-section-subtitle">Private market intelligence — not available to the public</p>
+    <div class="bank-insights-grid">
+      <article class="bank-insight-card"><div class="bank-insight-content"><div class="bank-insight-category">Q2 2025 Outlook</div><div class="bank-insight-title">Private credit: the new fixed income?</div><div class="bank-insight-date">March 15, 2025</div><a class="bank-service-link" href="#">Read report</a></div></article>
+      <article class="bank-insight-card"><div class="bank-insight-content"><div class="bank-insight-category">Family Office</div><div class="bank-insight-title">Succession planning for industrial families</div><div class="bank-insight-date">February 28, 2025</div><a class="bank-service-link" href="#">Read report</a></div></article>
+      <article class="bank-insight-card"><div class="bank-insight-content"><div class="bank-insight-category">Real Assets</div><div class="bank-insight-title">Infrastructure: the next decade</div><div class="bank-insight-date">January 20, 2025</div><a class="bank-service-link" href="#">Read report</a></div></article>
+    </div>
+  </section>
+
+  <section class="bank-section">
+    <div class="bank-cta-section">
+      <h2>Access the Aethera ecosystem</h2>
+      <p>Private banking, direct investments, and industrial holdings — unified for ultra-high-net-worth families.</p>
+      <button class="bank-btn-cta">Request introduction →</button>
+      <p style="font-size:.7rem;margin-top:1rem;opacity:.7;">By referral or introduction only</p>
+    </div>
+  </section>
+
+  <footer class="bank-footer">
+    <div class="bank-footer-grid">
+      <div class="bank-footer-col">
+        <h4>AETHERA HOLDING GROUP</h4>
+        <p>A fifth-generation family conglomerate with regulated subsidiaries in banking, real assets, and industrials.</p>
+        <div class="bank-social-links">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="bank-footer-col">
+        <h4>Banking & Wealth</h4>
+        <a href="#">Private Banking</a>
+        <a href="#">Investment Advisory</a>
+        <a href="#">Trust & Estate</a>
+        <a href="#">Family Office</a>
+      </div>
+      <div class="bank-footer-col">
+        <h4>Investments</h4>
+        <a href="#">Private Equity</a>
+        <a href="#">Real Estate</a>
+        <a href="#">Infrastructure</a>
+        <a href="#">Venture Capital</a>
+      </div>
+      <div class="bank-footer-col">
+        <h4>Resources</h4>
+        <a href="#">Client Portal</a>
+        <a href="#">Annual Report 2024</a>
+        <a href="#">Regulatory Disclosures</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <div class="bank-footer-col">
+        <h4>Contact</h4>
+        <a href="#">+41 44 555 8800</a>
+        <a href="#">private@aethera.com</a>
+        <a href="#">24/7 Concierge Line</a>
+        <a href="#">Zurich | New York | Singapore</a>
+      </div>
+    </div>
+    <div class="bank-copyright">
+      © 2025 Aethera Holding Group. All rights reserved.
+      <div class="bank-legal-line">Aethera Bank SA is regulated by FINMA (Switzerland). Aethera Capital Partners is an SEC-registered investment adviser. All assets held in segregated accounts.</div>
+    </div>
+  </footer>
+</div>
+
+<script src="components/trafficabuja-header.js"></script>
+<script>
+  (function(){
+    const words = ["amazing", "new", "wonderful", "beautiful", "smart"];
+    const host = document.getElementById("titleSwitch");
+    if (!host) return;
+
+    const nodes = words.map((word, index) => {
+      const span = document.createElement("span");
+      span.className = "title-word" + (index === 0 ? " is-active" : "");
+      span.textContent = word;
+      host.appendChild(span);
+      return span;
+    });
+
+    let currentIndex = 0;
+    window.setInterval(() => {
+      const previousIndex = currentIndex;
+      currentIndex = (currentIndex + 1) % nodes.length;
+
+      nodes.forEach((node) => node.classList.remove("is-active", "is-exit"));
+      nodes[previousIndex].classList.add("is-exit");
+      nodes[currentIndex].classList.add("is-active");
+    }, 2000);
+  })();
+</script>
+</body>
+</html>
