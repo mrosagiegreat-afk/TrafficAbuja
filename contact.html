@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -12,10 +12,18 @@
 body{font-family:"Inter","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6;}
 .hero{position:relative;min-height:70vh;padding:calc(44px + var(--header-overlay-offset)) clamp(18px, 4vw, 72px) 4.5rem;background-image:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.26) 55%, rgba(255,255,255,0.72) 92%),url('https://plus.unsplash.com/premium_photo-1746025616326-b205e7be5aa0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');background-size:cover;background-position:center;display:flex;align-items:flex-start;color:#fff;}
  .hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:180px;background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.34) 58%, #ffffff 100%);pointer-events:none;} .hero h1{font-family:"Playfair Display",serif;font-size:clamp(2rem,4.4vw,3.5rem);margin-bottom:8px;}
-.content{margin-top:-20rem;padding:72px clamp(18px, 4vw, 72px) 64px;position:relative;z-index:1;}
+.content{margin-top:calc(-20rem - 0.5vw);padding:72px clamp(18px, 4vw, 72px) 64px;position:relative;z-index:1;}
 .content > .section:first-of-type h2,
 .content > .section:first-of-type .lead{
   margin-left:calc(-6% + clamp(18px, 4vw, 72px));
+}
+.content > .section:first-of-type .grid-4 ul{
+  margin:0;
+  padding-left:0;
+  list-style-position:inside;
+}
+.content > .section:first-of-type .grid-4 li{
+  margin-bottom:0.55rem;
 }
 .section{padding:28px 0;border-bottom:1px solid var(--line);} .section:last-child{border-bottom:none;}
 h2{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,2.5vw,2.2rem);margin-bottom:8px;}
@@ -39,6 +47,9 @@ h2{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,2.5vw,2.2rem);mar
 .hero .footer-social{margin-top:1.4rem;}
 .footer-legal{margin-top:5rem;display:flex;flex-direction:column;gap:0.75rem;}
 .small{text-align:center;color:#64748b;font-size:.88rem;max-width:980px;margin:0 auto;}
+@media (max-width:900px){
+  .content{margin-top:calc(-22rem - 1vw);}
+}
 @media (max-width:1100px){.grid-4,.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.grid-3{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (max-width:700px){.grid-4,.grid-3,.footer-grid{grid-template-columns:1fr;}}
 </style>
@@ -56,9 +67,3 @@ h2{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,2.5vw,2.2rem);mar
 <script src="components/trafficabuja-header.js"></script>
 </body>
 </html>
-
-
-
-
-
-
