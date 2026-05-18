@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Aethera</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--header-overlay-offset:clamp(88px,11vw,120px);--ink:#0f172a;--muted:#64748b;--line:rgba(15,23,42,.1);} 
+body{font-family:"Inter","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6;}
+.hero{position:relative;min-height:70vh;padding:calc(44px + var(--header-overlay-offset)) clamp(18px, 4vw, 72px) 4.5rem;background-image:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.26) 55%, rgba(255,255,255,0.72) 92%),url('https://plus.unsplash.com/premium_photo-1746025616326-b205e7be5aa0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');background-size:cover;background-position:center;display:flex;align-items:flex-start;color:#fff;}
+ .hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:180px;background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.34) 58%, #ffffff 100%);pointer-events:none;} .hero h1{font-family:"Playfair Display",serif;font-size:clamp(2rem,4.4vw,3.5rem);margin-bottom:8px;}
+.content{margin-top:-20rem;padding:72px clamp(18px, 4vw, 72px) 64px;position:relative;z-index:1;}
+.content > .section:first-of-type h2,
+.content > .section:first-of-type .lead{
+  margin-left:calc(-6% + clamp(18px, 4vw, 72px));
+}
+.section{padding:28px 0;border-bottom:1px solid var(--line);} .section:last-child{border-bottom:none;}
+h2{font-family:"Playfair Display",serif;font-size:clamp(1.5rem,2.5vw,2.2rem);margin-bottom:8px;}
+.content > .section:first-of-type h2{margin-left:calc(-6% + clamp(18px, 4vw, 72px));}
+.lead{color:var(--muted);margin-bottom:20px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
+.service-vertical{display:grid;grid-template-columns:1fr;gap:18px;}
+.service-vertical article h3{font-size:1.1rem;margin-bottom:6px;}
+.service-vertical article p{color:#334155;margin-bottom:8px;max-width:110ch;}
+.service-vertical article a{font-weight:600;color:#0f172a;text-decoration:none;}
+.initial{width:38px;height:38px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:#f1f5f9;font-weight:700;margin-bottom:10px;}
+.name{font-weight:700}.role{color:#1f2937}.meta{color:var(--muted);font-size:.94rem;}
+.insight .kicker{font-weight:700;font-size:.9rem;margin-bottom:8px;}
+.insight .date{color:var(--muted);font-size:.92rem;margin:6px 0 8px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1.3fr;gap:26px;}
+.footer-col h4{font-size:.86rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
+.footer-col p,.footer-col li{color:#475569;font-size:.92rem;list-style:none;margin-bottom:6px;}
+.footer-social{display:flex;gap:2rem;margin-top:1rem;}
+.footer-social a{font-size:clamp(2rem,4.4vw,3.5rem);color:#0f172a;text-decoration:none;line-height:1;}
+.hero .footer-social{margin-top:1.4rem;}
+.footer-legal{margin-top:5rem;display:flex;flex-direction:column;gap:0.75rem;}
+.small{text-align:center;color:#64748b;font-size:.88rem;max-width:980px;margin:0 auto;}
+@media (max-width:1100px){.grid-4,.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.grid-3{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:700px){.grid-4,.grid-3,.footer-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<trafficabuja-header logo-src="logo.png" brand="trafficabuja" page-title="trafficabuja" personalize-href="overlay.html" nav-mode="stacked-links" scroll-mode="overlay" overlay-text-color="#000000" overlay-muted-color="rgba(0,0,0,0.72)" solid-background="rgba(255,255,255,0.96)" solid-text-color="#111827" solid-muted-color="#64748b" products-href="#" about-label="About" about-href="faq.html" blog-href="#" contact-href="#" privacy-href="#" terms-href="#"></trafficabuja-header>
+<section class="hero"><div><div class="footer-social"><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div></section>
+<main class="content">
+<section class="section"><h2>Global footprint</h2><p class="lead">34 countries | 57 offices | 24/7 coverage</p><div class="grid-4"><div><h3>Americas</h3><ul><li>New York (Headquarters)</li><li>Miami (LatAm Hub)</li><li>San Francisco (Tech Banking)</li><li>Sao Paulo (Private Office)</li><li>Toronto (Wealth Management)</li></ul></div><div><h3>Europe</h3><ul><li>Zurich (Banking HQ)</li><li>London (EMEA Advisory)</li><li>Geneva (Trust Services)</li><li>Luxembourg (Fund Platform)</li><li>Monaco (Family Office)</li></ul></div><div><h3>Asia-Pacific</h3><ul><li>Singapore (APAC HQ)</li><li>Hong Kong (Greater China)</li><li>Tokyo (Japan Desk)</li><li>Sydney (Australia)</li><li>Mumbai (India Advisory)</li></ul></div><div><h3>Middle East & Africa</h3><ul><li>Dubai (Private Office)</li><li>Abu Dhabi (Sovereign Relations)</li><li>Riyadh (KSA Desk)</li><li>Johannesburg (Africa)</li></ul></div></div></section>
+<section class="section"><h2>Group leadership</h2><p class="lead">Fifth-generation family principals and institutional executives</p><div class="grid-4"><div><div class="initial">A</div><div class="name">Alexander von Aethera</div><div class="role">Group Chairman & CEO</div><div class="meta">Fifth generation</div></div><div><div class="initial">H</div><div class="name">Dr. Helena Voss</div><div class="role">President, Aethera Bank</div><div class="meta">Former FINMA</div></div><div><div class="initial">J</div><div class="name">James Whitfield</div><div class="role">CIO, Aethera Capital</div><div class="meta">30 years PE experience</div></div><div><div class="initial">C</div><div class="name">Clara Dumont</div><div class="role">Head of Family Office</div><div class="meta">Multi-family office expert</div></div></div></section>
+<section class="section"><h2>Recent insights</h2><p class="lead">Private market intelligence - not available to the public</p><div class="grid-3"><div class="insight"><div class="kicker">Q2 2025 Outlook</div><div>Private credit: the new fixed income?</div><div class="date">March 15, 2025</div><div>Read report</div></div><div class="insight"><div class="kicker">Family Office</div><div>Succession planning for industrial families</div><div class="date">February 28, 2025</div><div>Read report</div></div><div class="insight"><div class="kicker">Real Assets</div><div>Infrastructure: the next decade</div><div class="date">January 20, 2025</div><div>Read report</div></div></div></section>
+<section class="section"><h2>Access the Aethera ecosystem</h2><p>Private banking, direct investments, and industrial holdings - unified for ultra-high-net-worth families.</p><p style="font-weight:700;margin-top:10px;">Request introduction -></p><p class="lead" style="margin-top:4px;">By referral or introduction only</p></section>
+<section class="section"><div class="footer-grid"><div class="footer-col"><h4>AETHERA HOLDING GROUP</h4><p>A fifth-generation family conglomerate with regulated subsidiaries in banking, real assets, and industrials.</p></div><div class="footer-col"><h4>Banking & Wealth</h4><ul><li>Private Banking</li><li>Investment Advisory</li><li>Trust & Estate</li><li>Family Office</li></ul></div><div class="footer-col"><h4>Investments</h4><ul><li>Private Equity</li><li>Real Estate</li><li>Infrastructure</li><li>Venture Capital</li></ul></div><div class="footer-col"><h4>Resources</h4><ul><li>Client Portal</li><li>Annual Report 2024</li><li>Regulatory Disclosures</li><li>Privacy Policy</li></ul></div><div class="footer-col"><h4>Contact</h4><ul><li>+41 44 555 8800</li><li>private@aethera.com</li><li>24/7 Concierge Line</li><li>Zurich | New York | Singapore</li></ul></div></div><div class="footer-legal"><p class="small">© 2025 Aethera Holding Group. All rights reserved.</p><p class="small">Aethera Bank SA is regulated by FINMA (Switzerland). Aethera Capital Partners is an SEC-registered investment adviser. All assets held in segregated accounts.</p></div></section>
+</main>
+<script src="components/trafficabuja-header.js"></script>
+</body>
+</html>
+
+
+
+
+
+
