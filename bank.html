@@ -11,6 +11,8 @@
 body{background:#ffffff;color:#111827;font-family:'Manrope',sans-serif;}
 input[type="email"], input[type="password"]{background:transparent;}
 input:focus{outline:none;}
+.input-container{border:none !important;background:#ffffff;box-shadow:none !important;border-width:0 !important;}
+.input-container input{border:none;outline:none;box-shadow:none;}
 
 /* Copied form utility styles */
 .w-full{width:100%;}
@@ -47,7 +49,7 @@ input:focus{outline:none;}
 .border-gray-300\/70{border-color:rgba(209,213,219,0.7);}
 .border-indigo-400{border-color:#60a5fa;}
 .rounded-full{border-radius:9999px;}
-.shadow-sm{box-shadow:0 1px 2px rgba(15,23,42,0.08);}
+.input-container{border:none !important;background:#ffffff;}.shadow-sm{box-shadow:0 1px 2px rgba(15,23,42,0.08);}
 .shadow-md{box-shadow:0 4px 10px rgba(15,23,42,0.12);}
 .flex{display:flex;}
 .flex-col{flex-direction:column;}
@@ -171,13 +173,13 @@ input:focus{outline:none;}
           <p class="text-nowrap text-xs sm:text-sm text-gray-500 font-medium">or sign in with email</p>
           <div class="w-full h-px bg-gray-200"></div>
         </div>
-        <div class="flex items-center w-full bg-white border border-gray-300/70 h-12 rounded-full overflow-hidden pl-5 pr-2 gap-2 transition-all duration-150">
+        <div class="flex items-center w-full bg-white h-12 rounded-full overflow-hidden pl-5 pr-2 gap-2 transition-all duration-150 input-container">
           <svg width="17" height="13" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 text-gray-500">
             <path fillRule="evenodd" clipRule="evenodd" d="M0.5 1.05L1.071 0.5H16.929L17.5 1.05V12.45L16.929 13H1.071L0.5 12.45V1.05ZM1.643 2.188V12H16.357V2.188L9.854 7.288H9.146L1.643 2.188ZM15.249 1.6H2.751L8.5 6.056L15.249 1.6Z" fill="#6B7280"/>
           </svg>
           <input type="email" name="email" id="email" placeholder="Email id" class="bg-transparent text-gray-800 placeholder:text-gray-400 outline-none text-sm w-full h-full py-2" required autocomplete="email" />
         </div>
-        <div class="flex items-center mt-5 w-full bg-white border border-gray-300/70 h-12 rounded-full overflow-hidden pl-5 pr-2 gap-2 transition-all duration-150">
+        <div class="flex items-center mt-5 w-full bg-white h-12 rounded-full overflow-hidden pl-5 pr-2 gap-2 transition-all duration-150 input-container">
           <svg width="14" height="17" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 text-gray-500">
             <path d="M13.5 8.5c0-.938-.729-1.7-1.625-1.7h-.812V4.25C11.063 1.907 9.24 0 7 0S2.938 1.907 2.938 4.25V6.8h-.813c-.896 0-1.625.762-1.625 1.7v6.8c0 .938.729 1.7 1.625 1.7h9.75c.896 0 1.625-.762 1.625-1.7v-6.8zm-9.5-4.25c0-1.406 1.093-2.55 2.438-2.55s2.437 1.144 2.437 2.55V6.8H3.999V4.25z" fill="#6B7280"/>
           </svg>
@@ -188,9 +190,9 @@ input:focus{outline:none;}
             <input type="checkbox" id="checkbox-remember" class="h-4 w-4 rounded border-gray-300 text-indigo-500 focus:ring-indigo-400 focus:ring-offset-0 accent-indigo-500" />
             <span class="text-sm font-normal text-gray-600 select-none">Remember me</span>
           </label>
-          <a href="#" class="text-sm underline-offset-2 hover:underline text-indigo-500 font-medium hover:text-indigo-700 transition">Forgot password?</a>
+          <a href="#" class="text-sm text-indigo-500 font-medium hover:text-indigo-700 transition">Forgot password?</a>
         </div>
-        <button type="submit" class="mt-7 w-full h-11 rounded-full text-white font-medium bg-indigo-500 hover:bg-indigo-600 transition-all shadow-sm hover:shadow-md active:scale-[0.98]">
+        <button type="submit" class="mt-7 w-full h-11 rounded-full text-white font-medium bg-indigo-500 hover:bg-indigo-600 transition-all shadow-sm hover:shadow-md active:scale-[0.98]" style="border:none;">
           Login
         </button>
         <p class="text-gray-500 text-sm mt-5 text-center">Don’t have an account? <a href="#" class="text-indigo-500 font-medium hover:underline transition">Sign up</a></p>
