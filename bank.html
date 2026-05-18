@@ -9,10 +9,91 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#ffffff;color:#111827;font-family:'Manrope',sans-serif;}
+input[type="email"], input[type="password"]{background:transparent;}
+input:focus{outline:none;}
+
+/* Copied form utility styles */
+.w-full{width:100%;}
+.h-full{height:100%;}
+.h-12{height:3rem;}
+.h-11{height:2.75rem;}
+.mt-7{margin-top:1.75rem;}
+.mt-6{margin-top:1.5rem;}
+.mt-5{margin-top:1.25rem;}
+.mt-2{margin-top:.5rem;}
+.my-8{margin-top:2rem;margin-bottom:2rem;}
+.my-6{margin-top:1.5rem;margin-bottom:1.5rem;}
+.text-sm{font-size:.875rem;line-height:1.25rem;}
+.text-xs{font-size:.75rem;line-height:1rem;}
+.text-4xl{font-size:2.25rem;line-height:1.1;}
+.font-medium{font-weight:500;}
+.font-semibold{font-weight:600;}
+.font-normal{font-weight:400;}
+.tracking-tight{letter-spacing:-.025em;}
+.text-gray-900{color:#111827;}
+.text-gray-800{color:#1f2937;}
+.text-gray-700{color:#374151;}
+.text-gray-600{color:#4b5563;}
+.text-gray-500{color:#6b7280;}
+.text-gray-500\/80{color:rgba(107,117,128,0.8);}
+.text-indigo-500{color:#6366f1;}
+.text-white{color:#ffffff;}
+.bg-white{background:#ffffff;}
+.bg-gray-100\/70{background:rgba(243,244,246,0.7);}
+.bg-gray-200\/80{background:rgba(229,231,235,0.8);}
+.bg-indigo-500{background:#6366f1;}
+.border{border-width:1px;border-style:solid;}
+.border-gray-200{border-color:#e5e7eb;}
+.border-gray-300\/70{border-color:rgba(209,213,219,0.7);}
+.border-indigo-400{border-color:#60a5fa;}
+.rounded-full{border-radius:9999px;}
+.shadow-sm{box-shadow:0 1px 2px rgba(15,23,42,0.08);}
+.shadow-md{box-shadow:0 4px 10px rgba(15,23,42,0.12);}
+.flex{display:flex;}
+.flex-col{flex-direction:column;}
+.items-center{align-items:center;}
+.justify-center{justify-content:center;}
+.justify-between{justify-content:space-between;}
+.gap-3{gap:.75rem;}
+.gap-4{gap:1rem;}
+.gap-2{gap:.5rem;}
+.overflow-hidden{overflow:hidden;}
+.pl-5{padding-left:1.25rem;}
+.pr-2{padding-right:.5rem;}
+.py-2{padding-top:.5rem;padding-bottom:.5rem;}
+.transition-all,.transition-colors{transition:all .2s ease;}
+.text-center{text-align:center;}
+.underline-offset-2{text-underline-offset:2px;}
+.cursor-pointer{cursor:pointer;}
+.select-none{user-select:none;}
+.outline-none{outline:none;}
+.text-nowrap{white-space:nowrap;}
+.placeholder\:text-gray-400::placeholder{color:#9ca3af;}
+.hover\:bg-gray-200\/80:hover{background:rgba(229,231,235,0.8);}
+.hover\:bg-indigo-600:hover{background:#4f46e5;}
+.hover\:text-indigo-700:hover{color:#1d4ed8;}
+.hover\:underline:hover{text-decoration:underline;}
+.active\:scale-\[0\.98\]:active{transform:scale(0.98);}
+.focus-within\:border-indigo-400:focus-within{border-color:#60a5fa;}
+.focus-within\:ring-1:focus-within{box-shadow:0 0 0 1px rgba(96,165,250,0.5);}
+.focus-within\:ring-indigo-300:focus-within{box-shadow:0 0 0 1px rgba(147,197,253,0.5);}
+
+.hero-form-panel{max-width:28rem;background:transparent;border:none;border-radius:0;padding:0;box-shadow:none;}
+.hero-form-panel form{width:100%;}
 
 .hero{position:relative;min-height:70vh;background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.18) 55%, rgba(255,255,255,0.58) 92%),url('https://plus.unsplash.com/premium_photo-1746025616326-b205e7be5aa0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');background-size:cover;background-position:center;display:flex;align-items:flex-start;padding:calc(44px + var(--header-overlay-offset, 88px)) clamp(18px, 4vw, 72px) 4.5rem;}
-.hero-inner{max-width:1180px;width:100%;position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem;}
+.hero-inner{max-width:1180px;width:100%;position:relative;z-index:2;display:flex;flex-direction:column;gap:2rem;}
+.hero-copy-panel,
+.hero-form-panel,
+.hero-copy{width:100%;}
+.hero-copy{order:3;}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:180px;background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,.24) 40%, rgba(255,255,255,.92) 75%, #ffffff 100%);pointer-events:none;}
+@media (min-width: 900px){
+  .hero-inner{display:grid;grid-template-columns:1fr 28rem;grid-template-rows:auto auto;gap:2rem 5rem;align-items:start;}
+  .hero-copy-panel{grid-column:1;grid-row:1;}
+  .hero-form-panel{grid-column:2;grid-row:1 / span 2;}
+  .hero-copy{grid-column:1;grid-row:2;}
+}
 .hero h1{font-size:clamp(2.7rem,6vw,4rem);font-weight:400;line-height:1.03;color:#ffffff;letter-spacing:-0.032em;}
 .tag{color:#ffffff;letter-spacing:2px;font-size:.78rem;font-weight:700;margin-top:1.8rem;margin-bottom:1rem;}
 .title-static{display:block;font-weight:400;}
@@ -70,12 +151,53 @@ body{background:#ffffff;color:#111827;font-family:'Manrope',sans-serif;}
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="tag">SMB TRADE, MADE SIMPLER</div>
-    <h1><span class="title-static">You make us</span> <span class="title-switch" id="titleSwitch" aria-live="polite"></span></h1>
-    <div class="hero-copy">
-      <p>Managing a small business today is already tough. Avoid further complications by ditching outdated, tedious trade methods. Our goal is to streamline SMB trade, making it easier and faster than ever.</p>
+    <div class="hero-copy-panel">
+      <h2 class="text-4xl font-semibold tracking-tight text-white">Sign In</h2>
+      <h1><span class="title-static">You make us</span> <span class="title-switch" id="titleSwitch" aria-live="polite"></span></h1>
     </div>
-  </div>
+    <div class="hero-form-panel">
+      <form class="w-full flex flex-col items-center justify-center" action="#" method="post">
+        <button type="button" class="w-full mt-7 bg-gray-100/70 hover:bg-gray-200/80 transition-colors flex items-center justify-center gap-3 h-12 rounded-full border border-gray-200 shadow-sm">
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+          </svg>
+          <span class="text-sm font-medium text-gray-700">Sign in with Google</span>
+        </button>
+        <div class="flex items-center gap-4 w-full my-6">
+          <div class="w-full h-px bg-gray-200"></div>
+          <p class="text-nowrap text-xs sm:text-sm text-gray-500 font-medium">or sign in with email</p>
+          <div class="w-full h-px bg-gray-200"></div>
+        </div>
+        <div class="flex items-center w-full bg-white border border-gray-300/70 h-12 rounded-full overflow-hidden pl-5 pr-2 gap-2 transition-all duration-150">
+          <svg width="17" height="13" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 text-gray-500">
+            <path fillRule="evenodd" clipRule="evenodd" d="M0.5 1.05L1.071 0.5H16.929L17.5 1.05V12.45L16.929 13H1.071L0.5 12.45V1.05ZM1.643 2.188V12H16.357V2.188L9.854 7.288H9.146L1.643 2.188ZM15.249 1.6H2.751L8.5 6.056L15.249 1.6Z" fill="#6B7280"/>
+          </svg>
+          <input type="email" name="email" id="email" placeholder="Email id" class="bg-transparent text-gray-800 placeholder:text-gray-400 outline-none text-sm w-full h-full py-2" required autocomplete="email" />
+        </div>
+        <div class="flex items-center mt-5 w-full bg-white border border-gray-300/70 h-12 rounded-full overflow-hidden pl-5 pr-2 gap-2 transition-all duration-150">
+          <svg width="14" height="17" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 text-gray-500">
+            <path d="M13.5 8.5c0-.938-.729-1.7-1.625-1.7h-.812V4.25C11.063 1.907 9.24 0 7 0S2.938 1.907 2.938 4.25V6.8h-.813c-.896 0-1.625.762-1.625 1.7v6.8c0 .938.729 1.7 1.625 1.7h9.75c.896 0 1.625-.762 1.625-1.7v-6.8zm-9.5-4.25c0-1.406 1.093-2.55 2.438-2.55s2.437 1.144 2.437 2.55V6.8H3.999V4.25z" fill="#6B7280"/>
+          </svg>
+          <input type="password" name="password" id="password" placeholder="Password" class="bg-transparent text-gray-800 placeholder:text-gray-400 outline-none text-sm w-full h-full py-2" required autocomplete="current-password" />
+        </div>
+        <div class="w-full flex items-center justify-between mt-6 text-gray-600">
+          <label class="flex items-center gap-2 cursor-pointer group">
+            <input type="checkbox" id="checkbox-remember" class="h-4 w-4 rounded border-gray-300 text-indigo-500 focus:ring-indigo-400 focus:ring-offset-0 accent-indigo-500" />
+            <span class="text-sm font-normal text-gray-600 select-none">Remember me</span>
+          </label>
+          <a href="#" class="text-sm underline-offset-2 hover:underline text-indigo-500 font-medium hover:text-indigo-700 transition">Forgot password?</a>
+        </div>
+        <button type="submit" class="mt-7 w-full h-11 rounded-full text-white font-medium bg-indigo-500 hover:bg-indigo-600 transition-all shadow-sm hover:shadow-md active:scale-[0.98]">
+          Login
+        </button>
+        <p class="text-gray-500 text-sm mt-5 text-center">Don’t have an account? <a href="#" class="text-indigo-500 font-medium hover:underline transition">Sign up</a></p>
+      </form>
+    </div>    <div class="hero-copy">
+      <p>Managing a small business today is already tough. Avoid further complications by ditching outdated, tedious trade methods. Our goal is to streamline SMB trade, making it easier and faster than ever.</p>
+    </div>  </div>
 </div>
 
 <section class="ecosystem-section">
